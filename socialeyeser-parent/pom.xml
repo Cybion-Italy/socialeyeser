@@ -32,6 +32,7 @@
 		<elasticsearch.version>0.90.7</elasticsearch.version>
 		<jackson-xc.version>1.9.9</jackson-xc.version>
 		<easymock.version>3.2</easymock.version>
+		<jetty.version>8.1.11.v20130520</jetty.version>
 
 		<!-- Plugin versions -->
 
@@ -124,6 +125,16 @@
 				<groupId>commons-io</groupId>
 				<artifactId>commons-io</artifactId>
 				<version>${commons-io.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-server</artifactId>
+				<version>${jetty.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-servlet</artifactId>
+				<version>${jetty.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

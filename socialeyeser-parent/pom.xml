@@ -1,12 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-  <groupId>it.cybion.socialeyeser</groupId>
-  <artifactId>socialeyeser-parent</artifactId>
-  <version>1.0-SNAPSHOT</version>
-  <packaging>jar</packaging>
+	<groupId>it.cybion.socialeyeser</groupId>
+	<artifactId>socialeyeser-parent</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
 
-  <name>socialeyeser-parent</name>
-    
+	<name>socialeyeser-parent</name>
+
+	<modules>
+		<module>socialeyeser-webapp</module>
+	</modules>
+
+	<properties>
+
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.6</java.version>
+
+		<socialeyeser.version>1.0-SNAPSHOT</socialeyeser.version>
+		<servlet-api.version>3.0.1</servlet-api.version>
+		<commons.version>1.0-SNAPSHOT</commons.version>
+		<testng.version>6.8.1</testng.version>
+		<joda-time.version>2.1</joda-time.version>
+		<log4j.version>1.2.17</log4j.version>
+		<slf4j-api.version>1.6.6</slf4j-api.version>
+		<jersey.version>1.16</jersey.version>
+		<guice.version>3.0</guice.version>
+		<jackson-mapper-asl.version>1.9.12</jackson-mapper-asl.version>
+		<elasticsearch.version>0.90.7</elasticsearch.version>
+		<jackson-xc.version>1.9.9</jackson-xc.version>
+		<easymock.version>3.2</easymock.version>
+
+		<!-- Plugin versions -->
+
+		<maven-compiler-plugin.version>2.5.1</maven-compiler-plugin.version>
+		<maven-resources-plugin.version>2.4</maven-resources-plugin.version>
+		<maven-surefire-plugin.version>2.4.3</maven-surefire-plugin.version>
+		<maven-war-plugin.version>2.12.3</maven-war-plugin.version>
+
+	</properties>
+
+	<!-- libraries used -->
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>javax.servlet-api</artifactId>
+				<version>${servlet-api.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>joda-time</groupId>
+				<artifactId>joda-time</artifactId>
+				<version>${joda-time.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${slf4j-api.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-log4j12</artifactId>
+				<version>${slf4j-api.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>log4j</groupId>
+				<artifactId>log4j</artifactId>
+				<version>${log4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.testng</groupId>
+				<artifactId>testng</artifactId>
+				<version>${testng.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>it.cybion.commons</groupId>
+				<artifactId>web</artifactId>
+				<version>${commons.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>it.cybion.commons</groupId>
+				<artifactId>utils</artifactId>
+				<version>${commons.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>it.cybion.commons</groupId>
+				<artifactId>test-utils</artifactId>
+				<version>${commons.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.google.inject</groupId>
+				<artifactId>guice</artifactId>
+				<version>${guice.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.codehaus.jackson</groupId>
+				<artifactId>jackson-mapper-asl</artifactId>
+				<version>${jackson-mapper-asl.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.elasticsearch</groupId>
+				<artifactId>elasticsearch</artifactId>
+				<version>${elasticsearch.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.codehaus.jackson</groupId>
+				<artifactId>jackson-xc</artifactId>
+				<version>${jackson-xc.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.codehaus.jackson</groupId>
+				<artifactId>jackson-jaxrs</artifactId>
+				<version>${jackson-xc.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.easymock</groupId>
+				<artifactId>easymock</artifactId>
+				<version>${easymock.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>${commons-io.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+
+	<dependencies>
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.easymock</groupId>
+			<artifactId>easymock</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${maven-compiler-plugin.version}</version>
+					<configuration>
+						<encoding>${project.build.sourceEncoding}</encoding>
+						<source>${java.version}</source>
+						<target>${java.version}</target>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>${maven-resources-plugin.version}</version>
+					<configuration>
+						<encoding>${project.build.sourceEncoding}</encoding>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>${maven-surefire-plugin.version}</version>
+					<configuration>
+						<includes>
+							<include>**/*TestCase.java</include>
+							<include>**/*Test.java</include>
+						</includes>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
 </project>

@@ -27,7 +27,6 @@ public class InfluencersService {
     public InfluencersService() {
     
         LOGGER.info("Starting influence service");
-        cache = new HashMap<String, Double>();
         randomGenerator = new Random(System.nanoTime());
     }
     
@@ -38,19 +37,15 @@ public class InfluencersService {
         try {
             LOGGER.info("Request for user " + userId + " with " + followers + " followers");
             
-            if (cache.containsKey(userId))
-                return new InfluenceScore(cache.get(userId));
-            else {
-                
-                // ranging random scores [0.005, 1]
-                double score = (randomGenerator.nextInt(1000) / 20000.0)
-                        + (Math.log10(Math.min(followers, MAX_FOLLOWERS)) / Math
-                                .log10(MAX_FOLLOWERS)) - 0.05;
-                if (score < 0)
-                    score *= -0.1;
-                // cache.put(userId, score);
-                return new InfluenceScore(score);
-            }
+            // ranging random scores [0.005, 1]
+            double score = (randomGenerator.nextInt(1000) / 20000.0)
+                    + (Math.log10(Math.min(followers, MAX_FOLLOWERS)) / Math.log10(MAX_FOLLOWERS))
+                    - 0.05;
+            if (score < 0)
+                score *= -0.1;
+            
+            return new InfluenceScore(score);
+            
         } catch (final Exception e) {
             throw new ServiceException("Error", e);
         }

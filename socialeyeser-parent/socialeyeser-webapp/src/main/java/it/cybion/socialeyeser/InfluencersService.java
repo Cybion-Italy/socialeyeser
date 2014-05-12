@@ -1,16 +1,14 @@
 package it.cybion.socialeyeser;
 
+import com.google.inject.Inject;
 import it.cybion.commons.web.responses.exceptions.ServiceException;
+import org.apache.log4j.Logger;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-
-import org.apache.log4j.Logger;
-
-import com.google.inject.Inject;
 
 @Produces(MediaType.APPLICATION_JSON)
 @Path("/twitter")
@@ -23,7 +21,8 @@ public class InfluencersService {
     
         LOGGER.info("Starting influence service");
     }
-    
+
+    //TODO use local exception, remove web dependency
     @GET
     @Path("/{userId}")
     public InfluenceScore add(@PathParam("userId") String twitterUserId) throws ServiceException {

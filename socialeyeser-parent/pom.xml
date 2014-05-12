@@ -19,7 +19,6 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.6</java.version>
 
-		<socialeyeser.version>1.0-SNAPSHOT</socialeyeser.version>
 		<servlet-api.version>3.0.1</servlet-api.version>
 		<commons.version>1.0-SNAPSHOT</commons.version>
 		<testng.version>6.8.1</testng.version>
@@ -29,7 +28,6 @@
 		<jersey.version>1.16</jersey.version>
 		<guice.version>3.0</guice.version>
 		<jackson-mapper-asl.version>1.9.12</jackson-mapper-asl.version>
-		<elasticsearch.version>0.90.7</elasticsearch.version>
 		<jackson-xc.version>1.9.9</jackson-xc.version>
 		<easymock.version>3.2</easymock.version>
 		<jetty.version>8.1.11.v20130520</jetty.version>
@@ -102,11 +100,6 @@
 				<version>${jackson-mapper-asl.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.elasticsearch</groupId>
-				<artifactId>elasticsearch</artifactId>
-				<version>${elasticsearch.version}</version>
-			</dependency>
-			<dependency>
 				<groupId>org.codehaus.jackson</groupId>
 				<artifactId>jackson-xc</artifactId>
 				<version>${jackson-xc.version}</version>
@@ -120,11 +113,6 @@
 				<groupId>org.easymock</groupId>
 				<artifactId>easymock</artifactId>
 				<version>${easymock.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>commons-io</groupId>
-				<artifactId>commons-io</artifactId>
-				<version>${commons-io.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.eclipse.jetty</groupId>
@@ -158,10 +146,12 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
+            <scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
+            <scope>test</scope>
 		</dependency>
 	</dependencies>
 

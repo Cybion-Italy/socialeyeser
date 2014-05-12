@@ -49,6 +49,7 @@ public class AlertsResourceTestCase extends JettyServer {
 
         final Map<String, String> requestHeaderMap = Maps.newHashMap();
         requestHeaderMap.put("Accept", MediaType.APPLICATION_JSON);
+        //TODO use a plain http-components client
         stringResponse = CybionHttpClient.performGet(url, requestHeaderMap);
 
         LOGGER.info("response body: " + stringResponse.getObject());

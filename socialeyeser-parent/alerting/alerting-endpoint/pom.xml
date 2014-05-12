@@ -11,8 +11,14 @@
     </parent>
 
     <artifactId>alerting-endpoint</artifactId>
-    <name>alerting-endpoint</name>
     <packaging>war</packaging>
+
+    <name>alerting-endpoint</name>
+    <description>
+        This is a preliminary implementation of alerting module.
+        It delivers the whole history of alerts detected by the system,
+        organised in pages
+    </description>
 
     <dependencies>
         <dependency>
@@ -57,7 +63,6 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
 
     <build>
         <finalName>alerting-endpoint</finalName>

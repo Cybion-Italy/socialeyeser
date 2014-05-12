@@ -21,7 +21,7 @@ public class WebappModule extends JerseyServletModule {
     @Override
     protected void configureServlets() {
     
-        bind(InfluencersService.class);
+        bind(InfluencersService.class).asEagerSingleton();
         
         bindJackson();
         routeRequests();

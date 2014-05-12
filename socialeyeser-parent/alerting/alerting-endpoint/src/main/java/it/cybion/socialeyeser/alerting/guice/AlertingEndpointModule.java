@@ -18,7 +18,7 @@ import javax.xml.bind.JAXBException;
 import java.util.Arrays;
 import java.util.List;
 
-public class WebappModule extends JerseyServletModule {
+public class AlertingEndpointModule extends JerseyServletModule {
 
     @Override
     protected void configureServlets() {
@@ -27,15 +27,7 @@ public class WebappModule extends JerseyServletModule {
         bind(NoSuchElementExceptionMapper.class);
         bind(IllegalArgumentExceptionMapper.class);
 
-        //        bindJackson();
         routeRequests();
-    }
-
-    private void bindJackson() {
-
-        //        bind(JacksonJaxbJsonProvider.class).asEagerSingleton();
-//        bind(MessageBodyReader.class).to(JacksonJsonProvider.class);
-//        bind(MessageBodyWriter.class).to(JacksonJsonProvider.class);
     }
 
     private void routeRequests() {

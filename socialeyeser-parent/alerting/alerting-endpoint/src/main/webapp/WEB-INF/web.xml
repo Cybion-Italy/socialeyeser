@@ -7,7 +7,7 @@
 	<display-name>socialeyeser</display-name>
 
 	<listener>
-		<listener-class>it.cybion.socialeyeser.alerting.guice.WebappConfig</listener-class>
+		<listener-class>it.cybion.socialeyeser.alerting.guice.AlertingEndpointListener</listener-class>
 	</listener>
 
 	<filter>

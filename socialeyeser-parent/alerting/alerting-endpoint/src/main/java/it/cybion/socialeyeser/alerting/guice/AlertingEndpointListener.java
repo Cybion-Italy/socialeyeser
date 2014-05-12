@@ -8,14 +8,14 @@ import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletContextEvent;
 
-public class WebappConfig extends GuiceServletContextListener {
+public class AlertingEndpointListener extends GuiceServletContextListener {
     
-    private static final Logger LOGGER = LoggerFactory.getLogger(WebappConfig.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AlertingEndpointListener.class);
     
     @Override
     public Injector getInjector() {
     
-        final Injector injector = Guice.createInjector(new WebappModule());
+        final Injector injector = Guice.createInjector(new AlertingEndpointModule());
         
         return injector;
     }

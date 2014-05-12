@@ -37,6 +37,10 @@ public class InfluencersService {
         try {
             LOGGER.info("Request for user " + userId + " with " + followers + " followers");
             
+            if (userId == null)
+                throw new ServiceException("Missing parameter user id");
+            if (followers <= 0)
+                throw new ServiceException("Invalid follower number; should be positive");
             // ranging random scores [0.005, 1]
             double score = (randomGenerator.nextInt(1000) / 20000.0)
                     + (Math.log10(Math.min(followers, MAX_FOLLOWERS)) / Math.log10(MAX_FOLLOWERS))

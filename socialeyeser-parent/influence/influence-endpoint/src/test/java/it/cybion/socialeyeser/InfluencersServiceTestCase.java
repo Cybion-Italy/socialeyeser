@@ -44,7 +44,7 @@ public class InfluencersServiceTestCase extends JettyServer {
     @Test
     public void shouldTestService() throws CybionHttpException {
     
-        final String url = super.baseUri + "twitter/1234";
+        String url = super.baseUri + "twitter?userId=1234&followers=100";
         
         ExternalStringResponse stringResponse = null;
         
@@ -54,6 +54,27 @@ public class InfluencersServiceTestCase extends JettyServer {
         
         LOGGER.info("response body: " + stringResponse.getObject());
         Assert.assertTrue(ResponseStatus.OK == stringResponse.getStatus(), "Unexpected result: "
+                + stringResponse.getMessage());
+        
+        url = super.baseUri + "twitter?userId=1234&followers=-100";
+        stringResponse = CybionHttpClient.performGet(url, requestHeaderMap);
+        
+        LOGGER.info("response body: " + stringResponse.getObject());
+        Assert.assertTrue(ResponseStatus.NOK == stringResponse.getStatus(), "Unexpected result: "
+                + stringResponse.getMessage());
+        
+        url = super.baseUri + "twitter?userId=1234";
+        stringResponse = CybionHttpClient.performGet(url, requestHeaderMap);
+        
+        LOGGER.info("response body: " + stringResponse.getObject());
+        Assert.assertTrue(ResponseStatus.NOK == stringResponse.getStatus(), "Unexpected result: "
+                + stringResponse.getMessage());
+        
+        url = super.baseUri + "twitter/";
+        stringResponse = CybionHttpClient.performGet(url, requestHeaderMap);
+        
+        LOGGER.info("response body: " + stringResponse.getObject());
+        Assert.assertTrue(ResponseStatus.NOK == stringResponse.getStatus(), "Unexpected result: "
                 + stringResponse.getMessage());
     }
 }

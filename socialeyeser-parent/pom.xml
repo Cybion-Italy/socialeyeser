@@ -33,17 +33,17 @@
 		<maven-compiler-plugin.version>2.5.1</maven-compiler-plugin.version>
 		<maven-resources-plugin.version>2.4</maven-resources-plugin.version>
 		<maven-surefire-plugin.version>2.4.3</maven-surefire-plugin.version>
-		<maven-war-plugin.version>2.12.3</maven-war-plugin.version>
+		<tomcat7-maven-plugin.version>2.2</tomcat7-maven-plugin.version>
 
 	</properties>
 
-    <modules>
-        <module>influence</module>
-        <module>trend-detection</module>
-        <module>alerting</module>
-    </modules>
+	<modules>
+		<module>influence</module>
+		<module>trend-detection</module>
+		<module>alerting</module>
+	</modules>
 
-    <!-- libraries used -->
+	<!-- libraries used -->
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -148,12 +148,12 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
-            <scope>test</scope>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
-            <scope>test</scope>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
@@ -188,6 +188,11 @@
 							<include>**/*Test.java</include>
 						</includes>
 					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.tomcat.maven</groupId>
+					<artifactId>tomcat7-maven-plugin</artifactId>
+					<version>${tomcat7-maven-plugin}</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>

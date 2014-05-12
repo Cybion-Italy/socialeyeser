@@ -17,17 +17,19 @@ public class JettyServer {
     
     private final ServletContextHandler rootContextHandler;
     
-    protected final String baseUri;
-    
+    public final String baseUri;
+
     public JettyServer(int port) {
-    
+
         this.server = new Server(port);
         this.rootContextHandler = new ServletContextHandler(this.server, "/",
                 ServletContextHandler.SESSIONS);
-        this.rootContextHandler.addFilter(GuiceFilter.class, "/*",
-                EnumSet.of(DispatcherType.REQUEST));
+        this.rootContextHandler.addFilter(GuiceFilter.class, "/*", EnumSet.of(
+                DispatcherType.REQUEST));
         this.rootContextHandler.addServlet(EmptyServlet.class, "/*");
-        this.baseUri = "http://localhost:" + port + "/";
+        final String http = "http";
+        final String localhost = "localhost";
+        this.baseUri = http + "://" + localhost + ":" + port + "/";
     }
     
     public void addEventListener(EventListener configuration) {

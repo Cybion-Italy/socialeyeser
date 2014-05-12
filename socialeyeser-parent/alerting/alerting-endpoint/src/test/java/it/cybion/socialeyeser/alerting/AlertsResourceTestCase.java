@@ -48,23 +48,6 @@ public class AlertsResourceTestCase {
         this.jettyServer.stop();
     }
 
-//    @Test
-//    public void shouldGetAlertById() throws CybionHttpException {
-//
-//        final String anAlert = this.jettyServer.baseUri + "alerts/1234";
-//
-//        ExternalStringResponse stringResponse = null;
-//
-//        final Map<String, String> requestHeaderMap = Maps.newHashMap();
-//        requestHeaderMap.put("Accept", MediaType.APPLICATION_JSON);
-//        //TODO use a plain http-components client
-//        stringResponse = CybionHttpClient.performGet(anAlert, requestHeaderMap);
-//
-//        LOGGER.info("response body: " + stringResponse.getObject());
-//        assertEquals(ResponseStatus.OK, stringResponse.getStatus(),
-//                "Unexpected result: " + stringResponse.getMessage());
-//    }
-
     @Test
     public void shouldGetAlertsById() {
 

@@ -63,8 +63,9 @@ public class AlertsResource {
         //TODO validate params
         LOGGER.info("alerts parameter '" + page + "' '" + perPage + "'");
 
-        //TODO use an intermediate service layer
         final List<AlertDTO> list = this.alertsService.list(page, perPage);
+
+        //TODO map dto to representation
 
         URI nextPageUri = null;
 

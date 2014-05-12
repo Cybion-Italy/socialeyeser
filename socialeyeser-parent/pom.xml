@@ -40,6 +40,7 @@
     <modules>
         <module>influence</module>
         <module>trend-detection</module>
+        <module>alerting</module>
     </modules>
 
     <!-- libraries used -->

@@ -1,4 +1,4 @@
-package it.cybion.socialeyeser.guice;
+package it.cybion.socialeyeser.alerting.guice;
 
 import it.cybion.commons.guice.PropertiesModule;
 

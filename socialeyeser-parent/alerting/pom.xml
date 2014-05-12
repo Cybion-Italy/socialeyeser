@@ -10,13 +10,13 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>influence</artifactId>
+    <artifactId>alerting</artifactId>
     <packaging>pom</packaging>
 
-    <name>influence</name>
+    <name>alerting</name>
 
     <modules>
-        <module>influence-endpoint</module>
+        <module>alerting-endpoint</module>
     </modules>
 
 </project>

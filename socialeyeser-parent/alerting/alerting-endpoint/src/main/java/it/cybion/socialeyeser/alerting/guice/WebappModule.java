@@ -1,20 +1,17 @@
-package it.cybion.socialeyeser.guice;
-
-import it.cybion.socialeyeser.InfluencersService;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.ws.rs.ext.MessageBodyReader;
-import javax.ws.rs.ext.MessageBodyWriter;
-
-import org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider;
-import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
+package it.cybion.socialeyeser.alerting.guice;
 
 import com.sun.jersey.api.core.ClasspathResourceConfig;
 import com.sun.jersey.guice.JerseyServletModule;
 import com.sun.jersey.guice.spi.container.servlet.GuiceContainer;
 import com.sun.jersey.spi.container.servlet.ServletContainer;
+import it.cybion.socialeyeser.alerting.InfluencersService;
+import org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider;
+import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
+
+import javax.ws.rs.ext.MessageBodyReader;
+import javax.ws.rs.ext.MessageBodyWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 public class WebappModule extends JerseyServletModule {
     

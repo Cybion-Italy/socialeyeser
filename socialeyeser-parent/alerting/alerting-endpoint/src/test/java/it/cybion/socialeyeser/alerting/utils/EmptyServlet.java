@@ -1,4 +1,4 @@
-package it.cybion.socialeyeser.alerting;
+package it.cybion.socialeyeser.alerting.utils;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

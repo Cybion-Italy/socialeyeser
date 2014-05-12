@@ -3,7 +3,6 @@ package it.cybion.socialeyeser.alerting.guice;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceServletContextListener;
-import it.cybion.socialeyeser.alerting.TestJerseyServletModule;
 
 import javax.servlet.ServletContextEvent;
 

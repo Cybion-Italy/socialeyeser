@@ -1,4 +1,4 @@
-package it.cybion.socialeyeser.alerting;
+package it.cybion.socialeyeser.alerting.utils;
 
 import com.google.inject.servlet.GuiceFilter;
 import org.eclipse.jetty.server.Server;

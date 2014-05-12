@@ -23,8 +23,7 @@
 		<slf4j-api.version>1.6.6</slf4j-api.version>
 		<jersey.version>1.16</jersey.version>
 		<guice.version>3.0</guice.version>
-		<jackson-mapper-asl.version>1.9.12</jackson-mapper-asl.version>
-		<jackson-xc.version>1.9.9</jackson-xc.version>
+		<jackson-core.version>1.9.12</jackson-core.version>
 		<easymock.version>3.2</easymock.version>
 		<jetty.version>8.1.11.v20130520</jetty.version>
 
@@ -96,20 +95,25 @@
 				<artifactId>guice</artifactId>
 				<version>${guice.version}</version>
 			</dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>${jackson-core.version}</version>
+            </dependency>
 			<dependency>
 				<groupId>org.codehaus.jackson</groupId>
 				<artifactId>jackson-mapper-asl</artifactId>
-				<version>${jackson-mapper-asl.version}</version>
+				<version>${jackson-core.version}</version>
 			</dependency>
-			<dependency>
+            <dependency>
+                <groupId>org.codehaus.jackson</groupId>
+                <artifactId>jackson-jaxrs</artifactId>
+                <version>${jackson-core.version}</version>
+            </dependency>
+            <dependency>
 				<groupId>org.codehaus.jackson</groupId>
 				<artifactId>jackson-xc</artifactId>
-				<version>${jackson-xc.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.codehaus.jackson</groupId>
-				<artifactId>jackson-jaxrs</artifactId>
-				<version>${jackson-xc.version}</version>
+				<version>${jackson-core.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.easymock</groupId>

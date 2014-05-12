@@ -4,6 +4,9 @@
         xmlns="http://maven.apache.org/POM/4.0.0"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
+    <properties>
+        <jersey-core.version>1.17.1</jersey-core.version>
+    </properties>
     <parent>
         <groupId>it.cybion.socialeyeser</groupId>
         <artifactId>alerting</artifactId>
@@ -17,7 +20,7 @@
     <description>
         This is a preliminary implementation of alerting module.
         It publishes the whole history of alerts detected by the system,
-        organised in pages
+        organised in pages, from the most recent to the oldest.
     </description>
 
     <dependencies>
@@ -25,10 +28,6 @@
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>it.cybion.commons</groupId>
-            <artifactId>web</artifactId>
         </dependency>
         <dependency>
             <groupId>it.cybion.commons</groupId>
@@ -44,8 +43,39 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpcore</artifactId>
+            <version>4.3.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.3.3</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.codehaus.jackson</groupId>
-            <artifactId>jackson-mapper-asl</artifactId>
+            <artifactId>jackson-jaxrs</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-xc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-core</artifactId>
+            <version>${jersey-core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.jersey.contribs</groupId>
+            <artifactId>jersey-guice</artifactId>
+            <version>${jersey-core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-json</artifactId>
+            <version>${jersey-core.version}</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>

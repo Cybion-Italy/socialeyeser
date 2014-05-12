@@ -1,7 +1,8 @@
-package it.cybion.socialeyeser.alerting;
+package it.cybion.socialeyeser.alerting.guice;
 
 import com.sun.jersey.guice.JerseyServletModule;
 import com.sun.jersey.guice.spi.container.servlet.GuiceContainer;
+import it.cybion.socialeyeser.alerting.AlertsResource;
 import org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider;
 import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
 import org.slf4j.Logger;

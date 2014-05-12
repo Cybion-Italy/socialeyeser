@@ -16,7 +16,7 @@
     <name>alerting-endpoint</name>
     <description>
         This is a preliminary implementation of alerting module.
-        It delivers the whole history of alerts detected by the system,
+        It publishes the whole history of alerts detected by the system,
         organised in pages
     </description>
 

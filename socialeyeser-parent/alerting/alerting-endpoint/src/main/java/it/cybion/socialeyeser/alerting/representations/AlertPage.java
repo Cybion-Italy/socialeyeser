@@ -1,6 +1,7 @@
 package it.cybion.socialeyeser.alerting.representations;
 
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
@@ -10,8 +11,12 @@ public class AlertPage {
     @XmlAttribute(name = "page")
     private int page;
 
-    @XmlAttribute(name = "paging")
+    @XmlElement
     private Paging paging;
+
+    public AlertPage() {
+
+    }
 
     public AlertPage(int page, Paging paging) {
 

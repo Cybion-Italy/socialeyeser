@@ -14,7 +14,7 @@ public class TestServiceConfig extends GuiceServletContextListener {
     
     @Override
     protected Injector getInjector() {
-        return Guice.createInjector(new TestJerseyServletModule());
+        return Guice.createInjector(new WebappModule());
     }
     
     @Override

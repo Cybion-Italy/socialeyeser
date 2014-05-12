@@ -11,10 +11,14 @@ import java.net.URI;
 public class Paging {
 
     @XmlAttribute(name = "previous")
-    private final URI previous;
+    private URI previous;
 
     @XmlAttribute(name = "next")
-    private final URI next;
+    private URI next;
+
+    public Paging() {
+
+    }
 
     public Paging(URI previous, URI next) {
 

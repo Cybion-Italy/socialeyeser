@@ -5,8 +5,8 @@ import java.util.Random;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import org.apache.log4j.Logger;
@@ -19,6 +19,7 @@ public class InfluencersService {
     
     private static final Logger LOGGER = Logger.getLogger(InfluencersService.class);
     
+    private static final double MAX_FOLLOWERS = 1000000.0;
     private HashMap<String, Double> cache;
     private Random randomGenerator;
     
@@ -31,20 +32,24 @@ public class InfluencersService {
     }
     
     @GET
-    @Path("/{userId}")
-    public InfluenceScore add(@PathParam("userId") String twitterUserId) throws ServiceException {
+    public InfluenceScore add(@QueryParam("userId") String userId,
+            @QueryParam("followers") int followers) throws ServiceException {
     
         try {
-            LOGGER.info("Request for user " + twitterUserId);
+            LOGGER.info("Request for user " + userId + " with " + followers + " followers");
             
-            if (cache.containsKey(twitterUserId))
-                return new InfluenceScore(cache.get(twitterUserId));
+            if (cache.containsKey(userId))
+                return new InfluenceScore(cache.get(userId));
             else {
                 
-                // ranging random scores [0.01, 0.51]
-                double score = (randomGenerator.nextInt(5000) / 10000.0) + 0.01;
-                cache.put(twitterUserId, score);
-                return new InfluenceScore(cache.get(twitterUserId));
+                // ranging random scores [0.005, 1]
+                double score = (randomGenerator.nextInt(1000) / 20000.0)
+                        + (Math.log10(Math.min(followers, MAX_FOLLOWERS)) / Math
+                                .log10(MAX_FOLLOWERS)) - 0.05;
+                if (score < 0)
+                    score *= -0.1;
+                // cache.put(userId, score);
+                return new InfluenceScore(score);
             }
         } catch (final Exception e) {
             throw new ServiceException("Error", e);

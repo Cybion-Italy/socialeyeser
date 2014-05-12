@@ -4,22 +4,32 @@ import com.google.inject.Inject;
 import it.cybion.socialeyeser.alerting.representations.Alert;
 import it.cybion.socialeyeser.alerting.representations.AlertPage;
 import it.cybion.socialeyeser.alerting.representations.Paging;
+import it.cybion.socialeyeser.alerting.services.AlertsService;
+import it.cybion.socialeyeser.alerting.services.dto.AlertDTO;
 import org.apache.log4j.Logger;
 
-import javax.ws.rs.*;
+import javax.ws.rs.DefaultValue;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 import java.net.URI;
+import java.util.List;
 
 @Path("/alerts")
 public class AlertsResource {
-    
+
     private static final Logger LOGGER = Logger.getLogger(AlertsResource.class);
-    
+
+    private AlertsService alertsService;
+
     @Inject
     public AlertsResource() {
-    
+
         LOGGER.info("Starting influence service");
     }
 
@@ -35,7 +45,6 @@ public class AlertsResource {
         URI nextPageUri = null;
 
         boolean hasNextPage = true;
-
 
         try {
             return new Alert(alertId, 100);
@@ -53,6 +62,9 @@ public class AlertsResource {
 
         //TODO validate params
         LOGGER.info("alerts parameter '" + page + "' '" + perPage + "'");
+
+        //TODO use an intermediate service layer
+        final List<AlertDTO> list = this.alertsService.list(page, perPage);
 
         URI nextPageUri = null;
 
@@ -72,5 +84,5 @@ public class AlertsResource {
         }
 
     }
-    
+
 }

@@ -1,14 +1,14 @@
-package it.cybion.socialeyeser.alerting;
+package it.cybion.socialeyeser.alerting.responses;
 
-public class InfluenceScore {
+public class Alert {
     
     private double score = 0.0;
     
-    public InfluenceScore() {
+    public Alert() {
     
     }
     
-    public InfluenceScore(double score) {
+    public Alert(double score) {
     
         super();
         this.score = score;

@@ -9,8 +9,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.ext.MessageBodyReader;
 import javax.ws.rs.ext.MessageBodyWriter;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author Matteo Moci ( matteo (dot) moci (at) gmail (dot) com )
@@ -22,7 +20,7 @@ public class TestJerseyServletModule extends JerseyServletModule {
     @Override
     protected void configureServlets() {
     
-        bind(InfluencersService.class);
+        bind(AlertsResource.class);
         
         bindJackson();
         routeRequests();
@@ -38,11 +36,7 @@ public class TestJerseyServletModule extends JerseyServletModule {
     private void routeRequests() {
     
         // Route all requests through GuiceContainer
-        final Map<String, String> initParams = new HashMap<String, String>();
-        // initParams.put(ServletContainer.RESOURCE_CONFIG_CLASS,
-        // ClasspathResourceConfig.class.getName());
         serve("/*").with(GuiceContainer.class);
-        filter("/*").through(GuiceContainer.class, initParams);
     }
     
 }

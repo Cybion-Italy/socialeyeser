@@ -2,6 +2,7 @@ package it.cybion.socialeyeser.alerting;
 
 import com.google.inject.Inject;
 import it.cybion.commons.web.responses.exceptions.ServiceException;
+import it.cybion.socialeyeser.alerting.responses.Alert;
 import org.apache.log4j.Logger;
 
 import javax.ws.rs.GET;
@@ -11,13 +12,13 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 @Produces(MediaType.APPLICATION_JSON)
-@Path("/twitter")
-public class InfluencersService {
+@Path("/alerts")
+public class AlertsResource {
     
-    private static final Logger LOGGER = Logger.getLogger(InfluencersService.class);
+    private static final Logger LOGGER = Logger.getLogger(AlertsResource.class);
     
     @Inject
-    public InfluencersService() {
+    public AlertsResource() {
     
         LOGGER.info("Starting influence service");
     }
@@ -25,11 +26,11 @@ public class InfluencersService {
     //TODO use local exception, remove web dependency
     @GET
     @Path("/{userId}")
-    public InfluenceScore add(@PathParam("userId") String twitterUserId) throws ServiceException {
+    public Alert add(@PathParam("userId") String twitterUserId) throws ServiceException {
     
         try {
             LOGGER.info("Request for user " + twitterUserId);
-            return new InfluenceScore(45.6);
+            return new Alert(45.6);
         } catch (final Exception e) {
             throw new ServiceException("Error", e);
         }

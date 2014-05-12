@@ -4,7 +4,7 @@ import com.sun.jersey.api.core.ClasspathResourceConfig;
 import com.sun.jersey.guice.JerseyServletModule;
 import com.sun.jersey.guice.spi.container.servlet.GuiceContainer;
 import com.sun.jersey.spi.container.servlet.ServletContainer;
-import it.cybion.socialeyeser.alerting.InfluencersService;
+import it.cybion.socialeyeser.alerting.AlertsResource;
 import org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider;
 import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
 
@@ -18,7 +18,7 @@ public class WebappModule extends JerseyServletModule {
     @Override
     protected void configureServlets() {
     
-        bind(InfluencersService.class);
+        bind(AlertsResource.class);
         
         bindJackson();
         routeRequests();

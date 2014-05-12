@@ -38,7 +38,6 @@
 	</properties>
 
     <modules>
-        <module>socialeyeser-webapp</module>
         <module>influence</module>
         <module>trend-detection</module>
     </modules>

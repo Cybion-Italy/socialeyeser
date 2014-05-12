@@ -3,16 +3,19 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>it.cybion.socialeyeser</groupId>
+    <parent>
+        <groupId>it.cybion.socialeyeser</groupId>
+        <artifactId>socialeyeser-parent</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
     <artifactId>influence</artifactId>
-    <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>influence</name>
 
-    <!--<modules>-->
-        <!--<module>socialeyeser-webapp</module>-->
-    <!--</modules>-->
-
+    <modules>
+        <module>influence-endpoint</module>
+    </modules>
 
 </project>

@@ -66,7 +66,7 @@
 				<groupId>org.apache.tomcat.maven</groupId>
 				<artifactId>tomcat7-maven-plugin</artifactId>
 				<configuration>
-					<url> https://gaia.cybion.eu:8085/manager/text</url>
+					<url> http://gaia.cybion.eu:8085/manager/text</url>
 					<server>gaia-tomcat7-ftr</server>
 					<path>/${project.build.finalName}</path>
 				</configuration>

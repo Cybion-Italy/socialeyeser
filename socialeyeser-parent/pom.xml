@@ -10,10 +10,6 @@
 
 	<name>socialeyeser-parent</name>
 
-	<modules>
-		<module>socialeyeser-webapp</module>
-	</modules>
-
 	<properties>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -41,7 +37,12 @@
 
 	</properties>
 
-	<!-- libraries used -->
+    <modules>
+        <module>socialeyeser-webapp</module>
+        <module>influence</module>
+    </modules>
+
+    <!-- libraries used -->
 	<dependencyManagement>
 		<dependencies>
 			<dependency>

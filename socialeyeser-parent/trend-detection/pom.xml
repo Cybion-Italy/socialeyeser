@@ -11,12 +11,19 @@
     </parent>
 
     <artifactId>trend-detection</artifactId>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
     <name>trend-detection</name>
 
-    <!--<modules>-->
-        <!--<module>trend-detection</module>-->
-    <!--</modules>-->
+    <build>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <includes>
+                    <include>**/*.properties</include>
+                </includes>
+            </testResource>
+        </testResources>
+    </build>
 
 </project>

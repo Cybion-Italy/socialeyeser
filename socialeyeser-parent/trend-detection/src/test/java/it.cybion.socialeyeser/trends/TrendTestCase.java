@@ -147,7 +147,8 @@ public class TrendTestCase {
 
             while (running) {
                 final DateTime now = new DateTime();
-                this.eventBus.post(new TweetArrived("" + now.getMillis(), now));
+                final TweetArrived aTweetArrived = new TweetArrived("" + now.getMillis(), now);
+                this.eventBus.post(aTweetArrived);
                 try {
                     Thread.sleep(pauseBetweenTweets);
                 } catch (InterruptedException e) {

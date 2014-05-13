@@ -11,6 +11,8 @@ import org.testng.annotations.Test;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import static org.testng.Assert.assertTrue;
+
 /**
  * @author Matteo Moci ( matteo (dot) moci (at) gmail (dot) com )
  */
@@ -26,16 +28,18 @@ public class TrendTestCase {
 
         eventBus.register(tweetArrivedListener);
 
-        final long tenMsecs = 10L;
-        final TweetStream tweetStream = new TweetStream(tenMsecs, eventBus);
+        final long tenMsecsPauseBetweenTweets = 10L;
+        final TweetStream tweetStream = new TweetStream(tenMsecsPauseBetweenTweets, eventBus);
 
         final Thread producerThread = new Thread(tweetStream);
         producerThread.start();
 
-        Thread.sleep(1000L);
+        final long oneSecMsecs = 1000L;
+        Thread.sleep(oneSecMsecs);
 
         tweetStream.stop();
         producerThread.join();
+        assertTrue(true);
 
     }
 

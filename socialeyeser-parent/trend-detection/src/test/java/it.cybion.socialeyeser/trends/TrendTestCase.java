@@ -59,15 +59,13 @@ public class TrendTestCase {
         public void recordTweet(final TweetArrived event) {
 
             final DateTime timeStamp = event.getTimeStamp();
-            //            LOGGER.info("tweet arrived: '" + event.getTweetId() + "' at '" + timeStamp.getMillis() +
-            //                        "'");
 
             boolean trendDetected = areLastEventsEnoughForTrend(timeStamp);
 
             if (trendDetected) {
-                LOGGER.info("it's trending!");
+                LOGGER.info("it's trending! - " + timeStamp);
             } else {
-                LOGGER.info("nothing to say");
+                LOGGER.info("nothing relevant " + timeStamp);
             }
 
         }
@@ -77,12 +75,7 @@ public class TrendTestCase {
             //update
             this.lastRequests.add(timestamp);
 
-            //check
-            final int size = this.lastRequests.size();
-
-            if (size >= maxTweetsPerWindow) {
-                final DateTime removed = this.lastRequests.poll();
-            }
+            removeLastElementIfExceeds(maxTweetsPerWindow);
 
             final DateTime oldest = this.lastRequests.peek();
 
@@ -96,6 +89,14 @@ public class TrendTestCase {
             }
 
             return false;
+        }
+
+        private void removeLastElementIfExceeds(int maxTweetsPerWindow) {
+
+            //check
+            if (this.lastRequests.size() >= maxTweetsPerWindow) {
+                final DateTime removed = this.lastRequests.poll();
+            }
         }
 
     }

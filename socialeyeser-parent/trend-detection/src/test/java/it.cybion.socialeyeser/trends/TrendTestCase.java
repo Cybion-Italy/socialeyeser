@@ -76,10 +76,10 @@ public class TrendTestCase {
 
         private boolean areLastEventsEnoughForTrend(final DateTime timestamp) {
 
-            //update
+            //enqueue
             this.lastRequests.add(timestamp);
 
-            removeLastElementIfExceeds(maxTweetsPerWindow);
+            dequeueLastElementIfExceeds(maxTweetsPerWindow);
 
             final DateTime oldest = this.lastRequests.peek();
 
@@ -95,7 +95,7 @@ public class TrendTestCase {
             return false;
         }
 
-        private void removeLastElementIfExceeds(int maxTweetsPerWindow) {
+        private void dequeueLastElementIfExceeds(int maxTweetsPerWindow) {
 
             //check
             if (this.lastRequests.size() >= maxTweetsPerWindow) {

@@ -43,7 +43,7 @@ public class TrendTestCase {
 
     }
 
-    private class TweetArrivedListener {
+    private static class TweetArrivedListener {
 
         private final Queue<DateTime> lastRequests;
 
@@ -105,7 +105,7 @@ public class TrendTestCase {
 
     }
 
-    private class TweetArrived {
+    private static class TweetArrived {
 
         private String tweetId;
 
@@ -128,7 +128,7 @@ public class TrendTestCase {
         }
     }
 
-    private class TweetStream implements Runnable {
+    private static class TweetStream implements Runnable {
 
         private final EventBus eventBus;
 

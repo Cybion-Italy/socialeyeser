@@ -17,6 +17,7 @@
 
     <modules>
         <module>alerting-endpoint</module>
+        <module>trend-detection</module>
     </modules>
 
 </project>

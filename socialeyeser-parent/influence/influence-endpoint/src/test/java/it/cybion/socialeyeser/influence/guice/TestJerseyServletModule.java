@@ -1,4 +1,4 @@
-package it.cybion.socialeyeser;
+package it.cybion.socialeyeser.influence.guice;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.ws.rs.ext.MessageBodyReader;
 import javax.ws.rs.ext.MessageBodyWriter;
 
+import it.cybion.socialeyeser.influence.resources.InfluencersResource;
 import org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider;
 import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
 import org.slf4j.Logger;
@@ -24,7 +25,7 @@ public class TestJerseyServletModule extends JerseyServletModule {
     @Override
     protected void configureServlets() {
     
-        bind(InfluencersService.class);
+        bind(InfluencersResource.class);
         
         bindJackson();
         routeRequests();

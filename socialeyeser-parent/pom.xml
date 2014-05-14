@@ -15,19 +15,23 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.6</java.version>
 
-		<servlet-api.version>3.0.1</servlet-api.version>
 		<commons.version>1.0-SNAPSHOT</commons.version>
-		<testng.version>6.8.8</testng.version>
-		<joda-time.version>2.1</joda-time.version>
-		<log4j.version>1.2.17</log4j.version>
-		<slf4j-api.version>1.6.6</slf4j-api.version>
-		<jersey.version>1.16</jersey.version>
-		<guice.version>3.0</guice.version>
-		<jackson-core.version>1.9.12</jackson-core.version>
-		<easymock.version>3.2</easymock.version>
-		<jetty.version>8.1.11.v20130520</jetty.version>
+        <easymock.version>3.2</easymock.version>
+        <guava.version>14.0.1</guava.version>
+        <guice.version>3.0</guice.version>
+        <httpclient.version>4.3.3</httpclient.version>
+        <httpcore.version>4.3.2</httpcore.version>
+        <jackson-core.version>1.9.12</jackson-core.version>
+        <jersey.version>1.16</jersey.version>
+        <jersey-core.version>1.17.1</jersey-core.version>
+        <jetty.version>8.1.11.v20130520</jetty.version>
+        <joda-time.version>2.1</joda-time.version>
+        <log4j.version>1.2.17</log4j.version>
+        <servlet-api.version>3.0.1</servlet-api.version>
+        <slf4j-api.version>1.6.6</slf4j-api.version>
+        <testng.version>6.8.8</testng.version>
 
-		<!-- Plugin versions -->
+        <!-- Plugin versions -->
 
 		<maven-compiler-plugin.version>2.5.1</maven-compiler-plugin.version>
 		<maven-resources-plugin.version>2.4</maven-resources-plugin.version>
@@ -38,13 +42,32 @@
 
 	<modules>
 		<module>influence</module>
-		<module>trend-detection</module>
 		<module>alerting</module>
 	</modules>
 
 	<!-- libraries used -->
 	<dependencyManagement>
 		<dependencies>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sun.jersey</groupId>
+                <artifactId>jersey-core</artifactId>
+                <version>${jersey-core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sun.jersey.contribs</groupId>
+                <artifactId>jersey-guice</artifactId>
+                <version>${jersey-core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sun.jersey</groupId>
+                <artifactId>jersey-json</artifactId>
+                <version>${jersey-core.version}</version>
+            </dependency>
 			<dependency>
 				<groupId>javax.servlet</groupId>
 				<artifactId>javax.servlet-api</artifactId>
@@ -70,6 +93,16 @@
 				<artifactId>log4j</artifactId>
 				<version>${log4j.version}</version>
 			</dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>${httpclient.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpcore</artifactId>
+                <version>${httpcore.version}</version>
+            </dependency>
 			<dependency>
 				<groupId>org.testng</groupId>
 				<artifactId>testng</artifactId>

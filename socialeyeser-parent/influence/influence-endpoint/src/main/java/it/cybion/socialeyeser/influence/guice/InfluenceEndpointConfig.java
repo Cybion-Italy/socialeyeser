@@ -1,25 +1,23 @@
-package it.cybion.socialeyeser.alerting.guice;
-
-import it.cybion.commons.guice.PropertiesModule;
-
-import javax.servlet.ServletContextEvent;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+package it.cybion.socialeyeser.influence.guice;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceServletContextListener;
+import it.cybion.commons.guice.PropertiesModule;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class WebappConfig extends GuiceServletContextListener {
+import javax.servlet.ServletContextEvent;
+
+public class InfluenceEndpointConfig extends GuiceServletContextListener {
     
-    private static final Logger LOGGER = LoggerFactory.getLogger(WebappConfig.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(InfluenceEndpointConfig.class);
     
     @Override
     public Injector getInjector() {
     
         final Injector injector = Guice.createInjector(new PropertiesModule(
-                "/socialeyeser.properties"), new WebappModule());
+                "/socialeyeser.properties"), new InfluenceResourcesModule());
         
         return injector;
     }

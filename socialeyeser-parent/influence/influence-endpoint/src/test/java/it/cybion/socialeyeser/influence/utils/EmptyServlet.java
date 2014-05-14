@@ -1,4 +1,4 @@
-package it.cybion.socialeyeser;
+package it.cybion.socialeyeser.influence.utils;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

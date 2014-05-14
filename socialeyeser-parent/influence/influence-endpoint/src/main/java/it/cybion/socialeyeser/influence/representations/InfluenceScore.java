@@ -1,4 +1,4 @@
-package it.cybion.socialeyeser;
+package it.cybion.socialeyeser.influence.representations;
 
 public class InfluenceScore {
     

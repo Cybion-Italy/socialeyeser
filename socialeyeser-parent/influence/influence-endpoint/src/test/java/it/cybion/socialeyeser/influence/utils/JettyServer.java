@@ -1,14 +1,12 @@
-package it.cybion.socialeyeser;
+package it.cybion.socialeyeser.influence.utils;
 
-import java.util.EnumSet;
-import java.util.EventListener;
-
-import javax.servlet.DispatcherType;
-
+import com.google.inject.servlet.GuiceFilter;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 
-import com.google.inject.servlet.GuiceFilter;
+import javax.servlet.DispatcherType;
+import java.util.EnumSet;
+import java.util.EventListener;
 
 /**
  * @author Matteo Moci ( matteo (dot) moci (at) gmail (dot) com )

@@ -1,15 +1,13 @@
-package it.cybion.socialeyeser;
+package it.cybion.socialeyeser.influence.resources;
 
+import com.google.common.collect.Maps;
 import it.cybion.commons.RESTTestUtils;
 import it.cybion.commons.web.http.CybionHttpClient;
 import it.cybion.commons.web.http.exceptions.CybionHttpException;
 import it.cybion.commons.web.responses.ExternalStringResponse;
 import it.cybion.commons.web.responses.ResponseStatus;
-
-import java.util.Map;
-
-import javax.ws.rs.core.MediaType;
-
+import it.cybion.socialeyeser.influence.utils.JettyServer;
+import it.cybion.socialeyeser.influence.guice.TestServiceConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
@@ -17,13 +15,14 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import com.google.common.collect.Maps;
+import javax.ws.rs.core.MediaType;
+import java.util.Map;
 
-public class InfluencersServiceTestCase extends JettyServer {
+public class InfluencersResourceTestCase extends JettyServer {
     
-    private static final Logger LOGGER = LoggerFactory.getLogger(InfluencersServiceTestCase.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(InfluencersResourceTestCase.class);
     
-    public InfluencersServiceTestCase() {
+    public InfluencersResourceTestCase() {
     
         super(RESTTestUtils.PORT);
     }

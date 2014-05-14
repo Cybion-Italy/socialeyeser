@@ -1,28 +1,26 @@
-package it.cybion.socialeyeser.alerting.guice;
-
-import it.cybion.socialeyeser.InfluencersService;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.ws.rs.ext.MessageBodyReader;
-import javax.ws.rs.ext.MessageBodyWriter;
-
-import org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider;
-import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
+package it.cybion.socialeyeser.influence.guice;
 
 import com.sun.jersey.api.core.ClasspathResourceConfig;
 import com.sun.jersey.guice.JerseyServletModule;
 import com.sun.jersey.guice.spi.container.servlet.GuiceContainer;
 import com.sun.jersey.spi.container.servlet.ServletContainer;
+import it.cybion.socialeyeser.influence.resources.InfluencersResource;
+import org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider;
+import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
 
-public class WebappModule extends JerseyServletModule {
+import javax.ws.rs.ext.MessageBodyReader;
+import javax.ws.rs.ext.MessageBodyWriter;
+import java.util.HashMap;
+import java.util.Map;
+
+public class InfluenceResourcesModule extends JerseyServletModule {
     
     @Override
     protected void configureServlets() {
-    
-        bind(InfluencersService.class).asEagerSingleton();
-        
+
+        //TODO why singleton? due to the random generator?
+        bind(InfluencersResource.class).asEagerSingleton();
+
         bindJackson();
         routeRequests();
     }

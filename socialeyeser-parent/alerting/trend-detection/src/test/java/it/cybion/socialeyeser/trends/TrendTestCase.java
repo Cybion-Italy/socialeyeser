@@ -1,4 +1,4 @@
-package it.cybion.socialeyeser;
+package it.cybion.socialeyeser.trends;
 
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;

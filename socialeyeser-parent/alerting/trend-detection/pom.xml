@@ -4,7 +4,6 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-
     <parent>
         <groupId>it.cybion.socialeyeser</groupId>
         <artifactId>alerting</artifactId>
@@ -16,6 +15,10 @@
 
     <name>trend-detection</name>
 
+    <properties>
+        <rxjava-core.version>0.18.3</rxjava-core.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>com.google.guava</groupId>
@@ -24,6 +27,12 @@
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.netflix.rxjava</groupId>
+            <artifactId>rxjava-core</artifactId>
+            <version>${rxjava-core.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

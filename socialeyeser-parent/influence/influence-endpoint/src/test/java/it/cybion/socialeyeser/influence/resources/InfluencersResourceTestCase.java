@@ -17,7 +17,7 @@ import org.testng.annotations.Test;
 import javax.ws.rs.core.MediaType;
 import java.util.Map;
 
-import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.assertEquals;
 
 public class InfluencersResourceTestCase extends JettyServer {
     
@@ -53,28 +53,28 @@ public class InfluencersResourceTestCase extends JettyServer {
         stringResponse = CybionHttpClient.performGet(url, requestHeaderMap);
         
         LOGGER.info("response body: " + stringResponse.getObject());
-        assertTrue(ResponseStatus.OK == stringResponse.getStatus(),
+        assertEquals(ResponseStatus.OK, stringResponse.getStatus(),
                 "Unexpected result: " + stringResponse.getMessage());
         
         url = super.baseUri + "twitter?userId=1234&followers=-100";
         stringResponse = CybionHttpClient.performGet(url, requestHeaderMap);
         
         LOGGER.info("response body: " + stringResponse.getObject());
-        assertTrue(ResponseStatus.NOK == stringResponse.getStatus(),
+        assertEquals(ResponseStatus.NOK, stringResponse.getStatus(),
                 "Unexpected result: " + stringResponse.getMessage());
         
         url = super.baseUri + "twitter?userId=1234";
         stringResponse = CybionHttpClient.performGet(url, requestHeaderMap);
         
         LOGGER.info("response body: " + stringResponse.getObject());
-        assertTrue(ResponseStatus.NOK == stringResponse.getStatus(),
+        assertEquals(ResponseStatus.NOK, stringResponse.getStatus(),
                 "Unexpected result: " + stringResponse.getMessage());
         
         url = super.baseUri + "twitter/";
         stringResponse = CybionHttpClient.performGet(url, requestHeaderMap);
         
         LOGGER.info("response body: " + stringResponse.getObject());
-        assertTrue(ResponseStatus.NOK == stringResponse.getStatus(),
+        assertEquals(ResponseStatus.NOK, stringResponse.getStatus(),
                 "Unexpected result: " + stringResponse.getMessage());
     }
 }

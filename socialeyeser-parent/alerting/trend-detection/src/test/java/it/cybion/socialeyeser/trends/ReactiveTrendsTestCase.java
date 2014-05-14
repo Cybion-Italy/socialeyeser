@@ -29,26 +29,26 @@ public class ReactiveTrendsTestCase {
         tweets.add("1");
         tweets.add("2");
 
-        final Observable<String> loopOverTweets = Observable
-                .from(tweets)
-                .repeat(Schedulers.io());
+        final Observable<String> loopOverTweets = Observable.from(tweets).repeat(Schedulers.io());
 
-        final Observable<Integer> itemsPerUnitObservable = loopOverTweets
-                .buffer(10, TimeUnit.MILLISECONDS).map(new Func1<List<String>, Integer>() {
-                                                            @Override
-                                                            public Integer call(
-                                                                    final List<String> strings) {
+        final Observable<Integer> itemsPerUnitObservable = loopOverTweets.buffer(100,
+                TimeUnit.MILLISECONDS).map(new Func1<List<String>, Integer>() {
+                                               @Override
+                                               public Integer call(final List<String> strings) {
 
-                                                                return strings.size();
-                                                            }
-                                                        }
-                );
+                                                   return strings.size();
+                                               }
+                                           }
+        );
 
         final Subscription subscription = itemsPerUnitObservable.subscribe(new Action1<Integer>() {
             @Override
             public void call(Integer integer) {
 
-                LOGGER.info("items per unit " + integer);
+                //                LOGGER.info("items per unit " + integer);
+                if (integer > 90000) {
+                    LOGGER.info("trending!");
+                }
 
             }
         }, new Action1<Throwable>() {

@@ -68,8 +68,6 @@ public class TrendTestCase {
 
             if (trendDetected) {
                 LOGGER.info("it's trending! - " + timeStamp);
-            } else {
-                LOGGER.info("nothing relevant " + timeStamp);
             }
 
         }

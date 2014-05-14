@@ -74,6 +74,7 @@ public class TrendTestCase {
 
         }
 
+        //the whole trend-detection algorithm
         private boolean areLastEventsEnoughForTrend(final DateTime timestamp) {
 
             //enqueue

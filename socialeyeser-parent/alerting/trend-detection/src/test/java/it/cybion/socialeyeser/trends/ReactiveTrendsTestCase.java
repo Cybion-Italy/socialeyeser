@@ -25,6 +25,7 @@ public class ReactiveTrendsTestCase {
     @Test
     public void shouldDetectSpeedChangesAndAvgsFromConsoleInput() throws Exception {
 
+        //build observables
         final PublishSubject<String> consoleInputLines = PublishSubject.create();
 
         final Observable<Integer> currentSpeed = speedometerOf(consoleInputLines);
@@ -33,6 +34,7 @@ public class ReactiveTrendsTestCase {
 
         final Observable<Integer> limiter = filterGtEq(4, currentSpeed);
 
+        //subscribe loggers
         limiter.subscribe(new Action1<Integer>() {
             @Override
             public void call(Integer integer) {
@@ -49,6 +51,7 @@ public class ReactiveTrendsTestCase {
             }
         });
 
+        //read from System.in
         final InputStreamReader inputStreamReader = new InputStreamReader(System.in);
         BufferedReader bufferRead = new BufferedReader(inputStreamReader);
 
@@ -62,7 +65,6 @@ public class ReactiveTrendsTestCase {
         }
 
         consoleInputLines.onCompleted();
-
 
     }
 
@@ -90,7 +92,8 @@ public class ReactiveTrendsTestCase {
                         return MathObservable.averageInteger(window);
 
                     }
-                }).observeOn(Schedulers.computation());
+                })
+                .observeOn(Schedulers.computation());
     }
 
     private Observable<Integer> speedometerOf(final PublishSubject<String> consoleInputLines) {
@@ -103,6 +106,7 @@ public class ReactiveTrendsTestCase {
 
                         return strings.size();
                     }
-                }).observeOn(Schedulers.io());
+                })
+                .observeOn(Schedulers.io());
     }
 }

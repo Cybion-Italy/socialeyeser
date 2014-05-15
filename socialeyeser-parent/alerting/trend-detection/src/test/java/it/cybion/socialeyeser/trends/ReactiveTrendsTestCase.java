@@ -22,7 +22,7 @@ public class ReactiveTrendsTestCase {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ReactiveTrendsTestCase.class);
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void shouldDetectSpeedChangesAndAvgsFromConsoleInput() throws Exception {
 
         //input
@@ -59,14 +59,52 @@ public class ReactiveTrendsTestCase {
         String currentLine = "";
         int counter = 0;
 
-        while (counter < 1000 && !currentLine.equals("stop")) {
-            currentLine = bufferRead.readLine();
-            //push input as subject
-            consoleInputLines.onNext(currentLine);
-            counter++;
-        }
+//        while (counter < 1000 && !currentLine.equals("stop")) {
+//            currentLine = bufferRead.readLine();
+//            //push input as subject
+//            consoleInputLines.onNext(currentLine);
+//            counter++;
+//        }
 
-        consoleInputLines.onCompleted();
+//        consoleInputLines.onCompleted();
+
+        final Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                //3 slow messages over 15 secs
+                for (int i = 0; i < 3; i++) {
+                    consoleInputLines.onNext("next");
+                    LOGGER.info("1 message pushed");
+                    try {
+                        Thread.sleep(500L);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                //5 fast messages
+                consoleInputLines.onNext("next");
+                consoleInputLines.onNext("next");
+                consoleInputLines.onNext("next");
+                consoleInputLines.onNext("next");
+                consoleInputLines.onNext("next");
+                LOGGER.info("5 message pushed");
+
+                try {
+                    Thread.sleep(1000L);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                consoleInputLines.onCompleted();
+
+                LOGGER.info("completed");
+
+            }
+        }, "the-thread");
+        thread.start();
+        thread.join();
 
     }
 

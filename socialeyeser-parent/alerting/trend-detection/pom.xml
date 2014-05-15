@@ -34,6 +34,12 @@
             <version>${rxjava-core.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.netflix.rxjava</groupId>
+            <artifactId>rxjava-math</artifactId>
+            <version>${rxjava-core.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -44,7 +50,17 @@
                     <include>**/*.properties</include>
                 </includes>
             </testResource>
+
         </testResources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <forkCount>0</forkCount>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 
 </project>

@@ -27,11 +27,11 @@ public class ReactiveTrendsTestCase {
 
         final PublishSubject<String> consoleInputLines = PublishSubject.create();
 
-        final Observable<Integer> speed = speedometerOf(consoleInputLines);
+        final Observable<Integer> currentSpeed = speedometerOf(consoleInputLines);
 
-        final Observable<Integer> averageSpeed = movingAverageOf(5, speed);
+        final Observable<Integer> averageSpeed = movingAverageOf(5, currentSpeed);
 
-        final Observable<Integer> limiter = filterGtEq(4, speed);
+        final Observable<Integer> limiter = filterGtEq(4, currentSpeed);
 
         limiter.subscribe(new Action1<Integer>() {
             @Override
@@ -98,11 +98,11 @@ public class ReactiveTrendsTestCase {
         return consoleInputLines.asObservable()
                 .buffer(1, TimeUnit.SECONDS)
                 .map(new Func1<List<String>, Integer>() {
-            @Override
-            public Integer call(final List<String> strings) {
+                    @Override
+                    public Integer call(final List<String> strings) {
 
-                return strings.size();
-            }
-        }).observeOn(Schedulers.io());
+                        return strings.size();
+                    }
+                }).observeOn(Schedulers.io());
     }
 }

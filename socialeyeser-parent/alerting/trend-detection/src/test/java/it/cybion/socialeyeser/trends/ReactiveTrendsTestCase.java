@@ -10,8 +10,6 @@ import rx.observables.MathObservable;
 import rx.schedulers.Schedulers;
 import rx.subjects.PublishSubject;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -33,14 +31,14 @@ public class ReactiveTrendsTestCase {
 
         final Observable<Integer> averageSpeed = movingAverageOf(5, currentSpeed);
 
-        final Observable<Integer> limiter = filterGtEq(5, currentSpeed);
+        final Observable<Integer> filterGtEq = filterGtEq(5, currentSpeed);
 
         //subscribe loggers
-        limiter.subscribe(new Action1<Integer>() {
+        filterGtEq.subscribe(new Action1<Integer>() {
             @Override
             public void call(Integer integer) {
 
-                LOGGER.info("gteq 5 lps: " + integer);
+                LOGGER.info("gteq 5 eps: " + integer);
             }
         });
 
@@ -52,30 +50,14 @@ public class ReactiveTrendsTestCase {
             }
         });
 
-        //read from System.in
-        final InputStreamReader inputStreamReader = new InputStreamReader(System.in);
-        final BufferedReader bufferRead = new BufferedReader(inputStreamReader);
-
-        String currentLine = "";
-        int counter = 0;
-
-//        while (counter < 1000 && !currentLine.equals("stop")) {
-//            currentLine = bufferRead.readLine();
-//            //push input as subject
-//            consoleInputLines.onNext(currentLine);
-//            counter++;
-//        }
-
-//        consoleInputLines.onCompleted();
-
         final Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
 
-                //3 slow messages over 15 secs
+                //3 slow messages
                 for (int i = 0; i < 3; i++) {
                     consoleInputLines.onNext("next");
-                    LOGGER.info("1 message pushed");
+                    LOGGER.info("1 slow message pushed");
                     try {
                         Thread.sleep(500L);
                     } catch (InterruptedException e) {
@@ -83,13 +65,13 @@ public class ReactiveTrendsTestCase {
                     }
                 }
 
-                //5 fast messages
-                consoleInputLines.onNext("next");
-                consoleInputLines.onNext("next");
-                consoleInputLines.onNext("next");
-                consoleInputLines.onNext("next");
-                consoleInputLines.onNext("next");
-                LOGGER.info("5 message pushed");
+                //lots of fast messages
+                int amount = 100;
+                for (int i = 0; i < amount; i++) {
+                    consoleInputLines.onNext("next");
+                }
+
+                LOGGER.info(amount + " fast message pushed");
 
                 try {
                     Thread.sleep(1000L);
@@ -102,7 +84,7 @@ public class ReactiveTrendsTestCase {
                 LOGGER.info("completed");
 
             }
-        }, "the-thread");
+        }, "the-writing-thread");
         thread.start();
         thread.join();
 

@@ -22,12 +22,13 @@ public class ReactiveTrendsTestCase {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ReactiveTrendsTestCase.class);
 
-    @Test
+    @Test (enabled = false)
     public void shouldDetectSpeedChangesAndAvgsFromConsoleInput() throws Exception {
 
-        //build observables
+        //input
         final PublishSubject<String> consoleInputLines = PublishSubject.create();
 
+        //build observables
         final Observable<Integer> currentSpeed = speedometerOf(consoleInputLines);
 
         final Observable<Integer> averageSpeed = movingAverageOf(5, currentSpeed);
@@ -60,6 +61,7 @@ public class ReactiveTrendsTestCase {
 
         while (counter < 1000 && !currentLine.equals("stop")) {
             currentLine = bufferRead.readLine();
+            //push input as subject
             consoleInputLines.onNext(currentLine);
             counter++;
         }

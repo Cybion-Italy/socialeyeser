@@ -22,25 +22,25 @@ public class ReactiveTrendsTestCase {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ReactiveTrendsTestCase.class);
 
-    @Test (enabled = false)
+    @Test(enabled = false)
     public void shouldDetectSpeedChangesAndAvgsFromConsoleInput() throws Exception {
 
         //input
         final PublishSubject<String> consoleInputLines = PublishSubject.create();
 
         //build observables
-        final Observable<Integer> currentSpeed = speedometerOf(consoleInputLines);
+        final Observable<Integer> currentSpeed = speedometerOf(consoleInputLines, 1);
 
         final Observable<Integer> averageSpeed = movingAverageOf(5, currentSpeed);
 
-        final Observable<Integer> limiter = filterGtEq(4, currentSpeed);
+        final Observable<Integer> limiter = filterGtEq(5, currentSpeed);
 
         //subscribe loggers
         limiter.subscribe(new Action1<Integer>() {
             @Override
             public void call(Integer integer) {
 
-                LOGGER.info("gteq 4 lps: " + integer);
+                LOGGER.info("gteq 5 lps: " + integer);
             }
         });
 
@@ -54,7 +54,7 @@ public class ReactiveTrendsTestCase {
 
         //read from System.in
         final InputStreamReader inputStreamReader = new InputStreamReader(System.in);
-        BufferedReader bufferRead = new BufferedReader(inputStreamReader);
+        final BufferedReader bufferRead = new BufferedReader(inputStreamReader);
 
         String currentLine = "";
         int counter = 0;
@@ -85,30 +85,29 @@ public class ReactiveTrendsTestCase {
     private Observable<Integer> movingAverageOf(final int windowSize,
             final Observable<Integer> perSecondSpeedometer) {
 
-        return perSecondSpeedometer
-                .window(windowSize)
-                .flatMap(new Func1<Observable<Integer>, Observable<Integer>>() {
+        return perSecondSpeedometer.window(windowSize).flatMap(
+                new Func1<Observable<Integer>, Observable<Integer>>() {
                     @Override
                     public Observable<Integer> call(Observable<Integer> window) {
 
                         return MathObservable.averageInteger(window);
 
                     }
-                })
-                .observeOn(Schedulers.computation());
+                }
+        ).observeOn(Schedulers.computation());
     }
 
-    private Observable<Integer> speedometerOf(final PublishSubject<String> consoleInputLines) {
+    private Observable<Integer> speedometerOf(final PublishSubject<String> consoleInputLines,
+            final int bufferSizeSecs) {
 
-        return consoleInputLines.asObservable()
-                .buffer(1, TimeUnit.SECONDS)
-                .map(new Func1<List<String>, Integer>() {
+        return consoleInputLines.asObservable().buffer(bufferSizeSecs, TimeUnit.SECONDS).map(
+                new Func1<List<String>, Integer>() {
                     @Override
                     public Integer call(final List<String> strings) {
 
                         return strings.size();
                     }
-                })
-                .observeOn(Schedulers.io());
+                }
+        ).observeOn(Schedulers.io());
     }
 }

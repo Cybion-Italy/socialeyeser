@@ -33,6 +33,8 @@ public class ReactiveTrendsTestCase {
 
         final Observable<Integer> filterGtEq = filterGtEq(5, currentSpeed);
 
+        //TODO groupJoin to detect if current speed is higher than the average speed
+
         //subscribe loggers
         filterGtEq.subscribe(new Action1<Integer>() {
             @Override

@@ -1,9 +1,13 @@
 package it.cybion.socialeyeser.trends;
 
+import it.cybion.socialeyeser.trends.functions.Average;
+import it.cybion.socialeyeser.trends.functions.FilterInteger;
+import it.cybion.socialeyeser.trends.functions.Speedometer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import rx.Observable;
 import rx.functions.Action1;
+import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 import rx.subjects.PublishSubject;
 
@@ -30,22 +34,36 @@ public class Demo {
 
         this.consoleInputLines = PublishSubject.create();
 
-        //build observables "topology"
-        final Speedometer<String> tSpeedometer = new Speedometer<String>(consoleInputLines, Schedulers.io());
+        //wire observables "topology"
+        final Speedometer<String> tSpeedometer = new Speedometer<String>(consoleInputLines,
+                Schedulers.io());
 
-        final Observable<Integer> currentSpeed = tSpeedometer.bufferForSecs(1, TimeUnit.SECONDS);
+        final Observable<Integer> currentSpeed = tSpeedometer.measureEvery(1, TimeUnit.SECONDS);
 
         final Average averageObservable = new Average(currentSpeed, Schedulers.computation());
 
         final int windowSize = 5;
         final Observable<Integer> averageSpeed = averageObservable.movingOf(windowSize);
 
-        final FilterInteger filterInteger = new FilterInteger(currentSpeed, Schedulers.computation());
+        final FilterInteger filterInteger = new FilterInteger(currentSpeed,
+                Schedulers.computation());
 
         final int limit = 3;
         final Observable<Integer> filterGtEq = filterInteger.filterGtEq(limit);
 
-        //subscribe loggers
+        final Observable<Boolean> trendHappening = Observable.combineLatest(averageSpeed,
+                currentSpeed, new Func2<Integer, Integer, Boolean>() {
+                    @Override
+                    public Boolean call(Integer average, Integer currentSpeed) {
+
+                        LOGGER.info("avg " + average + " current " + currentSpeed);
+                        final boolean bothHigherThanZero = average > 0 && currentSpeed > 0;
+                        return currentSpeed >= average && bothHigherThanZero;
+                    }
+                }
+        );
+
+        //subscribe to observables
         filterGtEq.subscribe(new Action1<Integer>() {
             @Override
             public void call(Integer integer) {
@@ -54,19 +72,27 @@ public class Demo {
             }
         });
 
-        //subscribe loggers
         averageSpeed.subscribe(new Action1<Integer>() {
             @Override
             public void call(Integer integer) {
 
-                LOGGER.info("avg mps of last " + windowSize + " speed values: " + integer);
+                LOGGER.info("rolling average of last " + windowSize + " speed values: " + integer);
+            }
+        });
+
+        trendHappening.subscribe(new Action1<Boolean>() {
+            @Override
+            public void call(Boolean aBoolean) {
+
+                if (aBoolean) {
+                    LOGGER.info("trend happening: current speed is higher than rolling average");
+                }
             }
         });
 
     }
 
     private void run() {
-
 
         String inputLine = "";
 

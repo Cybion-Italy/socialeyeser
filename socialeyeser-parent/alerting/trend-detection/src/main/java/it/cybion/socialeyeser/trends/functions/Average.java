@@ -1,4 +1,4 @@
-package it.cybion.socialeyeser.trends;
+package it.cybion.socialeyeser.trends.functions;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

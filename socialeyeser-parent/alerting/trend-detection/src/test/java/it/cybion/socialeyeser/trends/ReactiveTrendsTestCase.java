@@ -1,5 +1,8 @@
 package it.cybion.socialeyeser.trends;
 
+import it.cybion.socialeyeser.trends.functions.Average;
+import it.cybion.socialeyeser.trends.functions.FilterInteger;
+import it.cybion.socialeyeser.trends.functions.Speedometer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
@@ -28,16 +31,13 @@ public class ReactiveTrendsTestCase {
                 Schedulers.io());
 
         //build observables
-        final Observable<Integer> speedPerSecond = stringSpeedometer.bufferForSecs(1,
-                TimeUnit.SECONDS);
+        final Observable<Integer> currentSpeed = stringSpeedometer.measureEvery(1, TimeUnit.SECONDS);
 
-        final Average average = new Average(speedPerSecond, Schedulers.computation());
+        final Average average = new Average(currentSpeed, Schedulers.computation());
         final Observable<Integer> averageSpeed = average.movingOf(5);
 
-        final FilterInteger filterInteger = new FilterInteger(speedPerSecond, Schedulers.computation());
+        final FilterInteger filterInteger = new FilterInteger(currentSpeed, Schedulers.computation());
         final Observable<Integer> filterGtEq = filterInteger.filterGtEq(5);
-
-        //TODO groupJoin to detect if current speed is higher than the average speed
 
         //subscribe loggers
         final Subscription peakPrinter = filterGtEq.subscribe(new Action1<Integer>() {

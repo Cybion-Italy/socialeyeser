@@ -1,4 +1,4 @@
-package it.cybion.socialeyeser.trends;
+package it.cybion.socialeyeser.trends.functions;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +26,7 @@ public class Speedometer<T> {
         this.scheduler = scheduler;
     }
 
-    public Observable<Integer> bufferForSecs(final int timespan, final TimeUnit unit) {
+    public Observable<Integer> measureEvery(final int timespan, final TimeUnit unit) {
 
         return this.observable.buffer(timespan, unit).map(
                 new Func1<List<T>, Integer>() {

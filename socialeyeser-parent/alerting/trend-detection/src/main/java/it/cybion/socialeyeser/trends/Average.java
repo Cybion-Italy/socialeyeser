@@ -24,7 +24,7 @@ public class Average {
         this.observable = observable;
     }
 
-    public Observable<Integer> movingAverageOf(final int windowSize) {
+    public Observable<Integer> movingOf(final int windowSize) {
 
         return this.observable.window(windowSize).flatMap(
                 new Func1<Observable<Integer>, Observable<Integer>>() {

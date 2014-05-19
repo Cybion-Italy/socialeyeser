@@ -38,12 +38,12 @@ public class Demo {
         final Average averageObservable = new Average(currentSpeed, Schedulers.computation());
 
         final int windowSize = 5;
-        final Observable<Integer> averageSpeed = averageObservable.movingAverageOf(windowSize);
+        final Observable<Integer> averageSpeed = averageObservable.movingOf(windowSize);
 
-        final Filter filter = new Filter(currentSpeed, Schedulers.computation());
+        final FilterInteger filterInteger = new FilterInteger(currentSpeed, Schedulers.computation());
 
         final int limit = 3;
-        final Observable<Integer> filterGtEq = filter.filterGtEq(limit);
+        final Observable<Integer> filterGtEq = filterInteger.filterGtEq(limit);
 
         //subscribe loggers
         filterGtEq.subscribe(new Action1<Integer>() {
@@ -59,7 +59,7 @@ public class Demo {
             @Override
             public void call(Integer integer) {
 
-                LOGGER.info("avg mps of last " + windowSize + ": " + integer);
+                LOGGER.info("avg mps of last " + windowSize + " speed values: " + integer);
             }
         });
 

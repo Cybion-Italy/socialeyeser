@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 import rx.Observable;
+import rx.Subscription;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 import rx.subjects.PublishSubject;
@@ -27,18 +28,19 @@ public class ReactiveTrendsTestCase {
                 Schedulers.io());
 
         //build observables
-        final Observable<Integer> currentSpeed = stringSpeedometer.bufferForSecs(1, TimeUnit.SECONDS);
+        final Observable<Integer> speedPerSecond = stringSpeedometer.bufferForSecs(1,
+                TimeUnit.SECONDS);
 
-        final Average average = new Average(currentSpeed, Schedulers.computation());
-        final Observable<Integer> averageSpeed = average.movingAverageOf(5);
+        final Average average = new Average(speedPerSecond, Schedulers.computation());
+        final Observable<Integer> averageSpeed = average.movingOf(5);
 
-        final Filter filter = new Filter(currentSpeed, Schedulers.computation());
-        final Observable<Integer> filterGtEq = filter.filterGtEq(5);
+        final FilterInteger filterInteger = new FilterInteger(speedPerSecond, Schedulers.computation());
+        final Observable<Integer> filterGtEq = filterInteger.filterGtEq(5);
 
         //TODO groupJoin to detect if current speed is higher than the average speed
 
         //subscribe loggers
-        filterGtEq.subscribe(new Action1<Integer>() {
+        final Subscription peakPrinter = filterGtEq.subscribe(new Action1<Integer>() {
             @Override
             public void call(Integer integer) {
 
@@ -46,7 +48,7 @@ public class ReactiveTrendsTestCase {
             }
         });
 
-        averageSpeed.subscribe(new Action1<Integer>() {
+        final Subscription avgPrinter = averageSpeed.subscribe(new Action1<Integer>() {
             @Override
             public void call(Integer integer) {
 
@@ -91,6 +93,9 @@ public class ReactiveTrendsTestCase {
         }, "the-writing-thread");
         thread.start();
         thread.join();
+
+        peakPrinter.unsubscribe();
+        avgPrinter.unsubscribe();
 
     }
 

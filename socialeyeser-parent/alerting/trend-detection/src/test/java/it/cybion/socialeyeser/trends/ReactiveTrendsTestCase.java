@@ -22,7 +22,7 @@ public class ReactiveTrendsTestCase {
     private static final Logger LOGGER = LoggerFactory.getLogger(ReactiveTrendsTestCase.class);
 
     @Test(enabled = true)
-    public void shouldDetectSpeedChangesAndAvgsFromConsoleInput() throws Exception {
+    public void shouldDetectSpeedChangesAndAvgs() throws Exception {
 
         //input
         final PublishSubject<String> stringPublishSubject = PublishSubject.create();
@@ -73,6 +73,7 @@ public class ReactiveTrendsTestCase {
 
                 //lots speedometer fast messages
                 int amount = 100;
+
                 for (int i = 0; i < amount; i++) {
                     stringPublishSubject.onNext("next");
                 }

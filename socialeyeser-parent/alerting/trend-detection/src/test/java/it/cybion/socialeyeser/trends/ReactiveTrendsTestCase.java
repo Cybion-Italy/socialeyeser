@@ -31,12 +31,14 @@ public class ReactiveTrendsTestCase {
                 Schedulers.io());
 
         //build observables
-        final Observable<Integer> currentSpeed = stringSpeedometer.measureEvery(1, TimeUnit.SECONDS);
+        final Observable<Integer> currentSpeed = stringSpeedometer.measureEvery(1,
+                TimeUnit.SECONDS);
 
         final Average average = new Average(currentSpeed, Schedulers.computation());
         final Observable<Integer> averageSpeed = average.movingOf(5);
 
-        final FilterInteger filterInteger = new FilterInteger(currentSpeed, Schedulers.computation());
+        final FilterInteger filterInteger = new FilterInteger(currentSpeed,
+                Schedulers.computation());
         final Observable<Integer> filterGtEq = filterInteger.filterGtEq(5);
 
         //subscribe loggers

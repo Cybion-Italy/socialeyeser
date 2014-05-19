@@ -16,9 +16,9 @@ import static org.testng.Assert.assertTrue;
 /**
  * @author Matteo Moci ( matteo (dot) moci (at) gmail (dot) com )
  */
-public class TrendTestCase {
+public class EventbusTrendTestCase {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(TrendTestCase.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(EventbusTrendTestCase.class);
 
     @Test
     public void shouldTestSingletonEventBus() throws Exception {

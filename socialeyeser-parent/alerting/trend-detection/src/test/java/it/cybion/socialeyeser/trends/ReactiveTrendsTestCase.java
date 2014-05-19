@@ -5,7 +5,10 @@ import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 import rx.Observable;
 import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 import rx.subjects.PublishSubject;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Matteo Moci ( matteo (dot) moci (at) gmail (dot) com )
@@ -18,17 +21,19 @@ public class ReactiveTrendsTestCase {
     public void shouldDetectSpeedChangesAndAvgsFromConsoleInput() throws Exception {
 
         //input
-        final PublishSubject<String> consoleInputLines = PublishSubject.create();
+        final PublishSubject<String> stringPublishSubject = PublishSubject.create();
+
+        final Speedometer<String> stringSpeedometer = new Speedometer<String>(stringPublishSubject,
+                Schedulers.io());
 
         //build observables
-        final Observable<Integer> currentSpeed = it.cybion.socialeyeser.trends.Speed.speedometer(
-                consoleInputLines, 1);
+        final Observable<Integer> currentSpeed = stringSpeedometer.bufferForSecs(1, TimeUnit.SECONDS);
 
-        final Observable<Integer> averageSpeed = it.cybion.socialeyeser.trends.Speed.movingAverageOf(
-                5, currentSpeed);
+        final Average average = new Average(currentSpeed, Schedulers.computation());
+        final Observable<Integer> averageSpeed = average.movingAverageOf(5);
 
-        final Observable<Integer> filterGtEq = it.cybion.socialeyeser.trends.Filter.filterGtEq(5,
-                currentSpeed);
+        final Filter filter = new Filter(currentSpeed, Schedulers.computation());
+        final Observable<Integer> filterGtEq = filter.filterGtEq(5);
 
         //TODO groupJoin to detect if current speed is higher than the average speed
 
@@ -55,7 +60,7 @@ public class ReactiveTrendsTestCase {
 
                 //3 slow messages
                 for (int i = 0; i < 3; i++) {
-                    consoleInputLines.onNext("next");
+                    stringPublishSubject.onNext("next");
                     LOGGER.info("1 slow message pushed");
                     try {
                         Thread.sleep(500L);
@@ -67,7 +72,7 @@ public class ReactiveTrendsTestCase {
                 //lots speedometer fast messages
                 int amount = 100;
                 for (int i = 0; i < amount; i++) {
-                    consoleInputLines.onNext("next");
+                    stringPublishSubject.onNext("next");
                 }
 
                 LOGGER.info(amount + " fast message pushed");
@@ -78,7 +83,7 @@ public class ReactiveTrendsTestCase {
                     e.printStackTrace();
                 }
 
-                consoleInputLines.onCompleted();
+                stringPublishSubject.onCompleted();
 
                 LOGGER.info("completed");
 

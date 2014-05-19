@@ -42,6 +42,15 @@ public class ReactiveTrendsTestCase {
         final Observable<Integer> filterGtEq = filterInteger.filterGtEq(5);
 
         //subscribe loggers
+        final Subscription avgPrinter = averageSpeed.subscribe(new Action1<Integer>() {
+            @Override
+            public void call(Integer integer) {
+
+                LOGGER.info("avg speed of last 5 seconds: " + integer);
+            }
+        });
+
+
         final Subscription peakPrinter = filterGtEq.subscribe(new Action1<Integer>() {
             @Override
             public void call(Integer integer) {
@@ -50,13 +59,6 @@ public class ReactiveTrendsTestCase {
             }
         });
 
-        final Subscription avgPrinter = averageSpeed.subscribe(new Action1<Integer>() {
-            @Override
-            public void call(Integer integer) {
-
-                LOGGER.info("avg speed of last 5 seconds: " + integer);
-            }
-        });
 
         final Thread thread = new Thread(new Runnable() {
             @Override
@@ -78,6 +80,7 @@ public class ReactiveTrendsTestCase {
 
                 for (int i = 0; i < amount; i++) {
                     stringPublishSubject.onNext("next");
+
                 }
 
                 LOGGER.info(amount + " fast message pushed");

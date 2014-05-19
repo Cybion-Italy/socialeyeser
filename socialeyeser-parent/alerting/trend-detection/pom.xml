@@ -32,17 +32,33 @@
             <groupId>com.netflix.rxjava</groupId>
             <artifactId>rxjava-core</artifactId>
             <version>${rxjava-core.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.netflix.rxjava</groupId>
             <artifactId>rxjava-math</artifactId>
             <version>${rxjava-core.version}</version>
-            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.properties</include>
+                </includes>
+            </resource>
+        </resources>
         <testResources>
             <testResource>
                 <directory>src/test/resources</directory>
@@ -56,10 +72,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <!--TODO remove-->
-                <configuration>
-                    <forkCount>0</forkCount>
-                </configuration>
             </plugin>
         </plugins>
     </build>

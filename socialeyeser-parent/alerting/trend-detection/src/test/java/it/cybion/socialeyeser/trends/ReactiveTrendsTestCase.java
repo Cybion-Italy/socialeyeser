@@ -5,13 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 import rx.Observable;
 import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.observables.MathObservable;
-import rx.schedulers.Schedulers;
 import rx.subjects.PublishSubject;
-
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author Matteo Moci ( matteo (dot) moci (at) gmail (dot) com )
@@ -27,11 +21,14 @@ public class ReactiveTrendsTestCase {
         final PublishSubject<String> consoleInputLines = PublishSubject.create();
 
         //build observables
-        final Observable<Integer> currentSpeed = speedometerOf(consoleInputLines, 1);
+        final Observable<Integer> currentSpeed = it.cybion.socialeyeser.trends.Speed.speedometer(
+                consoleInputLines, 1);
 
-        final Observable<Integer> averageSpeed = movingAverageOf(5, currentSpeed);
+        final Observable<Integer> averageSpeed = it.cybion.socialeyeser.trends.Speed.movingAverageOf(
+                5, currentSpeed);
 
-        final Observable<Integer> filterGtEq = filterGtEq(5, currentSpeed);
+        final Observable<Integer> filterGtEq = it.cybion.socialeyeser.trends.Filter.filterGtEq(5,
+                currentSpeed);
 
         //TODO groupJoin to detect if current speed is higher than the average speed
 
@@ -67,7 +64,7 @@ public class ReactiveTrendsTestCase {
                     }
                 }
 
-                //lots of fast messages
+                //lots speedometer fast messages
                 int amount = 100;
                 for (int i = 0; i < amount; i++) {
                     consoleInputLines.onNext("next");
@@ -92,44 +89,4 @@ public class ReactiveTrendsTestCase {
 
     }
 
-    private Observable<Integer> filterGtEq(final int limit,
-            final Observable<Integer> perSecondSpeedometer) {
-
-        return perSecondSpeedometer.filter(new Func1<Integer, Boolean>() {
-            @Override
-            public Boolean call(Integer speed) {
-
-                return speed >= limit;
-            }
-        }).observeOn(Schedulers.computation());
-    }
-
-    private Observable<Integer> movingAverageOf(final int windowSize,
-            final Observable<Integer> perSecondSpeedometer) {
-
-        return perSecondSpeedometer.window(windowSize).flatMap(
-                new Func1<Observable<Integer>, Observable<Integer>>() {
-                    @Override
-                    public Observable<Integer> call(Observable<Integer> window) {
-
-                        return MathObservable.averageInteger(window);
-
-                    }
-                }
-        ).observeOn(Schedulers.computation());
-    }
-
-    private Observable<Integer> speedometerOf(final PublishSubject<String> consoleInputLines,
-            final int bufferSizeSecs) {
-
-        return consoleInputLines.asObservable().buffer(bufferSizeSecs, TimeUnit.SECONDS).map(
-                new Func1<List<String>, Integer>() {
-                    @Override
-                    public Integer call(final List<String> strings) {
-
-                        return strings.size();
-                    }
-                }
-        ).observeOn(Schedulers.io());
-    }
 }

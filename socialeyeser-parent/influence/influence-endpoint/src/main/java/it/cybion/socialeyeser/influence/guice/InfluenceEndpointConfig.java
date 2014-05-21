@@ -27,7 +27,7 @@ public class InfluenceEndpointConfig extends GuiceServletContextListener {
     
         LOGGER.info("on context destroyed");
         try {
-            final Injector injector = (Injector) servletContextEvent.getServletContext()
+            servletContextEvent.getServletContext()
                     .getAttribute(Injector.class.getName());
             
         } catch (final Exception e) {

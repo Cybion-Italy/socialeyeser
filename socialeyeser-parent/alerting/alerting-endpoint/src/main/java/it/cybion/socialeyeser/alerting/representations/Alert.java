@@ -25,4 +25,13 @@ public class Alert {
         this.level = level;
     }
 
+    public String getId() {
+
+        return id;
+    }
+
+    public int getLevel() {
+
+        return level;
+    }
 }

@@ -1,5 +1,6 @@
 package it.cybion.socialeyeser.trends;
 
+import com.google.common.base.Charsets;
 import it.cybion.socialeyeser.trends.functions.Average;
 import it.cybion.socialeyeser.trends.functions.FilterInteger;
 import it.cybion.socialeyeser.trends.functions.Speedometer;
@@ -96,7 +97,7 @@ public class Demo {
 
         String inputLine = "";
 
-        Scanner scanIn = new Scanner(System.in);
+        Scanner scanIn = new Scanner(System.in, Charsets.UTF_8.name());
 
         while (!inputLine.equals("stop")) {
             inputLine = scanIn.nextLine();

@@ -23,5 +23,3 @@ uri: The URI of the current page
 nextpageuri: The URI for the next page of this list
 
 previouspageuri:	The URI for the previous page of this list
-
-

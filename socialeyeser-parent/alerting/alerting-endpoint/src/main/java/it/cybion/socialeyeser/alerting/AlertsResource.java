@@ -5,7 +5,6 @@ import it.cybion.socialeyeser.alerting.representations.Alert;
 import it.cybion.socialeyeser.alerting.representations.AlertPage;
 import it.cybion.socialeyeser.alerting.representations.Paging;
 import it.cybion.socialeyeser.alerting.services.AlertsService;
-import it.cybion.socialeyeser.alerting.services.dto.AlertDTO;
 import org.apache.log4j.Logger;
 
 import javax.ws.rs.DefaultValue;
@@ -18,7 +17,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 import java.net.URI;
-import java.util.List;
 
 @Path("/alerts")
 public class AlertsResource {
@@ -63,7 +61,7 @@ public class AlertsResource {
         //TODO validate params
         LOGGER.info("alerts parameter '" + page + "' '" + perPage + "'");
 
-        final List<AlertDTO> list = this.alertsService.list(page, perPage);
+        this.alertsService.list(page, perPage);
 
         //TODO map dto to representation
 

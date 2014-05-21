@@ -4,8 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 import rx.Observable;
-import rx.functions.Action1;
-import rx.schedulers.TestScheduler;
+import rx.observables.BlockingObservable;
+import rx.schedulers.Schedulers;
 
 import static org.testng.Assert.assertEquals;
 
@@ -19,18 +19,10 @@ public class FilterIntegerTestCase {
     @Test
     public void shouldFilter() throws Exception {
 
-        final TestScheduler testScheduler = new TestScheduler();
         final Observable<Integer> two = Observable.just(2);
-        final FilterInteger filterInteger = new FilterInteger(two, testScheduler);
-        final Observable<Integer> gtEqTwo = filterInteger.filterGtEq(2);
-
-        gtEqTwo.subscribe(new Action1<Integer>() {
-            @Override
-            public void call(Integer integer) {
-
-                assertEquals(integer, Integer.valueOf(2));
-            }
-        });
-        testScheduler.triggerActions();
+        final FilterInteger filterInteger = new FilterInteger(two, Schedulers.computation());
+        final BlockingObservable<Integer> gtEqTwo = filterInteger.filterGtEq(2)
+                .toBlockingObservable();
+        assertEquals(gtEqTwo.first(), Integer.valueOf(2));
     }
 }

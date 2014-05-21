@@ -43,7 +43,7 @@ public class Demo {
 
         final Average averageObservable = new Average(currentSpeed, Schedulers.computation());
 
-        final int windowSize = 5;
+        final int windowSize = 3;
         final Observable<Integer> averageSpeed = averageObservable.movingOf(windowSize);
 
         final FilterInteger filterInteger = new FilterInteger(currentSpeed,

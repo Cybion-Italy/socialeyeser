@@ -7,8 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 import rx.Observable;
+import rx.Subscriber;
 import rx.Subscription;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 import rx.subjects.PublishSubject;
 
@@ -41,22 +41,11 @@ public class ReactiveTrendsTestCase {
                 Schedulers.computation());
         final Observable<Integer> filterGtEq = filterInteger.filterGtEq(5);
 
-        //subscribe loggers
-        final Subscription avgPrinter = averageSpeed.subscribe(new Action1<Integer>() {
-            @Override
-            public void call(Integer integer) {
+        //subscribe the same logger
+        final SystemOutSubscriber systemOutSubscriber = new SystemOutSubscriber();
 
-//                LOGGER.info("avg speed of last 5 seconds: " + integer);
-            }
-        });
-
-        final Subscription peakPrinter = filterGtEq.subscribe(new Action1<Integer>() {
-            @Override
-            public void call(Integer integer) {
-
-//                LOGGER.info("gteq 5 eps: " + integer);
-            }
-        });
+        final Subscription avgPrinter = averageSpeed.subscribe(systemOutSubscriber);
+        final Subscription peakPrinter = filterGtEq.subscribe(systemOutSubscriber);
 
         //        final BurstingWriter writer = new BurstingWriter(stringPublishSubject);
         final InfiniteWriter writer = new InfiniteWriter(stringPublishSubject);
@@ -158,6 +147,25 @@ public class ReactiveTrendsTestCase {
         public void stop() {
 
             this.running = false;
+        }
+    }
+
+    private static class SystemOutSubscriber extends Subscriber<Integer> {
+
+        @Override
+        public void onCompleted() {
+
+        }
+
+        @Override
+        public void onError(Throwable e) {
+
+        }
+
+        @Override
+        public void onNext(Integer o) {
+            //log
+
         }
     }
 }

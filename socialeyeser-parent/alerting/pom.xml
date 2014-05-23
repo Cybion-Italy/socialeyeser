@@ -16,7 +16,6 @@
     <name>alerting</name>
 
     <modules>
-        <module>alerting-endpoint</module>
         <module>trend-detection</module>
     </modules>
 

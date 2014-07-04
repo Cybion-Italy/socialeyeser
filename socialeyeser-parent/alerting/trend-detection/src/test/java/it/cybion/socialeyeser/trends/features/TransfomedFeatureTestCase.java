@@ -1,7 +1,6 @@
-package it.cybion.socialeyeser.trends.features.freq;
+package it.cybion.socialeyeser.trends.features;
 
 import static org.testng.Assert.assertTrue;
-import it.cybion.socialeyeser.trends.features.AbstractFeatureTestCase;
 import it.cybion.socialeyeser.trends.features.simple.freq.TweetFrequency;
 
 import java.io.IOException;
@@ -12,11 +11,13 @@ import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-public class TweetFrequencyTestCase extends AbstractFeatureTestCase {
+import com.google.common.base.Function;
+
+public class TransfomedFeatureTestCase extends AbstractFeatureTestCase {
     
-    private static final Logger LOGGER = LoggerFactory.getLogger(TweetFrequencyTestCase.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TransfomedFeatureTestCase.class);
     
-    public TweetFrequencyTestCase() throws IOException, URISyntaxException {
+    public TransfomedFeatureTestCase() throws IOException, URISyntaxException {
     
         super();
         
@@ -25,21 +26,30 @@ public class TweetFrequencyTestCase extends AbstractFeatureTestCase {
     @BeforeClass
     public void setup() {
     
-        feature = new TweetFrequency();
+        Function<Double, Double> log10Function = new Function<Double, Double>() {
+            
+            @Override
+            public Double apply(Double arg0) {
+            
+                return Math.log10(arg0);
+            }
+        };
+        
+        feature = new TransformedFeature(new TweetFrequency(), log10Function);
     }
     
     @Test
     public void shouldTestFeature() throws Exception {
     
         double value = feature.extractFrom(sampleTweet);
-        LOGGER.info("punctual frequency: " + value);
+        LOGGER.info("tweet frequency: " + value);
         
         for (int i = 0; i < 100; i++) {
             
             value = feature.extractFrom(sampleTweet);
             LOGGER.info("punctual frequency: " + value + " / s");
             
-            assertTrue(value > 80);
+            assertTrue(value > 1.9);
             Thread.sleep(10L);
             
         }

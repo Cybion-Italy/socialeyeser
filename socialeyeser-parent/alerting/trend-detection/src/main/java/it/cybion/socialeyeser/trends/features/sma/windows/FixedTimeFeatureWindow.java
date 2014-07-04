@@ -10,13 +10,13 @@ import java.util.List;
 public class FixedTimeFeatureWindow implements FeatureWindow {
     
     private List<EmittedFeature> features;
-    private long periodMillis;
+    private long windowLengthMillis;
     private double featuresSum;
     
-    public FixedTimeFeatureWindow(long period) {
+    public FixedTimeFeatureWindow(long windowLengthMillis) {
     
         this.features = new LinkedList<EmittedFeature>();
-        this.periodMillis = period;
+        this.windowLengthMillis = windowLengthMillis;
         featuresSum = 0;
         
         features.add(new EmittedFeature(System.currentTimeMillis(), 0));
@@ -30,7 +30,7 @@ public class FixedTimeFeatureWindow implements FeatureWindow {
         featuresSum += newestFeature.getValue();
         
         EmittedFeature oldestFeature = features.get(oldestFeatureIndex);
-        if (newestFeature.getTimeMillis() - oldestFeature.getTimeMillis() > periodMillis) {
+        if (newestFeature.getTimeMillis() - oldestFeature.getTimeMillis() > windowLengthMillis) {
             
             featuresSum -= oldestFeature.getValue();
             features.remove(oldestFeatureIndex);

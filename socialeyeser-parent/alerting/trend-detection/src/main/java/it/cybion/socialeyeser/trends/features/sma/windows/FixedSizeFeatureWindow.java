@@ -6,13 +6,13 @@ import com.google.common.collect.EvictingQueue;
  * @author serxhiodaja (at) gmail (dot) com
  */
 
-public class FixedSizedFeatureWindow implements FeatureWindow {
+public class FixedSizeFeatureWindow implements FeatureWindow {
     
     private EvictingQueue<EmittedFeature> features;
     private int containerSize;
     private double featuresSum;
     
-    public FixedSizedFeatureWindow(int size) {
+    public FixedSizeFeatureWindow(int size) {
     
         this.features = EvictingQueue.create(size);
         

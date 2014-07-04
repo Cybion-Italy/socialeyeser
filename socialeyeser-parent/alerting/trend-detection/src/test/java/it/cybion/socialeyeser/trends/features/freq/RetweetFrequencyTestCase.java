@@ -1,7 +1,7 @@
 package it.cybion.socialeyeser.trends.features.freq;
 
 import static org.testng.Assert.assertTrue;
-import it.cybion.socialeyeser.trends.features.count.AbstractFeatureTestCase;
+import it.cybion.socialeyeser.trends.features.AbstractFeatureTestCase;
 import it.cybion.socialeyeser.trends.features.simple.freq.RetweetFrequency;
 
 import java.io.IOException;
@@ -29,7 +29,6 @@ public class RetweetFrequencyTestCase extends AbstractFeatureTestCase {
     }
     
     @Test
-    @Override
     public void shouldTestFeature() throws Exception {
     
         double value = feature.extractFrom(sampleTweet);

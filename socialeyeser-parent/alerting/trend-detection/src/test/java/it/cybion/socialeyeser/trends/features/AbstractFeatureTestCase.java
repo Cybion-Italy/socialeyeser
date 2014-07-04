@@ -1,4 +1,4 @@
-package it.cybion.socialeyeser.trends.features.count;
+package it.cybion.socialeyeser.trends.features;
 
 import it.cybion.socialeyeser.trends.features.Feature;
 import it.cybion.socialeyeser.trends.model.Tweet;
@@ -43,7 +43,5 @@ public abstract class AbstractFeatureTestCase {
         }
         
     }
-    
-    public abstract void shouldTestFeature() throws Exception;
     
 }

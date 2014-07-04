@@ -1,6 +1,7 @@
 package it.cybion.socialeyeser.trends.features.count;
 
 import static org.testng.Assert.assertEquals;
+import it.cybion.socialeyeser.trends.features.AbstractFeatureTestCase;
 import it.cybion.socialeyeser.trends.features.simple.count.FavoritesFeature;
 
 import java.io.IOException;
@@ -24,7 +25,6 @@ public class FavoriteFeatureTestCase extends AbstractFeatureTestCase {
     }
     
     @Test
-    @Override
     public void shouldTestFeature() throws Exception {
     
         double value = feature.extractFrom(sampleTweet);

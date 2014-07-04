@@ -97,6 +97,7 @@
                 <directory>src/test/resources</directory>
                 <includes>
                     <include>**/*.properties</include>
+                    <include>**/*.json</include>
                 </includes>
             </testResource>
         </testResources>

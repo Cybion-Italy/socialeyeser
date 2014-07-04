@@ -2,16 +2,16 @@ package it.cybion.socialeyeser.trends;
 
 import it.cybion.socialeyeser.trends.adwin.AdWin;
 import it.cybion.socialeyeser.trends.features.Feature;
-import it.cybion.socialeyeser.trends.features.sma.FavoritesContainerFeature;
-import it.cybion.socialeyeser.trends.features.sma.FollowersContainerFeature;
-import it.cybion.socialeyeser.trends.features.sma.FollowingsContainerFeature;
-import it.cybion.socialeyeser.trends.features.sma.HashtagsCountContainerFeature;
-import it.cybion.socialeyeser.trends.features.sma.LinksContainerFeature;
-import it.cybion.socialeyeser.trends.features.sma.MentionsContainerFeature;
-import it.cybion.socialeyeser.trends.features.sma.RetweetContainerFeature;
+import it.cybion.socialeyeser.trends.features.sma.FavoritesWindowFeature;
+import it.cybion.socialeyeser.trends.features.sma.FollowersWindowFeature;
+import it.cybion.socialeyeser.trends.features.sma.FollowingsWindowFeature;
+import it.cybion.socialeyeser.trends.features.sma.HashtagsCountWindowFeature;
+import it.cybion.socialeyeser.trends.features.sma.LinksWindowFeature;
+import it.cybion.socialeyeser.trends.features.sma.MentionsWindowFeature;
+import it.cybion.socialeyeser.trends.features.sma.RetweetWindowFeature;
 import it.cybion.socialeyeser.trends.features.sma.RetweetCountContainerFeature;
-import it.cybion.socialeyeser.trends.features.sma.TweetContainerFeature;
-import it.cybion.socialeyeser.trends.features.sma.containers.FixedTimeFeatureContainer;
+import it.cybion.socialeyeser.trends.features.sma.TweetWindowFeature;
+import it.cybion.socialeyeser.trends.features.sma.windows.FixedTimeFeatureWindow;
 import it.cybion.socialeyeser.trends.model.Tweet;
 
 import java.io.PrintStream;
@@ -50,35 +50,35 @@ public class CrisisDetector {
         long sixHoursMillis = 6 * oneHourMillis;
         long oneDayMillis = 24 * oneHourMillis;
         featureObserverList = new Feature[] {
-                new FavoritesContainerFeature(new FixedTimeFeatureContainer(oneHourMillis)),
-                new FollowersContainerFeature(new FixedTimeFeatureContainer(oneHourMillis)),
-                new FollowingsContainerFeature(new FixedTimeFeatureContainer(oneHourMillis)),
-                new HashtagsCountContainerFeature(new FixedTimeFeatureContainer(oneHourMillis)),
-                new LinksContainerFeature(new FixedTimeFeatureContainer(oneHourMillis)),
-                new MentionsContainerFeature(new FixedTimeFeatureContainer(oneHourMillis)),
-                new TweetContainerFeature(new FixedTimeFeatureContainer(oneHourMillis)),
-                new RetweetContainerFeature(new FixedTimeFeatureContainer(oneHourMillis)),
-                new RetweetCountContainerFeature(new FixedTimeFeatureContainer(oneHourMillis)),
+                new FavoritesWindowFeature(new FixedTimeFeatureWindow(oneHourMillis)),
+                new FollowersWindowFeature(new FixedTimeFeatureWindow(oneHourMillis)),
+                new FollowingsWindowFeature(new FixedTimeFeatureWindow(oneHourMillis)),
+                new HashtagsCountWindowFeature(new FixedTimeFeatureWindow(oneHourMillis)),
+                new LinksWindowFeature(new FixedTimeFeatureWindow(oneHourMillis)),
+                new MentionsWindowFeature(new FixedTimeFeatureWindow(oneHourMillis)),
+                new TweetWindowFeature(new FixedTimeFeatureWindow(oneHourMillis)),
+                new RetweetWindowFeature(new FixedTimeFeatureWindow(oneHourMillis)),
+                new RetweetCountContainerFeature(new FixedTimeFeatureWindow(oneHourMillis)),
                 
-                new FavoritesContainerFeature(new FixedTimeFeatureContainer(sixHoursMillis)),
-                new FollowersContainerFeature(new FixedTimeFeatureContainer(sixHoursMillis)),
-                new FollowingsContainerFeature(new FixedTimeFeatureContainer(sixHoursMillis)),
-                new HashtagsCountContainerFeature(new FixedTimeFeatureContainer(sixHoursMillis)),
-                new LinksContainerFeature(new FixedTimeFeatureContainer(sixHoursMillis)),
-                new MentionsContainerFeature(new FixedTimeFeatureContainer(sixHoursMillis)),
-                new TweetContainerFeature(new FixedTimeFeatureContainer(sixHoursMillis)),
-                new RetweetContainerFeature(new FixedTimeFeatureContainer(sixHoursMillis)),
-                new RetweetCountContainerFeature(new FixedTimeFeatureContainer(sixHoursMillis)),
+                new FavoritesWindowFeature(new FixedTimeFeatureWindow(sixHoursMillis)),
+                new FollowersWindowFeature(new FixedTimeFeatureWindow(sixHoursMillis)),
+                new FollowingsWindowFeature(new FixedTimeFeatureWindow(sixHoursMillis)),
+                new HashtagsCountWindowFeature(new FixedTimeFeatureWindow(sixHoursMillis)),
+                new LinksWindowFeature(new FixedTimeFeatureWindow(sixHoursMillis)),
+                new MentionsWindowFeature(new FixedTimeFeatureWindow(sixHoursMillis)),
+                new TweetWindowFeature(new FixedTimeFeatureWindow(sixHoursMillis)),
+                new RetweetWindowFeature(new FixedTimeFeatureWindow(sixHoursMillis)),
+                new RetweetCountContainerFeature(new FixedTimeFeatureWindow(sixHoursMillis)),
                 
-                new FavoritesContainerFeature(new FixedTimeFeatureContainer(oneDayMillis)),
-                new FollowersContainerFeature(new FixedTimeFeatureContainer(oneDayMillis)),
-                new FollowingsContainerFeature(new FixedTimeFeatureContainer(oneDayMillis)),
-                new HashtagsCountContainerFeature(new FixedTimeFeatureContainer(oneDayMillis)),
-                new LinksContainerFeature(new FixedTimeFeatureContainer(oneDayMillis)),
-                new MentionsContainerFeature(new FixedTimeFeatureContainer(oneDayMillis)),
-                new TweetContainerFeature(new FixedTimeFeatureContainer(oneDayMillis)),
-                new RetweetContainerFeature(new FixedTimeFeatureContainer(oneDayMillis)),
-                new RetweetCountContainerFeature(new FixedTimeFeatureContainer(oneDayMillis))
+                new FavoritesWindowFeature(new FixedTimeFeatureWindow(oneDayMillis)),
+                new FollowersWindowFeature(new FixedTimeFeatureWindow(oneDayMillis)),
+                new FollowingsWindowFeature(new FixedTimeFeatureWindow(oneDayMillis)),
+                new HashtagsCountWindowFeature(new FixedTimeFeatureWindow(oneDayMillis)),
+                new LinksWindowFeature(new FixedTimeFeatureWindow(oneDayMillis)),
+                new MentionsWindowFeature(new FixedTimeFeatureWindow(oneDayMillis)),
+                new TweetWindowFeature(new FixedTimeFeatureWindow(oneDayMillis)),
+                new RetweetWindowFeature(new FixedTimeFeatureWindow(oneDayMillis)),
+                new RetweetCountContainerFeature(new FixedTimeFeatureWindow(oneDayMillis))
         
         };
         ps.println("timeMillis favorite1h follower1h following1h hashtag1h link1h mention1h tweet1h retweet1h retweet_count1h favorite6h follower6h following6h hashtag6h link6h mention6h tweet6h retweet6h retweet_count6h favorite24h follower24h following24h hashtag24h link24h mention24h tweet24h retweet24h retweet_count24h total_alerts");

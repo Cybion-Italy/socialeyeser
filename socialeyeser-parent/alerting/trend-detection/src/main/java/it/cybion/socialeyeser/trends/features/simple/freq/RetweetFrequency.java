@@ -27,7 +27,7 @@ public class RetweetFrequency implements Feature {
             frequency = 1000000000.0 / (now - lastTime);
             
             lastTime = now;
-            return Math.log10(frequency);
+            return frequency;
         }
         
         return frequency;

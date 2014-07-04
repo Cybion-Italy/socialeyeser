@@ -1,4 +1,4 @@
-package it.cybion.socialeyeser.trends.features.sma.containers;
+package it.cybion.socialeyeser.trends.features.sma.windows;
 
 import com.google.common.collect.EvictingQueue;
 
@@ -6,13 +6,13 @@ import com.google.common.collect.EvictingQueue;
  * @author serxhiodaja (at) gmail (dot) com
  */
 
-public class FixedSizedFeatureContainer implements FeatureContainer {
+public class FixedSizedFeatureWindow implements FeatureWindow {
     
     private EvictingQueue<EmittedFeature> features;
     private int containerSize;
     private double featuresSum;
     
-    public FixedSizedFeatureContainer(int size) {
+    public FixedSizedFeatureWindow(int size) {
     
         this.features = EvictingQueue.create(size);
         

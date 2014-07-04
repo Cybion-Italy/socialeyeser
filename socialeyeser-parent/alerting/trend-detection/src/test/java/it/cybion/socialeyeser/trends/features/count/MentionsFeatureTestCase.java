@@ -1,4 +1,4 @@
-package it.cybion.socialeyeser.trends.features;
+package it.cybion.socialeyeser.trends.features.count;
 
 import static org.testng.Assert.assertEquals;
 import it.cybion.socialeyeser.trends.features.simple.count.MentionsFeature;

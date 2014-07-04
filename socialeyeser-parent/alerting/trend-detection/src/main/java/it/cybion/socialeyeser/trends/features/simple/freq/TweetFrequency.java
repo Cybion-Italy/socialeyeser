@@ -25,6 +25,6 @@ public class TweetFrequency implements Feature {
         
         lastTime = now;
         
-        return Math.log10(frequency);
+        return frequency;
     }
 }

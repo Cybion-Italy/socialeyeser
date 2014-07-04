@@ -1,5 +1,6 @@
-package it.cybion.socialeyeser.trends.features;
+package it.cybion.socialeyeser.trends.features.count;
 
+import it.cybion.socialeyeser.trends.features.Feature;
 import it.cybion.socialeyeser.trends.model.Tweet;
 
 import java.io.File;

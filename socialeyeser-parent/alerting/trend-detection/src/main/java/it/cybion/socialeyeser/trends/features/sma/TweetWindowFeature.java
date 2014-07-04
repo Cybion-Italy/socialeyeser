@@ -1,9 +1,9 @@
 package it.cybion.socialeyeser.trends.features.sma;
 
 import it.cybion.socialeyeser.trends.features.Feature;
-import it.cybion.socialeyeser.trends.features.sma.containers.EmittedFeature;
-import it.cybion.socialeyeser.trends.features.sma.containers.FeatureContainer;
-import it.cybion.socialeyeser.trends.features.sma.containers.FixedTimeFeatureContainer;
+import it.cybion.socialeyeser.trends.features.sma.windows.EmittedFeature;
+import it.cybion.socialeyeser.trends.features.sma.windows.FeatureWindow;
+import it.cybion.socialeyeser.trends.features.sma.windows.FixedTimeFeatureWindow;
 import it.cybion.socialeyeser.trends.model.Tweet;
 
 /**
@@ -13,11 +13,11 @@ import it.cybion.socialeyeser.trends.model.Tweet;
 /*
  * this makes sense only with fixed time containers!
  */
-public class TweetContainerFeature implements Feature {
+public class TweetWindowFeature implements Feature {
     
-    private FeatureContainer container;
+    private FeatureWindow container;
     
-    public TweetContainerFeature(FeatureContainer container) {
+    public TweetWindowFeature(FeatureWindow container) {
     
         this.container = container;
         
@@ -28,9 +28,9 @@ public class TweetContainerFeature implements Feature {
     
         EmittedFeature feature = new EmittedFeature(tweet.createdAt.getTime(), 1);
         
-        if (container instanceof FixedTimeFeatureContainer) {
+        if (container instanceof FixedTimeFeatureWindow) {
             container.pushFeature(feature);
-            return ((FixedTimeFeatureContainer) container).getFeatureSum();
+            return ((FixedTimeFeatureWindow) container).getFeatureSum();
         } else
             return container.pushFeature(feature);
     }

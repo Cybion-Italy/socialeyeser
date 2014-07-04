@@ -1,4 +1,4 @@
-package it.cybion.socialeyeser.trends.features.sma.containers;
+package it.cybion.socialeyeser.trends.features.sma.windows;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -7,13 +7,13 @@ import java.util.List;
  * @author serxhiodaja (at) gmail (dot) com
  */
 
-public class FixedTimeFeatureContainer implements FeatureContainer {
+public class FixedTimeFeatureWindow implements FeatureWindow {
     
     private List<EmittedFeature> features;
     private long periodMillis;
     private double featuresSum;
     
-    public FixedTimeFeatureContainer(long period) {
+    public FixedTimeFeatureWindow(long period) {
     
         this.features = new LinkedList<EmittedFeature>();
         this.periodMillis = period;

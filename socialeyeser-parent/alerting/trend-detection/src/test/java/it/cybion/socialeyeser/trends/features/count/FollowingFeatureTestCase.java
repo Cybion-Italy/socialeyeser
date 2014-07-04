@@ -1,7 +1,7 @@
-package it.cybion.socialeyeser.trends.features;
+package it.cybion.socialeyeser.trends.features.count;
 
 import static org.testng.Assert.assertEquals;
-import it.cybion.socialeyeser.trends.features.simple.count.RetweetsFeature;
+import it.cybion.socialeyeser.trends.features.simple.count.FollowingFeature;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -9,9 +9,9 @@ import java.net.URISyntaxException;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-public class RetweetsFeatureTestCase extends AbstractFeatureTestCase {
+public class FollowingFeatureTestCase extends AbstractFeatureTestCase {
     
-    public RetweetsFeatureTestCase() throws IOException, URISyntaxException {
+    public FollowingFeatureTestCase() throws IOException, URISyntaxException {
     
         super();
         
@@ -20,7 +20,7 @@ public class RetweetsFeatureTestCase extends AbstractFeatureTestCase {
     @BeforeClass
     public void setup() {
     
-        feature = new RetweetsFeature();
+        feature = new FollowingFeature();
     }
     
     @Test
@@ -28,7 +28,7 @@ public class RetweetsFeatureTestCase extends AbstractFeatureTestCase {
     public void shouldTestFeature() throws Exception {
     
         double value = feature.extractFrom(sampleTweet);
-        assertEquals(value, 1.0);
+        assertEquals(value, 538.0);
     }
     
 }

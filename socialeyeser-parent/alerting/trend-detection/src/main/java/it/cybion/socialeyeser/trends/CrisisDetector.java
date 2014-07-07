@@ -33,12 +33,9 @@ public class CrisisDetector extends Observable {
     private final double delta = 0.002;// default 0.002;
     private final Map<Feature, AdWin> featureObservers;
     private final Feature[] featureObserverList;
-    private final PrintStream ps;
-    
+
     public CrisisDetector(PrintStream ps) {
-    
-        this.ps = ps;
-        
+
         featureObservers = new HashMap<Feature, AdWin>();
         // featureObserverList = new Feature[] { new FavoritesFeature(), new
         // FollowersFeature(),
@@ -95,19 +92,19 @@ public class CrisisDetector extends Observable {
         double activatedObservers = 0.00;
         double observerValue = 0.0;
         
-        ps.print(tweet.createdAt.getTime() + " ");
+        LOGGER.debug(tweet.createdAt.getTime() + "");
         
         for (Feature observer : featureObserverList) {
             
             observerValue = observer.extractFrom(tweet);
-            ps.print(observerValue + " ");
+            LOGGER.debug(observerValue + "");
             
             if (featureObservers.get(observer).setInput(observerValue)) {
                 activatedObservers++;
             }
             
         }
-        ps.print(activatedObservers + "\n");
+        LOGGER.debug(activatedObservers + "");
         
         final boolean aCrisisIsHappening = checkIfCrisis(activatedObservers);
         if (aCrisisIsHappening) {

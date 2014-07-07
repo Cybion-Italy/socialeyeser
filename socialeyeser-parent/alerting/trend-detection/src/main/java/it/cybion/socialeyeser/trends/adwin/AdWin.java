@@ -122,7 +122,7 @@ public class AdWin { // extends Estimator {
         
     }
     
-    private class ListItem {
+    private static class ListItem {
         
         // protected Object data;
         protected ListItem next;

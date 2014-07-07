@@ -16,7 +16,7 @@
     <name>trend-detection</name>
 
     <properties>
-        <rxjava-core.version>0.18.3</rxjava-core.version>
+        <rxjava-core.version>0.19.2</rxjava-core.version>
     </properties>
 
     <dependencies>

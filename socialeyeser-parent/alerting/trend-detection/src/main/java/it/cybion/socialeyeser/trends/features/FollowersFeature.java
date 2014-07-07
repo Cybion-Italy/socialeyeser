@@ -2,7 +2,7 @@ package it.cybion.socialeyeser.trends.features;
 
 import it.cybion.socialeyeser.trends.features.base.EmittedFeature;
 import it.cybion.socialeyeser.trends.features.base.Feature;
-import it.cybion.socialeyeser.trends.features.windows.FeatureWindow;
+import it.cybion.socialeyeser.trends.features.windows.Window;
 import it.cybion.socialeyeser.trends.model.Tweet;
 
 /**
@@ -11,9 +11,9 @@ import it.cybion.socialeyeser.trends.model.Tweet;
 
 public class FollowersFeature implements Feature {
     
-    private FeatureWindow container;
+    private Window container;
     
-    public FollowersFeature(FeatureWindow container) {
+    public FollowersFeature(Window container) {
     
         this.container = container;
         

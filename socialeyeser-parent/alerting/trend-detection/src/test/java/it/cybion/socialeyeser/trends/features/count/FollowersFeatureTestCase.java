@@ -3,7 +3,7 @@ package it.cybion.socialeyeser.trends.features.count;
 import static org.testng.Assert.assertEquals;
 import it.cybion.socialeyeser.trends.features.AbstractFeatureTestCase;
 import it.cybion.socialeyeser.trends.features.FollowersFeature;
-import it.cybion.socialeyeser.trends.features.windows.FixedSizeFeatureWindow;
+import it.cybion.socialeyeser.trends.features.windows.FixedSizeWindow;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -22,7 +22,7 @@ public class FollowersFeatureTestCase extends AbstractFeatureTestCase {
     @BeforeClass
     public void setup() {
     
-        feature = new FollowersFeature(new FixedSizeFeatureWindow(1));
+        feature = new FollowersFeature(new FixedSizeWindow(1));
     }
     
     @Test

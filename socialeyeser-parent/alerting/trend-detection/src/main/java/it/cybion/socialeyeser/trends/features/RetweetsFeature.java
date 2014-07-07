@@ -2,7 +2,7 @@ package it.cybion.socialeyeser.trends.features;
 
 import it.cybion.socialeyeser.trends.features.base.EmittedFeature;
 import it.cybion.socialeyeser.trends.features.base.Feature;
-import it.cybion.socialeyeser.trends.features.windows.FeatureWindow;
+import it.cybion.socialeyeser.trends.features.windows.Window;
 import it.cybion.socialeyeser.trends.model.Tweet;
 
 /**
@@ -11,11 +11,11 @@ import it.cybion.socialeyeser.trends.model.Tweet;
 
 public class RetweetsFeature implements Feature {
     
-    private FeatureWindow container;
+    private Window window;
     
-    public RetweetsFeature(FeatureWindow container) {
+    public RetweetsFeature(Window container) {
     
-        this.container = container;
+        this.window = container;
         
     }
     
@@ -29,7 +29,7 @@ public class RetweetsFeature implements Feature {
         else
             feature = new EmittedFeature(tweet.createdAt.getTime(), 0);
         
-        return container.pushFeature(feature);
+        return window.pushFeature(feature);
     }
     
 }

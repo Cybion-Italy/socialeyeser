@@ -9,13 +9,13 @@ import java.util.List;
  * @author serxhiodaja (at) gmail (dot) com
  */
 
-public class FixedTimeFeatureWindow implements FeatureWindow {
+public class FixedTimeWindow implements Window {
     
     private List<EmittedFeature> features;
     private long windowLengthMillis;
     private double featuresSum;
     
-    public FixedTimeFeatureWindow(long windowLengthMillis) {
+    public FixedTimeWindow(long windowLengthMillis) {
     
         this.features = new LinkedList<EmittedFeature>();
         this.windowLengthMillis = windowLengthMillis;

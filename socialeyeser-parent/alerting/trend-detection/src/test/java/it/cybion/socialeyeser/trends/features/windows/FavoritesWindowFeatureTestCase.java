@@ -3,8 +3,8 @@ package it.cybion.socialeyeser.trends.features.windows;
 import static org.testng.Assert.assertTrue;
 import it.cybion.socialeyeser.trends.features.AbstractFeatureTestCase;
 import it.cybion.socialeyeser.trends.features.FavoritesFeature;
-import it.cybion.socialeyeser.trends.features.windows.FixedSizeFeatureWindow;
-import it.cybion.socialeyeser.trends.features.windows.FixedTimeFeatureWindow;
+import it.cybion.socialeyeser.trends.features.windows.FixedSizeWindow;
+import it.cybion.socialeyeser.trends.features.windows.FixedTimeWindow;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -27,7 +27,7 @@ public class FavoritesWindowFeatureTestCase extends AbstractFeatureTestCase {
     @Test
     public void shouldTestFixedTimeWindowFeature() throws Exception {
     
-        feature = new FavoritesFeature(new FixedTimeFeatureWindow(10000L));
+        feature = new FavoritesFeature(new FixedTimeWindow(10000L));
         
         double value = feature.extractFrom(sampleTweet);
         LOGGER.info("time average favorites: " + value);
@@ -47,7 +47,7 @@ public class FavoritesWindowFeatureTestCase extends AbstractFeatureTestCase {
     @Test
     public void shouldTestFixedSizeWindowFeature() throws Exception {
     
-        feature = new FavoritesFeature(new FixedSizeFeatureWindow(10));
+        feature = new FavoritesFeature(new FixedSizeWindow(10));
         
         double value = feature.extractFrom(sampleTweet);
         LOGGER.info("size average favorites: " + value);

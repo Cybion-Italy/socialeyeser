@@ -2,7 +2,7 @@ package it.cybion.socialeyeser.trends.features;
 
 import static org.testng.Assert.assertTrue;
 import it.cybion.socialeyeser.trends.features.base.TransformedFeature;
-import it.cybion.socialeyeser.trends.features.windows.FixedTimeFeatureWindow;
+import it.cybion.socialeyeser.trends.features.windows.FixedTimeWindow;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -36,7 +36,7 @@ public class TransfomedFeatureTestCase extends AbstractFeatureTestCase {
             }
         };
         
-        feature = new TransformedFeature(new TweetWindowFeature(new FixedTimeFeatureWindow(1000)),
+        feature = new TransformedFeature(new TweetWindowFeature(new FixedTimeWindow(1000)),
                 log10Function);
     }
     

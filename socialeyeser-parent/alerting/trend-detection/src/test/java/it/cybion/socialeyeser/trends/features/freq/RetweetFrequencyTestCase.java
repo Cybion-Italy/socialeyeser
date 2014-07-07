@@ -3,7 +3,7 @@ package it.cybion.socialeyeser.trends.features.freq;
 import static org.testng.Assert.assertTrue;
 import it.cybion.socialeyeser.trends.features.AbstractFeatureTestCase;
 import it.cybion.socialeyeser.trends.features.IsARetweetFeature;
-import it.cybion.socialeyeser.trends.features.windows.FixedTimeFeatureWindow;
+import it.cybion.socialeyeser.trends.features.windows.FixedTimeWindow;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -26,7 +26,7 @@ public class RetweetFrequencyTestCase extends AbstractFeatureTestCase {
     @BeforeClass
     public void setup() {
     
-        feature = new IsARetweetFeature(new FixedTimeFeatureWindow(1000));
+        feature = new IsARetweetFeature(new FixedTimeWindow(1000));
     }
     
     @Test

@@ -2,8 +2,8 @@ package it.cybion.socialeyeser.trends.features;
 
 import it.cybion.socialeyeser.trends.features.base.EmittedFeature;
 import it.cybion.socialeyeser.trends.features.base.Feature;
-import it.cybion.socialeyeser.trends.features.windows.FeatureWindow;
-import it.cybion.socialeyeser.trends.features.windows.FixedTimeFeatureWindow;
+import it.cybion.socialeyeser.trends.features.windows.Window;
+import it.cybion.socialeyeser.trends.features.windows.FixedTimeWindow;
 import it.cybion.socialeyeser.trends.model.Tweet;
 
 /**
@@ -15,9 +15,9 @@ import it.cybion.socialeyeser.trends.model.Tweet;
  */
 public class TweetWindowFeature implements Feature {
     
-    private FeatureWindow container;
+    private Window container;
     
-    public TweetWindowFeature(FeatureWindow container) {
+    public TweetWindowFeature(Window container) {
     
         this.container = container;
         
@@ -28,9 +28,9 @@ public class TweetWindowFeature implements Feature {
     
         EmittedFeature feature = new EmittedFeature(tweet.createdAt.getTime(), 1);
         
-        if (container instanceof FixedTimeFeatureWindow) {
+        if (container instanceof FixedTimeWindow) {
             container.pushFeature(feature);
-            return ((FixedTimeFeatureWindow) container).getFeatureSum();
+            return ((FixedTimeWindow) container).getFeatureSum();
         } else
             return container.pushFeature(feature);
     }

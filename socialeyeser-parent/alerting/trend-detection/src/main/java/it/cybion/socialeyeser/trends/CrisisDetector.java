@@ -13,15 +13,14 @@ import it.cybion.socialeyeser.trends.features.TweetWindowFeature;
 import it.cybion.socialeyeser.trends.features.base.Feature;
 import it.cybion.socialeyeser.trends.features.windows.FixedTimeWindow;
 import it.cybion.socialeyeser.trends.model.Tweet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author serxhiodaja (at) gmail (dot) com
@@ -32,9 +31,9 @@ public class CrisisDetector extends Observable {
     private static final Logger LOGGER = LoggerFactory.getLogger(CrisisDetector.class);
     
     private final double delta = 0.002;// default 0.002;
-    Map<Feature, AdWin> featureObservers;
-    Feature[] featureObserverList;
-    PrintStream ps;
+    private final Map<Feature, AdWin> featureObservers;
+    private final Feature[] featureObserverList;
+    private final PrintStream ps;
     
     public CrisisDetector(PrintStream ps) {
     

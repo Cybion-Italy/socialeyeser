@@ -4,7 +4,6 @@ import it.cybion.socialeyeser.trends.model.HashTag;
 import it.cybion.socialeyeser.trends.model.Tweet;
 import it.cybion.socialeyeser.trends.model.Url;
 import it.cybion.socialeyeser.trends.model.UserMention;
-import it.cybion.socialeyeser.trends.utils.NullPrintStream;
 import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.PropertyNamingStrategy;
@@ -49,7 +48,7 @@ public class CrisisDetectorTestCase {
     @BeforeClass
     public void setUp() throws Exception {
     
-        this.crisisDetector = new CrisisDetector(new NullPrintStream());
+        this.crisisDetector = new CrisisDetector();
         this.aMockObserver = createStrictMock(Observer.class);
         this.crisisDetector.add(aMockObserver);
         this.sampleTweet = buildSampleTweet();

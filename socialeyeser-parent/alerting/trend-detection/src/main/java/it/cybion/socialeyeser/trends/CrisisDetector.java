@@ -16,7 +16,6 @@ import it.cybion.socialeyeser.trends.model.Tweet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
@@ -34,7 +33,7 @@ public class CrisisDetector extends Observable {
     private final Map<Feature, AdWin> featureObservers;
     private final Feature[] featureObserverList;
 
-    public CrisisDetector(PrintStream ps) {
+    public CrisisDetector() {
 
         featureObservers = new HashMap<Feature, AdWin>();
         // featureObserverList = new Feature[] { new FavoritesFeature(), new
@@ -79,7 +78,7 @@ public class CrisisDetector extends Observable {
                 new RetweetsFeature(new FixedTimeWindow(oneDayMillis))
         
         };
-        ps.println("timeMillis favorite1h follower1h following1h hashtag1h link1h mention1h tweet1h retweet1h retweet_count1h favorite6h follower6h following6h hashtag6h link6h mention6h tweet6h retweet6h retweet_count6h favorite24h follower24h following24h hashtag24h link24h mention24h tweet24h retweet24h retweet_count24h total_alerts");
+        LOGGER.info("timeMillis favorite1h follower1h following1h hashtag1h link1h mention1h tweet1h retweet1h retweet_count1h favorite6h follower6h following6h hashtag6h link6h mention6h tweet6h retweet6h retweet_count6h favorite24h follower24h following24h hashtag24h link24h mention24h tweet24h retweet24h retweet_count24h total_alerts");
         
         for (Feature feat : featureObserverList) {
             featureObservers.put(feat, new AdWin(delta));

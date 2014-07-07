@@ -2,17 +2,15 @@ package it.cybion.socialeyeser.trends.runners;
 
 import it.cybion.socialeyeser.trends.CrisisDetector;
 import it.cybion.socialeyeser.trends.model.Tweet;
+import org.apache.log4j.Logger;
+import org.codehaus.jackson.map.ObjectMapper;
+import twitter4j.TwitterStream;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
-
-import org.apache.log4j.Logger;
-import org.codehaus.jackson.map.ObjectMapper;
-
-import twitter4j.TwitterStream;
 
 /**
  * @author serxhiodaja (at) gmail (dot) com
@@ -75,7 +73,7 @@ public class OfflineTrendsMiner {
     
     private void initDetector() {
     
-        detector = new CrisisDetector(stats);
+        detector = new CrisisDetector();
     }
     
     public void fetchItems() {

@@ -116,7 +116,7 @@ public class TrendsMiner {
     
     private void initDetector() {
     
-        detector = new CrisisDetector(stats);
+        detector = new CrisisDetector();
     }
     
     public void fetchItems() {

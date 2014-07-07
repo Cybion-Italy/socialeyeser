@@ -1,5 +1,27 @@
 package it.cybion.socialeyeser.trends;
 
+import static org.testng.Assert.assertTrue;
+import it.cybion.socialeyeser.trends.model.HashTag;
+import it.cybion.socialeyeser.trends.model.Tweet;
+import it.cybion.socialeyeser.trends.model.Url;
+import it.cybion.socialeyeser.trends.model.UserMention;
+import it.cybion.socialeyeser.trends.utils.NullPrintStream;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.MappedByteBuffer;
+import java.nio.channels.FileChannel;
+import java.nio.charset.Charset;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+import org.codehaus.jackson.map.DeserializationConfig;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.PropertyNamingStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterClass;
@@ -10,21 +32,154 @@ import org.testng.annotations.Test;
  * @author Matteo Moci ( matteo (dot) moci (at) gmail (dot) com )
  */
 public class CrisisDetectorTestCase {
-
+    
     private static final Logger LOGGER = LoggerFactory.getLogger(CrisisDetectorTestCase.class);
-
+    
+    private static final String SAMPLE_TWEET_FILENAME = "/sample_tweet.json";
+    private static final int STREAM_TWEETS_NUMBER = 100000;
+    
+    private CrisisDetector crisisDetector;
+    private Tweet sampleTweet;
+    
     @BeforeClass
     public void setUp() throws Exception {
-
+    
+        this.crisisDetector = new CrisisDetector(new NullPrintStream());
+        this.sampleTweet = buildSampleTweet();
+        
     }
-
+    
     @AfterClass
     public void tearDown() throws Exception {
-
+    
+        crisisDetector = null;
     }
-
+    
+    /*
+     * Simulates an increased activity in the 2/3 of the stream
+     */
     @Test
-    public void testName() throws Exception {
-
+    public void testCrisisDetectorAlerts() throws Exception {
+    
+        Random rand = new Random();
+        double alertLevel;
+        Tweet tweet;
+        double preCrisisAlertLevelSum = 0;
+        double preCrisisAlerts = 0;
+        double crisisAlertLevelSum = 0;
+        double crisisAlerts = 0;
+        double postCrisisAlertLevelSum = 0;
+        double postCrisisAlerts = 0;
+        
+        LOGGER.info("********************* BEGIN STREAM **********************");
+        for (int i = 0; i < STREAM_TWEETS_NUMBER / 3.0; i++) {
+            
+            tweet = getStreamTweet(rand.nextInt() % 1000, rand.nextInt() % 1000,
+                    rand.nextInt() % 50, rand.nextInt() % 50, rand.nextInt() % 50,
+                    rand.nextInt() % 3, rand.nextInt() % 1);
+            alertLevel = crisisDetector.detect(tweet);
+            
+            if (alertLevel > 0) {
+                preCrisisAlertLevelSum += alertLevel;
+                preCrisisAlerts++;
+            }
+            
+            // LOGGER.info("Alert Level @ " + i + " : " + alertLevel);
+        }
+        
+        LOGGER.info("Alerts: " + preCrisisAlerts + " total sum: " + preCrisisAlertLevelSum);
+        LOGGER.info("********************* BEGIN CRISIS **********************");
+        
+        for (int i = 0; i < STREAM_TWEETS_NUMBER / 3.0; i++) {
+            
+            tweet = getStreamTweet(rand.nextInt() % 10000, rand.nextInt() % 10000,
+                    rand.nextInt() % 500, rand.nextInt() % 500, rand.nextInt() % 500,
+                    rand.nextInt() % 10, rand.nextInt() % 3);
+            alertLevel = crisisDetector.detect(tweet);
+            
+            if (alertLevel > 0) {
+                crisisAlertLevelSum += alertLevel;
+                crisisAlerts++;
+            }
+            
+            // LOGGER.info("Alert Level @ " + i + " : " + alertLevel);
+        }
+        
+        LOGGER.info("Alerts: " + crisisAlerts + " total sum: " + crisisAlertLevelSum);
+        LOGGER.info("********************* END CRISIS **********************");
+        
+        for (int i = 0; i < STREAM_TWEETS_NUMBER / 3.0; i++) {
+            
+            tweet = getStreamTweet(rand.nextInt() % 1000, rand.nextInt() % 1000,
+                    rand.nextInt() % 50, rand.nextInt() % 50, rand.nextInt() % 50,
+                    rand.nextInt() % 3, rand.nextInt() % 1);
+            alertLevel = crisisDetector.detect(tweet);
+            
+            if (alertLevel > 0) {
+                postCrisisAlertLevelSum += alertLevel;
+                postCrisisAlerts++;
+            }
+            
+            // LOGGER.info("Alert Level @ " + i + " : " + alertLevel);
+        }
+        
+        LOGGER.info("Alerts: " + postCrisisAlerts + " total sum: " + postCrisisAlertLevelSum);
+        
+        assertTrue(crisisAlertLevelSum > preCrisisAlertLevelSum);
+        assertTrue(crisisAlertLevelSum > postCrisisAlertLevelSum);
+        
     }
+    
+    private Tweet getStreamTweet(int followers, int following, int favoriteCount, int retweetCount,
+            int hashtagsCount, int mentionsCount, int urlsCount) {
+    
+        List<HashTag> hashtags = new ArrayList<HashTag>();
+        List<Url> urls = new ArrayList<Url>();
+        List<UserMention> mentions = new ArrayList<UserMention>();
+        
+        for (int i = 0; i < hashtagsCount; i++) {
+            hashtags.add(new HashTag());
+        }
+        
+        for (int i = 0; i < urlsCount; i++) {
+            urls.add(new Url());
+        }
+        
+        for (int i = 0; i < mentionsCount; i++) {
+            mentions.add(new UserMention());
+        }
+        
+        sampleTweet.user.followersCount = followers;
+        sampleTweet.user.friendsCount *= following;
+        sampleTweet.entities.urls = urls.toArray(new Url[urls.size()]);
+        sampleTweet.entities.hashtags = hashtags.toArray(new HashTag[hashtags.size()]);
+        sampleTweet.entities.userMentions = mentions.toArray(new UserMention[mentions.size()]);
+        sampleTweet.retweetedStatus.favoriteCount = favoriteCount;
+        sampleTweet.retweetedStatus.retweetCount = retweetCount;
+        
+        return sampleTweet;
+    }
+    
+    private Tweet buildSampleTweet() throws URISyntaxException, IOException {
+    
+        final FileInputStream stream = new FileInputStream(new File(this.getClass()
+                .getResource(SAMPLE_TWEET_FILENAME).toURI()));
+        try {
+            final FileChannel fc = stream.getChannel();
+            final MappedByteBuffer bb = fc.map(FileChannel.MapMode.READ_ONLY, 0, fc.size());
+            String json = Charset.defaultCharset().decode(bb).toString();
+            
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+            objectMapper
+                    .setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
+            objectMapper.setDateFormat(new SimpleDateFormat("EEE MMM dd HH:mm:ss ZZZZZ yyyy"));
+            
+            Tweet sampleTweet = objectMapper.readValue(json, Tweet.class);
+            return sampleTweet;
+        } finally {
+            stream.close();
+        }
+    }
+    
 }

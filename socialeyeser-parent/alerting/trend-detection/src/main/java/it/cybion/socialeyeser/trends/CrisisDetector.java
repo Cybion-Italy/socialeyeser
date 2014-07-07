@@ -8,8 +8,8 @@ import it.cybion.socialeyeser.trends.features.sma.FollowingsWindowFeature;
 import it.cybion.socialeyeser.trends.features.sma.HashtagsCountWindowFeature;
 import it.cybion.socialeyeser.trends.features.sma.LinksWindowFeature;
 import it.cybion.socialeyeser.trends.features.sma.MentionsWindowFeature;
-import it.cybion.socialeyeser.trends.features.sma.RetweetWindowFeature;
 import it.cybion.socialeyeser.trends.features.sma.RetweetCountContainerFeature;
+import it.cybion.socialeyeser.trends.features.sma.RetweetWindowFeature;
 import it.cybion.socialeyeser.trends.features.sma.TweetWindowFeature;
 import it.cybion.socialeyeser.trends.features.sma.windows.FixedTimeFeatureWindow;
 import it.cybion.socialeyeser.trends.model.Tweet;
@@ -29,7 +29,7 @@ public class CrisisDetector {
     
     private static final Logger LOGGER = LoggerFactory.getLogger(CrisisDetector.class);
     
-    private final double delta = 0.0000001;// 0.002;
+    private final double delta = 0.002;// default 0.002;
     Map<Feature, AdWin> featureObservers;
     Feature[] featureObserverList;
     PrintStream ps;

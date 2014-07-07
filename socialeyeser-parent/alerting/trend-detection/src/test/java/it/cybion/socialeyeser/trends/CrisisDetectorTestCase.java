@@ -1,5 +1,11 @@
 package it.cybion.socialeyeser.trends;
 
+import static org.easymock.EasyMock.anyObject;
+import static org.easymock.EasyMock.createStrictMock;
+import static org.easymock.EasyMock.expectLastCall;
+import static org.easymock.EasyMock.replay;
+import static org.easymock.EasyMock.reset;
+import static org.easymock.EasyMock.verify;
 import it.cybion.socialeyeser.trends.model.HashTag;
 import it.cybion.socialeyeser.trends.model.Tweet;
 import it.cybion.socialeyeser.trends.model.Url;
@@ -15,6 +21,7 @@ import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
 
@@ -39,14 +46,14 @@ public class CrisisDetectorTestCase {
     
     private CrisisDetector crisisDetector;
     private Tweet sampleTweet;
-    private Observer observer;
+    private Observer aMockObserver;
     
     @BeforeClass
     public void setUp() throws Exception {
     
         this.crisisDetector = new CrisisDetector();
-        this.observer = new DummyObserver();
-        this.crisisDetector.add(observer);
+        this.aMockObserver = createStrictMock(Observer.class);
+        this.crisisDetector.add(aMockObserver);
         this.sampleTweet = buildSampleTweet();
         
     }
@@ -63,6 +70,11 @@ public class CrisisDetectorTestCase {
     @Test
     public void testCrisisDetectorAlerts() throws Exception {
     
+        reset(this.aMockObserver);
+        setup();
+        replay(this.aMockObserver);
+        verify(this.aMockObserver);
+        
         Random rand = new Random();
         double alertLevel = 0;
         Tweet tweet;
@@ -129,6 +141,13 @@ public class CrisisDetectorTestCase {
         
         // assertTrue(crisisAlertLevelSum > preCrisisAlertLevelSum);
         // assertTrue(crisisAlertLevelSum > postCrisisAlertLevelSum);
+        
+    }
+    
+    private void setup() {
+    
+        this.aMockObserver.update((Observable) anyObject(), anyObject());
+        expectLastCall().anyTimes();
         
     }
     

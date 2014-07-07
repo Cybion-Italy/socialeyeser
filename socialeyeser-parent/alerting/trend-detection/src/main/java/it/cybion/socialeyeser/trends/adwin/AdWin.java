@@ -21,7 +21,7 @@ package it.cybion.socialeyeser.trends.adwin;
 
 public class AdWin { // extends Estimator {
 
-    private class List {
+    private static class List {
         
         protected int count;
         protected ListItem head;

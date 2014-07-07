@@ -13,19 +13,20 @@ import it.cybion.socialeyeser.trends.features.TweetWindowFeature;
 import it.cybion.socialeyeser.trends.features.base.Feature;
 import it.cybion.socialeyeser.trends.features.windows.FixedTimeFeatureWindow;
 import it.cybion.socialeyeser.trends.model.Tweet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * @author serxhiodaja (at) gmail (dot) com
  */
 
-public class CrisisDetector {
+public class CrisisDetector extends Observable {
     
     private static final Logger LOGGER = LoggerFactory.getLogger(CrisisDetector.class);
     
@@ -33,7 +34,7 @@ public class CrisisDetector {
     Map<Feature, AdWin> featureObservers;
     Feature[] featureObserverList;
     PrintStream ps;
-    
+
     public CrisisDetector(PrintStream ps) {
     
         this.ps = ps;
@@ -83,12 +84,13 @@ public class CrisisDetector {
         };
         ps.println("timeMillis favorite1h follower1h following1h hashtag1h link1h mention1h tweet1h retweet1h retweet_count1h favorite6h follower6h following6h hashtag6h link6h mention6h tweet6h retweet6h retweet_count6h favorite24h follower24h following24h hashtag24h link24h mention24h tweet24h retweet24h retweet_count24h total_alerts");
         
-        for (Feature feat : featureObserverList)
+        for (Feature feat : featureObserverList) {
             featureObservers.put(feat, new AdWin(delta));
-        
+        }
+
     }
     
-    public double detect(Tweet tweet) {
+    public void detect(Tweet tweet) {
     
         double activatedObservers = 0.00;
         double observerValue = 0.0;
@@ -106,7 +108,22 @@ public class CrisisDetector {
             
         }
         ps.print(activatedObservers + "\n");
-        
-        return activatedObservers / featureObservers.size();
+
+        final boolean aCrisisIsHappening = checkIfCrisis(activatedObservers);
+        if (aCrisisIsHappening) {
+            notifyObservers("crisis!");
+        }
+
+//        return activatedObservers / featureObservers.size();
+    }
+
+    public void add(final Observer anObserver) {
+        this.addObserver(anObserver);
+    }
+
+    private boolean checkIfCrisis(double activatedObservers) {
+
+        final double activatedObserversRatio = activatedObservers / featureObservers.size();
+        return activatedObserversRatio >= 0.85D;
     }
 }

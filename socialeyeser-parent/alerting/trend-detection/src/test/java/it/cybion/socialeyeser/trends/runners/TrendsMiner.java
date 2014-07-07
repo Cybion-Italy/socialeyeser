@@ -2,22 +2,12 @@ package it.cybion.socialeyeser.trends.runners;
 
 import it.cybion.socialeyeser.trends.CrisisDetector;
 import it.cybion.socialeyeser.trends.model.Tweet;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintStream;
-import java.text.SimpleDateFormat;
-import java.util.Properties;
-
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.PropertyNamingStrategy;
-
 import twitter4j.FilterQuery;
 import twitter4j.StallWarning;
 import twitter4j.Status;
@@ -28,6 +18,14 @@ import twitter4j.TwitterStreamFactory;
 import twitter4j.conf.Configuration;
 import twitter4j.conf.ConfigurationBuilder;
 import twitter4j.json.DataObjectFactory;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.text.SimpleDateFormat;
+import java.util.Properties;
 
 /**
  * @author serxhiodaja (at) gmail (dot) com
@@ -135,7 +133,8 @@ public class TrendsMiner {
                     final Tweet tweet = mapper.readValue(json, Tweet.class);
                     
                     totalTweetCounter++;
-                    double confidence = detector.detect(tweet);
+                    detector.detect(tweet);
+                    long confidence = 0;
                     if (confidence > 0)
                         stats.println(System.currentTimeMillis() + " " + confidence);
                     

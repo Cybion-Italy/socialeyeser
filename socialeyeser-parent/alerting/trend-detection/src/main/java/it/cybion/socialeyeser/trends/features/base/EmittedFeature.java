@@ -1,4 +1,4 @@
-package it.cybion.socialeyeser.trends.features.sma.windows;
+package it.cybion.socialeyeser.trends.features.base;
 
 /**
  * @author serxhiodaja (at) gmail (dot) com

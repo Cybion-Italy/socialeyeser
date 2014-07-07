@@ -1,4 +1,6 @@
-package it.cybion.socialeyeser.trends.features.sma.windows;
+package it.cybion.socialeyeser.trends.features.windows;
+
+import it.cybion.socialeyeser.trends.features.base.EmittedFeature;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -30,12 +32,14 @@ public class FixedTimeFeatureWindow implements FeatureWindow {
         featuresSum += newestFeature.getValue();
         
         EmittedFeature oldestFeature = features.get(oldestFeatureIndex);
-        if (newestFeature.getTimeMillis() - oldestFeature.getTimeMillis() > windowLengthMillis) {
+        long windowTimeSpan = newestFeature.getTimeMillis() - oldestFeature.getTimeMillis();
+        if (windowTimeSpan > windowLengthMillis) {
             
             featuresSum -= oldestFeature.getValue();
             features.remove(oldestFeatureIndex);
             
         }
+        System.out.println(windowTimeSpan + " " + features.size());
         
         return featuresSum / features.size();
     }

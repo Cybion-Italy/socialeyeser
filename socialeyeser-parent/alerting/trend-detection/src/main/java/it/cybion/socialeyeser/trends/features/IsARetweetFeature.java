@@ -1,19 +1,19 @@
-package it.cybion.socialeyeser.trends.features.sma;
+package it.cybion.socialeyeser.trends.features;
 
-import it.cybion.socialeyeser.trends.features.Feature;
-import it.cybion.socialeyeser.trends.features.sma.windows.EmittedFeature;
-import it.cybion.socialeyeser.trends.features.sma.windows.FeatureWindow;
+import it.cybion.socialeyeser.trends.features.base.EmittedFeature;
+import it.cybion.socialeyeser.trends.features.base.Feature;
+import it.cybion.socialeyeser.trends.features.windows.FeatureWindow;
 import it.cybion.socialeyeser.trends.model.Tweet;
 
 /**
  * @author serxhiodaja (at) gmail (dot) com
  */
 
-public class RetweetWindowFeature implements Feature {
+public class IsARetweetFeature implements Feature {
     
     private FeatureWindow container;
     
-    public RetweetWindowFeature(FeatureWindow container) {
+    public IsARetweetFeature(FeatureWindow container) {
     
         this.container = container;
         

@@ -1,4 +1,4 @@
-package it.cybion.socialeyeser.trends.features;
+package it.cybion.socialeyeser.trends.features.base;
 
 import it.cybion.socialeyeser.trends.model.Tweet;
 

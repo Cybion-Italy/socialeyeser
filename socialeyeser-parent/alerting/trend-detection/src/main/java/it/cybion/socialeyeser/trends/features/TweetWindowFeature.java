@@ -1,9 +1,9 @@
-package it.cybion.socialeyeser.trends.features.sma;
+package it.cybion.socialeyeser.trends.features;
 
-import it.cybion.socialeyeser.trends.features.Feature;
-import it.cybion.socialeyeser.trends.features.sma.windows.EmittedFeature;
-import it.cybion.socialeyeser.trends.features.sma.windows.FeatureWindow;
-import it.cybion.socialeyeser.trends.features.sma.windows.FixedTimeFeatureWindow;
+import it.cybion.socialeyeser.trends.features.base.EmittedFeature;
+import it.cybion.socialeyeser.trends.features.base.Feature;
+import it.cybion.socialeyeser.trends.features.windows.FeatureWindow;
+import it.cybion.socialeyeser.trends.features.windows.FixedTimeFeatureWindow;
 import it.cybion.socialeyeser.trends.model.Tweet;
 
 /**

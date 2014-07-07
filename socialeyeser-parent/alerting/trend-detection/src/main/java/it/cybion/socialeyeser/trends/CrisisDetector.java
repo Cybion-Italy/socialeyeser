@@ -9,7 +9,7 @@ import it.cybion.socialeyeser.trends.features.IsARetweetFeature;
 import it.cybion.socialeyeser.trends.features.LinksFeature;
 import it.cybion.socialeyeser.trends.features.MentionsFeature;
 import it.cybion.socialeyeser.trends.features.RetweetsFeature;
-import it.cybion.socialeyeser.trends.features.TweetWindowFeature;
+import it.cybion.socialeyeser.trends.features.TweetFeature;
 import it.cybion.socialeyeser.trends.features.base.Feature;
 import it.cybion.socialeyeser.trends.features.windows.FixedTimeWindow;
 import it.cybion.socialeyeser.trends.model.Tweet;
@@ -53,7 +53,7 @@ public class CrisisDetector extends Observable {
                 new HashtagsWindowFeature(new FixedTimeWindow(oneHourMillis)),
                 new LinksFeature(new FixedTimeWindow(oneHourMillis)),
                 new MentionsFeature(new FixedTimeWindow(oneHourMillis)),
-                new TweetWindowFeature(new FixedTimeWindow(oneHourMillis)),
+                new TweetFeature(new FixedTimeWindow(oneHourMillis)),
                 new IsARetweetFeature(new FixedTimeWindow(oneHourMillis)),
                 new RetweetsFeature(new FixedTimeWindow(oneHourMillis)),
                 
@@ -63,7 +63,7 @@ public class CrisisDetector extends Observable {
                 new HashtagsWindowFeature(new FixedTimeWindow(sixHoursMillis)),
                 new LinksFeature(new FixedTimeWindow(sixHoursMillis)),
                 new MentionsFeature(new FixedTimeWindow(sixHoursMillis)),
-                new TweetWindowFeature(new FixedTimeWindow(sixHoursMillis)),
+                new TweetFeature(new FixedTimeWindow(sixHoursMillis)),
                 new IsARetweetFeature(new FixedTimeWindow(sixHoursMillis)),
                 new RetweetsFeature(new FixedTimeWindow(sixHoursMillis)),
                 
@@ -73,7 +73,7 @@ public class CrisisDetector extends Observable {
                 new HashtagsWindowFeature(new FixedTimeWindow(oneDayMillis)),
                 new LinksFeature(new FixedTimeWindow(oneDayMillis)),
                 new MentionsFeature(new FixedTimeWindow(oneDayMillis)),
-                new TweetWindowFeature(new FixedTimeWindow(oneDayMillis)),
+                new TweetFeature(new FixedTimeWindow(oneDayMillis)),
                 new IsARetweetFeature(new FixedTimeWindow(oneDayMillis)),
                 new RetweetsFeature(new FixedTimeWindow(oneDayMillis))
         

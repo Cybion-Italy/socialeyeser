@@ -1,7 +1,7 @@
 package it.cybion.socialeyeser.trends.features.freq;
 
 import it.cybion.socialeyeser.trends.features.AbstractFeatureTestCase;
-import it.cybion.socialeyeser.trends.features.TweetWindowFeature;
+import it.cybion.socialeyeser.trends.features.TweetFeature;
 import it.cybion.socialeyeser.trends.features.windows.FixedTimeWindow;
 
 import java.io.IOException;
@@ -26,7 +26,7 @@ public class TweetFrequencyTestCase extends AbstractFeatureTestCase {
     @BeforeClass
     public void setup() {
     
-        feature = new TweetWindowFeature(new FixedTimeWindow(1000));
+        feature = new TweetFeature(new FixedTimeWindow(1000));
     }
     
     @Test

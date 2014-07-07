@@ -13,11 +13,11 @@ import it.cybion.socialeyeser.trends.model.Tweet;
 /*
  * this makes sense only with fixed time containers!
  */
-public class TweetWindowFeature implements Feature {
+public class TweetFeature implements Feature {
     
     private Window container;
     
-    public TweetWindowFeature(Window container) {
+    public TweetFeature(Window container) {
     
         this.container = container;
         

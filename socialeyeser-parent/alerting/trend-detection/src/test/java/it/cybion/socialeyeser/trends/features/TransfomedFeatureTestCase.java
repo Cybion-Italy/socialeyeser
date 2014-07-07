@@ -36,7 +36,7 @@ public class TransfomedFeatureTestCase extends AbstractFeatureTestCase {
             }
         };
         
-        feature = new TransformedFeature(new TweetWindowFeature(new FixedTimeWindow(1000)),
+        feature = new TransformedFeature(new TweetFeature(new FixedTimeWindow(1000)),
                 log10Function);
     }
     

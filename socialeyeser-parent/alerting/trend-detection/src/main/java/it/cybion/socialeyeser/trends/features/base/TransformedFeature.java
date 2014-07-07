@@ -21,4 +21,10 @@ public class TransformedFeature implements Feature {
         return function.apply(baseFeature.extractFrom(tweet));
     }
     
+    @Override
+    public String getHumanReadableName() {
+    
+        return "[Remapped] " + baseFeature.getHumanReadableName();
+    }
+    
 }

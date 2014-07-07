@@ -2,8 +2,8 @@ package it.cybion.socialeyeser.trends.features;
 
 import it.cybion.socialeyeser.trends.features.base.EmittedFeature;
 import it.cybion.socialeyeser.trends.features.base.Feature;
-import it.cybion.socialeyeser.trends.features.windows.Window;
 import it.cybion.socialeyeser.trends.features.windows.FixedTimeWindow;
+import it.cybion.socialeyeser.trends.features.windows.Window;
 import it.cybion.socialeyeser.trends.model.Tweet;
 
 /**
@@ -15,6 +15,7 @@ import it.cybion.socialeyeser.trends.model.Tweet;
  */
 public class TweetFeature implements Feature {
     
+    private static final String FEATURE_NAME = "Tweets";
     private Window container;
     
     public TweetFeature(Window container) {
@@ -33,6 +34,13 @@ public class TweetFeature implements Feature {
             return ((FixedTimeWindow) container).getFeatureSum();
         } else
             return container.pushFeature(feature);
+    }
+    
+    @Override
+    public String getHumanReadableName() {
+    
+        // TODO Auto-generated method stub
+        return null;
     }
     
 }

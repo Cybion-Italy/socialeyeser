@@ -2,6 +2,8 @@ package it.cybion.socialeyeser.trends.features.windows;
 
 import it.cybion.socialeyeser.trends.features.base.EmittedFeature;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -46,5 +48,29 @@ public class FixedTimeWindow implements Window {
     public double getFeatureSum() {
     
         return featuresSum;
+    }
+    
+    public long getWindowLengthMillis() {
+    
+        return windowLengthMillis;
+    }
+    
+    public String getHumanReadableWindowLength() {
+    
+        if (windowLengthMillis <= 60000L)
+            return new BigDecimal(windowLengthMillis / 1000.0).setScale(1, RoundingMode.HALF_UP)
+                    .toString() + " s";
+        
+        if (windowLengthMillis <= 3600000L)
+            return new BigDecimal(windowLengthMillis / 60000.0).setScale(1, RoundingMode.HALF_UP)
+                    .toString() + " m";
+        
+        if (windowLengthMillis <= 86400000)
+            return new BigDecimal(windowLengthMillis / 3600000.0).setScale(1, RoundingMode.HALF_UP)
+                    .toString() + " h";
+        
+        else
+            return new BigDecimal(windowLengthMillis / 86400000.0)
+                    .setScale(1, RoundingMode.HALF_UP).toString() + " d";
     }
 }

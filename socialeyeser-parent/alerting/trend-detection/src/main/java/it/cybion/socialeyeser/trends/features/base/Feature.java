@@ -8,5 +8,7 @@ import it.cybion.socialeyeser.trends.model.Tweet;
 
 public interface Feature {
     
-    double extractFrom(Tweet tweet);
+    public double extractFrom(Tweet tweet);
+    
+    public String getHumanReadableName();
 }

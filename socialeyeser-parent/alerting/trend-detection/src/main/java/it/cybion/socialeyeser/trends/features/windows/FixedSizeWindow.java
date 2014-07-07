@@ -11,7 +11,7 @@ import com.google.common.collect.EvictingQueue;
 public class FixedSizeWindow implements Window {
     
     private EvictingQueue<EmittedFeature> features;
-    private int containerSize;
+    private int windowSize;
     private double featuresSum;
     
     public FixedSizeWindow(int size) {
@@ -22,7 +22,7 @@ public class FixedSizeWindow implements Window {
         for (int i = 0; i < size; i++)
             features.add(new EmittedFeature(-1, 0));
         
-        this.containerSize = size;
+        this.windowSize = size;
         this.featuresSum = 0;
     }
     
@@ -34,8 +34,12 @@ public class FixedSizeWindow implements Window {
         
         featuresSum = featuresSum - oldestFeature.getValue() + newestFeature.getValue();
         
-        return featuresSum / containerSize;
+        return featuresSum / windowSize;
         
     }
     
+    public int getWindowLength() {
+    
+        return windowSize;
+    }
 }

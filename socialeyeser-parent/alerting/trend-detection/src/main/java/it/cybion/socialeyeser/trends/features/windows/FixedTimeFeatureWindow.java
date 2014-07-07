@@ -28,7 +28,7 @@ public class FixedTimeFeatureWindow implements FeatureWindow {
     public synchronized double pushFeature(EmittedFeature newestFeature) {
     
         int oldestFeatureIndex = features.size() - 1;
-        features.add(newestFeature);
+        features.add(0, newestFeature);
         featuresSum += newestFeature.getValue();
         
         EmittedFeature oldestFeature = features.get(oldestFeatureIndex);
@@ -39,7 +39,6 @@ public class FixedTimeFeatureWindow implements FeatureWindow {
             features.remove(oldestFeatureIndex);
             
         }
-        System.out.println(windowTimeSpan + " " + features.size());
         
         return featuresSum / features.size();
     }

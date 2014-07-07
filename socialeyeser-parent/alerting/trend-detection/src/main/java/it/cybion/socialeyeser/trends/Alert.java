@@ -1,9 +1,9 @@
 package it.cybion.socialeyeser.trends;
 
+import org.joda.time.DateTime;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import org.joda.time.DateTime;
 
 public class Alert {
     
@@ -16,7 +16,7 @@ public class Alert {
     
     private Alert() {
     
-        this(new DateTime(), -1, -1, new HashMap<String, Double>());
+        this(new DateTime(0L), -1, -1, new HashMap<String, Double>());
     }
     
     public Alert(DateTime createdAt, double alertLevel, int alertCount,

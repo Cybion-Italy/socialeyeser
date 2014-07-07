@@ -31,9 +31,9 @@ public class Speedometer<T> {
         return this.observable.buffer(timespan, unit).map(
                 new Func1<List<T>, Integer>() {
                     @Override
-                    public Integer call(final List<T> items) {
+                    public Integer call(final List<T> strings) {
 
-                        return items.size();
+                        return strings.size();
                     }
                 }
         ).observeOn(this.scheduler);

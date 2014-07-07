@@ -3,6 +3,7 @@ package it.cybion.socialeyeser.trends;
 import it.cybion.socialeyeser.trends.functions.Average;
 import it.cybion.socialeyeser.trends.functions.FilterInteger;
 import it.cybion.socialeyeser.trends.functions.Speedometer;
+import it.cybion.socialeyeser.trends.functions.StringLengthOMeter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
@@ -29,6 +30,11 @@ public class ReactiveTrendsTestCase {
 
         final Speedometer<String> stringSpeedometer = new Speedometer<String>(stringPublishSubject,
                 Schedulers.io());
+
+        final StringLengthOMeter stringLengthOMeter = new StringLengthOMeter(stringPublishSubject,
+                Schedulers.io());
+
+        stringLengthOMeter.measureEvery(1, TimeUnit.SECONDS);
 
         //build observables
         final Observable<Integer> currentSpeed = stringSpeedometer.measureEvery(1,

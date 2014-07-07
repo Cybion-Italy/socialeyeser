@@ -4,14 +4,6 @@ import it.cybion.socialeyeser.trends.model.HashTag;
 import it.cybion.socialeyeser.trends.model.Tweet;
 import it.cybion.socialeyeser.trends.model.Url;
 import it.cybion.socialeyeser.trends.model.UserMention;
-import org.codehaus.jackson.map.DeserializationConfig;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.PropertyNamingStrategy;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -26,10 +18,14 @@ import java.util.List;
 import java.util.Observer;
 import java.util.Random;
 
-import static org.easymock.EasyMock.createStrictMock;
-import static org.easymock.EasyMock.replay;
-import static org.easymock.EasyMock.reset;
-import static org.easymock.EasyMock.verify;
+import org.codehaus.jackson.map.DeserializationConfig;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.PropertyNamingStrategy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
 
 /**
  * @author Matteo Moci ( matteo (dot) moci (at) gmail (dot) com )
@@ -43,14 +39,14 @@ public class CrisisDetectorTestCase {
     
     private CrisisDetector crisisDetector;
     private Tweet sampleTweet;
-    private Observer aMockObserver;
-
+    private Observer observer;
+    
     @BeforeClass
     public void setUp() throws Exception {
     
         this.crisisDetector = new CrisisDetector();
-        this.aMockObserver = createStrictMock(Observer.class);
-        this.crisisDetector.add(aMockObserver);
+        this.observer = new DummyObserver();
+        this.crisisDetector.add(observer);
         this.sampleTweet = buildSampleTweet();
         
     }
@@ -66,11 +62,6 @@ public class CrisisDetectorTestCase {
      */
     @Test
     public void testCrisisDetectorAlerts() throws Exception {
-
-        reset(this.aMockObserver);
-        setup();
-        replay(this.aMockObserver);
-        verify(this.aMockObserver);
     
         Random rand = new Random();
         double alertLevel = 0;
@@ -107,12 +98,12 @@ public class CrisisDetectorTestCase {
                     rand.nextInt() % 500, rand.nextInt() % 500, rand.nextInt() % 500,
                     rand.nextInt() % 10, rand.nextInt() % 3);
             crisisDetector.detect(tweet);
-
+            
             if (alertLevel > 0) {
                 crisisAlertLevelSum += alertLevel;
                 crisisAlerts++;
             }
-
+            
             // LOGGER.info("Alert Level @ " + i + " : " + alertLevel);
         }
         
@@ -136,15 +127,11 @@ public class CrisisDetectorTestCase {
         
         LOGGER.info("Alerts: " + postCrisisAlerts + " total sum: " + postCrisisAlertLevelSum);
         
-//        assertTrue(crisisAlertLevelSum > preCrisisAlertLevelSum);
-//        assertTrue(crisisAlertLevelSum > postCrisisAlertLevelSum);
+        // assertTrue(crisisAlertLevelSum > preCrisisAlertLevelSum);
+        // assertTrue(crisisAlertLevelSum > postCrisisAlertLevelSum);
         
     }
-
-    private void setup() {
-
-    }
-
+    
     private Tweet getStreamTweet(int followers, int following, int favoriteCount, int retweetCount,
             int hashtagsCount, int mentionsCount, int urlsCount) {
     

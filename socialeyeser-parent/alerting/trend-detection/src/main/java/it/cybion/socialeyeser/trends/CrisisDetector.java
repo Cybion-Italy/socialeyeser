@@ -15,12 +15,17 @@ import it.cybion.socialeyeser.trends.features.windows.FixedTimeWindow;
 import it.cybion.socialeyeser.trends.model.Tweet;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 
 /**
  * @author serxhiodaja (at) gmail (dot) com
@@ -88,21 +93,23 @@ public class CrisisDetector extends Observable {
     
     public void detect(Tweet tweet) {
     
-        double activatedObservers = 0.00;
         double observerValue = 0.0;
+        List<Feature> activatedObservers = Lists.newArrayList();
+        List<Double> activatingValues = Lists.newArrayList();
         
         for (Feature observer : featureObserverList) {
             
             observerValue = observer.extractFrom(tweet);
             
             if (featureObservers.get(observer).setInput(observerValue)) {
-                activatedObservers++;
+                activatedObservers.add(observer);
+                activatingValues.add(observerValue);
             }
         }
         
-        final boolean aCrisisIsHappening = checkIfCrisis(activatedObservers);
-        if (aCrisisIsHappening) {
-            notifyObservers("crisis!");
+        Alert possibleAlert = generateAlertIfCrisis(activatedObservers, activatingValues);
+        if (!possibleAlert.equals(Alert.NULL)) {
+            notifyObservers(possibleAlert);
         }
         
     }
@@ -112,10 +119,24 @@ public class CrisisDetector extends Observable {
         this.addObserver(anObserver);
     }
     
-    private boolean checkIfCrisis(double activatedObservers) {
+    private Alert generateAlertIfCrisis(List<Feature> activatedObservers,
+            List<Double> activatingValues) {
     
-        final double activatedObserversRatio = activatedObservers / featureObservers.size();
-        return activatedObserversRatio >= 0.85D;
+        final double activatedObserversRatio = ((double) activatedObservers.size())
+                / featureObservers.size();
+        if (activatedObserversRatio >= 0.85D) {
+            
+            Map<String, Double> alertFeatures = Maps.newHashMap();
+            
+            for (int i = 0; i < activatedObservers.size(); i++)
+                alertFeatures.put(activatedObservers.get(i).getHumanReadableName(),
+                        activatingValues.get(i));
+            
+            Alert alert = new Alert(new DateTime(), activatedObserversRatio,
+                    activatedObservers.size(), alertFeatures);
+            return alert;
+        } else
+            return Alert.NULL;
         
     }
 }

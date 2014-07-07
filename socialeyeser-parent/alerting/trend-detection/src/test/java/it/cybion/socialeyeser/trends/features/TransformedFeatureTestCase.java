@@ -44,13 +44,13 @@ public class TransformedFeatureTestCase extends AbstractFeatureTestCase {
     public void shouldTestFeature() throws Exception {
     
         double value = feature.extractFrom(sampleTweet);
-        LOGGER.info("tweet frequency: " + value);
+        // LOGGER.info("tweet frequency: " + value);
         
         for (int i = 0; i < 1000; i++) {
             
             sampleTweet.createdAt = new Date();
             value = feature.extractFrom(sampleTweet);
-            LOGGER.info("punctual frequency: " + value + " / s");
+            // LOGGER.info("punctual frequency: " + value + " / s");
             
             if (i > 100)
                 assertTrue(value > 1.9);

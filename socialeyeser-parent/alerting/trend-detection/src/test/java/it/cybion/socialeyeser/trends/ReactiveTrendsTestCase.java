@@ -21,7 +21,7 @@ public class ReactiveTrendsTestCase {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ReactiveTrendsTestCase.class);
 
-    @Test(enabled = true)
+    @Test
     public void shouldDetectSpeedChangesAndAvgs() throws Exception {
 
         //input
@@ -89,7 +89,7 @@ public class ReactiveTrendsTestCase {
                 }
             }
 
-            //lots speedometer fast messages
+            //lots of fast messages
             int amount = 100;
 
             for (int i = 0; i < amount; i++) {
@@ -120,7 +120,7 @@ public class ReactiveTrendsTestCase {
 
         private PublishSubject<String> stringPublishSubject;
 
-        private boolean running;
+        private volatile boolean running;
 
         public InfiniteWriter(PublishSubject<String> stringPublishSubject) {
 
@@ -154,7 +154,6 @@ public class ReactiveTrendsTestCase {
 
         @Override
         public void onCompleted() {
-
         }
 
         @Override

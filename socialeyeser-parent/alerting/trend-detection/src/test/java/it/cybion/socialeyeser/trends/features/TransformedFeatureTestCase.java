@@ -6,6 +6,7 @@ import it.cybion.socialeyeser.trends.features.windows.FixedTimeWindow;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,11 +15,11 @@ import org.testng.annotations.Test;
 
 import com.google.common.base.Function;
 
-public class TransfomedFeatureTestCase extends AbstractFeatureTestCase {
+public class TransformedFeatureTestCase extends AbstractFeatureTestCase {
     
-    private static final Logger LOGGER = LoggerFactory.getLogger(TransfomedFeatureTestCase.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TransformedFeatureTestCase.class);
     
-    public TransfomedFeatureTestCase() throws IOException, URISyntaxException {
+    public TransformedFeatureTestCase() throws IOException, URISyntaxException {
     
         super();
         
@@ -36,8 +37,7 @@ public class TransfomedFeatureTestCase extends AbstractFeatureTestCase {
             }
         };
         
-        feature = new TransformedFeature(new TweetFeature(new FixedTimeWindow(1000)),
-                log10Function);
+        feature = new TransformedFeature(new TweetFeature(new FixedTimeWindow(1000)), log10Function);
     }
     
     @Test
@@ -46,12 +46,14 @@ public class TransfomedFeatureTestCase extends AbstractFeatureTestCase {
         double value = feature.extractFrom(sampleTweet);
         LOGGER.info("tweet frequency: " + value);
         
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 1000; i++) {
             
+            sampleTweet.createdAt = new Date();
             value = feature.extractFrom(sampleTweet);
             LOGGER.info("punctual frequency: " + value + " / s");
             
-            assertTrue(value > 1.9);
+            if (i > 100)
+                assertTrue(value > 1.9);
             Thread.sleep(10L);
             
         }

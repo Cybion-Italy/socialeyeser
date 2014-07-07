@@ -1,5 +1,6 @@
 package it.cybion.socialeyeser.trends.features.freq;
 
+import static org.testng.Assert.assertTrue;
 import it.cybion.socialeyeser.trends.features.AbstractFeatureTestCase;
 import it.cybion.socialeyeser.trends.features.TweetFeature;
 import it.cybion.socialeyeser.trends.features.windows.FixedTimeWindow;
@@ -39,9 +40,10 @@ public class TweetFrequencyTestCase extends AbstractFeatureTestCase {
             
             sampleTweet.createdAt = new Date();
             value = feature.extractFrom(sampleTweet);
-            // LOGGER.info("punctual frequency: " + value + " / s");
+            LOGGER.info("punctual frequency: " + value + " / s");
             
-            // assertTrue(value > 80);
+            if (i > 100)
+                assertTrue(value > 90);
             Thread.sleep(10L);
             
         }

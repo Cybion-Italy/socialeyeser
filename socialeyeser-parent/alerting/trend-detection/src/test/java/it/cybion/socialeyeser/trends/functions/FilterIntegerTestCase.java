@@ -22,7 +22,7 @@ public class FilterIntegerTestCase {
         final Observable<Integer> two = Observable.just(2);
         final FilterInteger filterInteger = new FilterInteger(two, Schedulers.computation());
         final BlockingObservable<Integer> gtEqTwo = filterInteger.filterGtEq(2)
-                .toBlockingObservable();
+                .toBlocking();
         assertEquals(gtEqTwo.first(), Integer.valueOf(2));
     }
 }

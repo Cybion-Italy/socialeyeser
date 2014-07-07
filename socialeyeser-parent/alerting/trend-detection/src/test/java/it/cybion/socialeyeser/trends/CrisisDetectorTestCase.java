@@ -1,17 +1,15 @@
 package it.cybion.socialeyeser.trends;
 
+import static org.easymock.EasyMock.anyObject;
+import static org.easymock.EasyMock.createStrictMock;
+import static org.easymock.EasyMock.expectLastCall;
+import static org.easymock.EasyMock.replay;
+import static org.easymock.EasyMock.reset;
+import static org.easymock.EasyMock.verify;
 import it.cybion.socialeyeser.trends.model.HashTag;
 import it.cybion.socialeyeser.trends.model.Tweet;
 import it.cybion.socialeyeser.trends.model.Url;
 import it.cybion.socialeyeser.trends.model.UserMention;
-import org.codehaus.jackson.map.DeserializationConfig;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.PropertyNamingStrategy;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -27,12 +25,14 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
 
-import static org.easymock.EasyMock.anyObject;
-import static org.easymock.EasyMock.createStrictMock;
-import static org.easymock.EasyMock.expectLastCall;
-import static org.easymock.EasyMock.replay;
-import static org.easymock.EasyMock.reset;
-import static org.easymock.EasyMock.verify;
+import org.codehaus.jackson.map.DeserializationConfig;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.PropertyNamingStrategy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
 
 /**
  * @author Matteo Moci ( matteo (dot) moci (at) gmail (dot) com )
@@ -73,81 +73,33 @@ public class CrisisDetectorTestCase {
         reset(this.aMockObserver);
         setup();
         replay(this.aMockObserver);
-        verify(this.aMockObserver);
         
         Random rand = new Random();
-        double alertLevel = 0;
         Tweet tweet;
-        double preCrisisAlertLevelSum = 0;
-        double preCrisisAlerts = 0;
-        double crisisAlertLevelSum = 0;
-        double crisisAlerts = 0;
-        double postCrisisAlertLevelSum = 0;
-        double postCrisisAlerts = 0;
         
         LOGGER.info("********************* BEGIN STREAM **********************");
         for (int i = 0; i < STREAM_TWEETS_NUMBER / 3.0; i++) {
             
-            tweet = getStreamTweet(rand.nextInt() % 1000, rand.nextInt() % 1000,
-                    rand.nextInt() % 50, rand.nextInt() % 50, rand.nextInt() % 50,
-                    rand.nextInt() % 3, rand.nextInt() % 1);
+            if (i < STREAM_TWEETS_NUMBER / 3.0 || i > STREAM_TWEETS_NUMBER * 0.66)
+                tweet = getStreamTweet(rand.nextInt() % 1000, rand.nextInt() % 1000,
+                        rand.nextInt() % 50, rand.nextInt() % 50, rand.nextInt() % 50,
+                        rand.nextInt() % 3, rand.nextInt() % 1);
+            else
+                tweet = getStreamTweet(rand.nextInt() % 10000, rand.nextInt() % 10000,
+                        rand.nextInt() % 500, rand.nextInt() % 500, rand.nextInt() % 500,
+                        rand.nextInt() % 10, rand.nextInt() % 3);
             crisisDetector.detect(tweet);
             
-            if (alertLevel > 0) {
-                preCrisisAlertLevelSum += alertLevel;
-                preCrisisAlerts++;
-            }
-            
-            // LOGGER.info("Alert Level @ " + i + " : " + alertLevel);
-        }
-        
-        LOGGER.info("Alerts: " + preCrisisAlerts + " total sum: " + preCrisisAlertLevelSum);
-        LOGGER.info("********************* BEGIN CRISIS **********************");
-        
-        for (int i = 0; i < STREAM_TWEETS_NUMBER / 3.0; i++) {
-            
-            tweet = getStreamTweet(rand.nextInt() % 10000, rand.nextInt() % 10000,
-                    rand.nextInt() % 500, rand.nextInt() % 500, rand.nextInt() % 500,
-                    rand.nextInt() % 10, rand.nextInt() % 3);
             crisisDetector.detect(tweet);
-            
-            if (alertLevel > 0) {
-                crisisAlertLevelSum += alertLevel;
-                crisisAlerts++;
-            }
-            
-            // LOGGER.info("Alert Level @ " + i + " : " + alertLevel);
         }
         
-        LOGGER.info("Alerts: " + crisisAlerts + " total sum: " + crisisAlertLevelSum);
-        LOGGER.info("********************* END CRISIS **********************");
-        
-        for (int i = 0; i < STREAM_TWEETS_NUMBER / 3.0; i++) {
-            
-            tweet = getStreamTweet(rand.nextInt() % 1000, rand.nextInt() % 1000,
-                    rand.nextInt() % 50, rand.nextInt() % 50, rand.nextInt() % 50,
-                    rand.nextInt() % 3, rand.nextInt() % 1);
-            crisisDetector.detect(tweet);
-            
-            if (alertLevel > 0) {
-                postCrisisAlertLevelSum += alertLevel;
-                postCrisisAlerts++;
-            }
-            
-            // LOGGER.info("Alert Level @ " + i + " : " + alertLevel);
-        }
-        
-        LOGGER.info("Alerts: " + postCrisisAlerts + " total sum: " + postCrisisAlertLevelSum);
-        
-        // assertTrue(crisisAlertLevelSum > preCrisisAlertLevelSum);
-        // assertTrue(crisisAlertLevelSum > postCrisisAlertLevelSum);
-        
+        verify(this.aMockObserver);
     }
     
     private void setup() {
     
         this.aMockObserver.update(anyObject(Observable.class), anyObject());
-        expectLastCall().anyTimes();
+        expectLastCall().atLeastOnce();
         
     }
     

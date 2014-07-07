@@ -1,15 +1,17 @@
 package it.cybion.socialeyeser.trends;
 
-import static org.easymock.EasyMock.anyObject;
-import static org.easymock.EasyMock.createStrictMock;
-import static org.easymock.EasyMock.expectLastCall;
-import static org.easymock.EasyMock.replay;
-import static org.easymock.EasyMock.reset;
-import static org.easymock.EasyMock.verify;
 import it.cybion.socialeyeser.trends.model.HashTag;
 import it.cybion.socialeyeser.trends.model.Tweet;
 import it.cybion.socialeyeser.trends.model.Url;
 import it.cybion.socialeyeser.trends.model.UserMention;
+import org.codehaus.jackson.map.DeserializationConfig;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.PropertyNamingStrategy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -25,14 +27,12 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
 
-import org.codehaus.jackson.map.DeserializationConfig;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.PropertyNamingStrategy;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
+import static org.easymock.EasyMock.anyObject;
+import static org.easymock.EasyMock.createStrictMock;
+import static org.easymock.EasyMock.expectLastCall;
+import static org.easymock.EasyMock.replay;
+import static org.easymock.EasyMock.reset;
+import static org.easymock.EasyMock.verify;
 
 /**
  * @author Matteo Moci ( matteo (dot) moci (at) gmail (dot) com )
@@ -146,7 +146,7 @@ public class CrisisDetectorTestCase {
     
     private void setup() {
     
-        this.aMockObserver.update((Observable) anyObject(), anyObject());
+        this.aMockObserver.update(anyObject(Observable.class), anyObject());
         expectLastCall().anyTimes();
         
     }

@@ -3,8 +3,6 @@ package it.cybion.socialeyeser.trends.features.windows;
 import static org.testng.Assert.assertTrue;
 import it.cybion.socialeyeser.trends.features.AbstractFeatureTestCase;
 import it.cybion.socialeyeser.trends.features.FavoritesFeature;
-import it.cybion.socialeyeser.trends.features.windows.FixedSizeWindow;
-import it.cybion.socialeyeser.trends.features.windows.FixedTimeWindow;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -63,4 +61,5 @@ public class FavoritesWindowFeatureTestCase extends AbstractFeatureTestCase {
         }
         
     }
+    
 }

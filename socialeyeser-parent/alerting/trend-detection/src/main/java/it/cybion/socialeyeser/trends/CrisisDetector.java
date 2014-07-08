@@ -17,6 +17,7 @@ import it.cybion.socialeyeser.trends.model.Tweet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -111,7 +112,13 @@ public class CrisisDetector extends Observable {
         
         Alert possibleAlert = generateAlertIfCrisis(activatedObservers, activatingValues);
         if (!possibleAlert.equals(Alert.NULL)) {
-            LOGGER.debug("Generated alert " + possibleAlert);
+            
+            LOGGER.info("---------------------------");
+            LOGGER.debug("Generated alert with " + possibleAlert.getAlertLevel() + " alertLevel");
+            
+            for (Entry<String, Double> entry : possibleAlert.getAlertFeatures().entrySet())
+                LOGGER.debug(entry.getKey() + " -> " + entry.getValue());
+            
             setChanged();
             notifyObservers(possibleAlert);
         }

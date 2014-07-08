@@ -57,15 +57,15 @@ public class FixedTimeWindow implements Window {
     
     public String getHumanReadableWindowLength() {
     
-        if (windowLengthMillis <= 60000L)
+        if (windowLengthMillis < 60000L)
             return new BigDecimal(windowLengthMillis / 1000.0).setScale(1, RoundingMode.HALF_UP)
                     .toString() + " s";
         
-        if (windowLengthMillis <= 3600000L)
+        if (windowLengthMillis < 3600000L)
             return new BigDecimal(windowLengthMillis / 60000.0).setScale(1, RoundingMode.HALF_UP)
                     .toString() + " m";
         
-        if (windowLengthMillis <= 86400000)
+        if (windowLengthMillis < 86400000L)
             return new BigDecimal(windowLengthMillis / 3600000.0).setScale(1, RoundingMode.HALF_UP)
                     .toString() + " h";
         

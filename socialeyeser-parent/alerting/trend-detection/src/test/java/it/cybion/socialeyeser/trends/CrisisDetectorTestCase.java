@@ -1,17 +1,15 @@
 package it.cybion.socialeyeser.trends;
 
+import static org.easymock.EasyMock.anyObject;
+import static org.easymock.EasyMock.createStrictMock;
+import static org.easymock.EasyMock.expectLastCall;
+import static org.easymock.EasyMock.replay;
+import static org.easymock.EasyMock.reset;
+import static org.easymock.EasyMock.verify;
 import it.cybion.socialeyeser.trends.model.HashTag;
 import it.cybion.socialeyeser.trends.model.Tweet;
 import it.cybion.socialeyeser.trends.model.Url;
 import it.cybion.socialeyeser.trends.model.UserMention;
-import org.codehaus.jackson.map.DeserializationConfig;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.PropertyNamingStrategy;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,17 +20,20 @@ import java.nio.channels.FileChannel;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
 
-import static org.easymock.EasyMock.anyObject;
-import static org.easymock.EasyMock.createStrictMock;
-import static org.easymock.EasyMock.expectLastCall;
-import static org.easymock.EasyMock.replay;
-import static org.easymock.EasyMock.reset;
-import static org.easymock.EasyMock.verify;
+import org.codehaus.jackson.map.DeserializationConfig;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.PropertyNamingStrategy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
 
 /**
  * @author Matteo Moci ( matteo (dot) moci (at) gmail (dot) com )
@@ -44,6 +45,7 @@ public class CrisisDetectorTestCase {
     private static final String SAMPLE_TWEET_FILENAME = "/sample_tweet.json";
     private static final int STREAM_TWEETS_NUMBER = 100000;
     
+    private Random rand;
     private CrisisDetector crisisDetector;
     private Tweet sampleTweet;
     private Observer aMockObserver;
@@ -51,6 +53,7 @@ public class CrisisDetectorTestCase {
     @BeforeClass
     public void setUp() throws Exception {
     
+        this.rand = new Random();
         this.crisisDetector = new CrisisDetector();
         this.aMockObserver = createStrictMock(Observer.class);
         this.crisisDetector.add(aMockObserver);
@@ -65,7 +68,8 @@ public class CrisisDetectorTestCase {
     }
     
     /*
-     * Simulates an increased activity in the 2/3 of the stream
+     * Simulates an increased activity in the 2/3 of the stream by increasing
+     * all observed feature
      */
     @Test
     public void testCrisisDetectorAlerts() throws Exception {
@@ -74,20 +78,19 @@ public class CrisisDetectorTestCase {
         setup();
         replay(this.aMockObserver);
         
-        Random rand = new Random();
         Tweet tweet;
-
+        
         LOGGER.info("********************* BEGIN OF STREAM **********************");
         for (int i = 0; i < STREAM_TWEETS_NUMBER / 3.0; i++) {
             
             if (i < STREAM_TWEETS_NUMBER / 3.0 || i > STREAM_TWEETS_NUMBER * 0.66)
-                tweet = getStreamTweet(rand.nextInt() % 1000, rand.nextInt() % 1000,
-                        rand.nextInt() % 50, rand.nextInt() % 50, rand.nextInt() % 50,
-                        rand.nextInt() % 3, rand.nextInt() % 1);
+                tweet = getStreamTweet(getRandInt() % 1500L, getRandInt() % 1000,
+                        getRandInt() % 1000, getRandInt() % 50, getRandInt() % 50,
+                        getRandInt() % 2, getRandInt() % 3, getRandInt() % 1);
             else
-                tweet = getStreamTweet(rand.nextInt() % 10000, rand.nextInt() % 10000,
-                        rand.nextInt() % 500, rand.nextInt() % 500, rand.nextInt() % 500,
-                        rand.nextInt() % 10, rand.nextInt() % 3);
+                tweet = getStreamTweet(getRandInt() % 500L, getRandInt() % 10000,
+                        getRandInt() % 10000, getRandInt() % 500, getRandInt() % 500,
+                        getRandInt() % 6, getRandInt() % 10, getRandInt() % 3);
             
             crisisDetector.detect(tweet);
             
@@ -104,9 +107,11 @@ public class CrisisDetectorTestCase {
         
     }
     
-    private Tweet getStreamTweet(int followers, int following, int favoriteCount, int retweetCount,
-            int hashtagsCount, int mentionsCount, int urlsCount) {
+    private Tweet getStreamTweet(long incrementalTime, int followers, int following,
+            int favoriteCount, int retweetCount, int hashtagsCount, int mentionsCount, int urlsCount) {
     
+        sampleTweet.createdAt = new Date(sampleTweet.createdAt.getTime() + incrementalTime);
+        
         List<HashTag> hashtags = new ArrayList<HashTag>();
         List<Url> urls = new ArrayList<Url>();
         List<UserMention> mentions = new ArrayList<UserMention>();
@@ -124,7 +129,7 @@ public class CrisisDetectorTestCase {
         }
         
         sampleTweet.user.followersCount = followers;
-        sampleTweet.user.friendsCount *= following;
+        sampleTweet.user.friendsCount = following;
         sampleTweet.entities.urls = urls.toArray(new Url[urls.size()]);
         sampleTweet.entities.hashtags = hashtags.toArray(new HashTag[hashtags.size()]);
         sampleTweet.entities.userMentions = mentions.toArray(new UserMention[mentions.size()]);
@@ -156,4 +161,12 @@ public class CrisisDetectorTestCase {
         }
     }
     
+    private int getRandInt() {
+    
+        int randomValue = rand.nextInt();
+        if (randomValue < 0)
+            randomValue *= -1;
+        
+        return randomValue;
+    }
 }

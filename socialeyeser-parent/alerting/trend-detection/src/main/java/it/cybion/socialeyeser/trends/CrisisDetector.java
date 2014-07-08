@@ -17,7 +17,6 @@ import it.cybion.socialeyeser.trends.model.Tweet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -43,12 +42,15 @@ public class CrisisDetector extends Observable {
     private static final long SIX_HOURS_MILLIS = 6 * ONE_HOUR_MILLIS;
     private static final long ONE_DAY_MILLIS = 24 * ONE_HOUR_MILLIS;
     
-    private final double delta = 0.002;// default 0.002;
+    private static final double ADWIN_DEFAULT_DELTA = 0.002;// default 0.002;
     private final Map<Feature, AdWin> featureObservers;
     private final Feature[] featureObserverList;
     
+    private AlertHandler alertHandler;
+    
     public CrisisDetector() {
     
+        alertHandler = new AlertHandler();
         featureObservers = new HashMap<Feature, AdWin>();
         
         featureObserverList = new Feature[] {
@@ -89,7 +91,7 @@ public class CrisisDetector extends Observable {
         };
         
         for (Feature feat : featureObserverList) {
-            featureObservers.put(feat, new AdWin(delta));
+            featureObservers.put(feat, new AdWin(ADWIN_DEFAULT_DELTA));
         }
         
     }
@@ -111,23 +113,13 @@ public class CrisisDetector extends Observable {
         }
         
         Alert possibleAlert = generateAlertIfCrisis(activatedObservers, activatingValues);
-        if (!possibleAlert.equals(Alert.NULL)) {
-            
-            LOGGER.info("---------------------------");
-            LOGGER.debug("Generated alert with " + possibleAlert.getAlertLevel() + " alertLevel");
-            
-            for (Entry<String, Double> entry : possibleAlert.getAlertFeatures().entrySet())
-                LOGGER.debug(entry.getKey() + " -> " + entry.getValue());
-            
-            setChanged();
-            notifyObservers(possibleAlert);
-        }
+        alertHandler.handle(possibleAlert);
         
     }
     
     public void add(final Observer anObserver) {
     
-        this.addObserver(anObserver);
+        this.alertHandler.addObserver(anObserver);
     }
     
     private Alert generateAlertIfCrisis(List<Feature> activatedObservers,

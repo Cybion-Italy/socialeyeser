@@ -2,12 +2,22 @@ package it.cybion.socialeyeser.trends.runners;
 
 import it.cybion.socialeyeser.trends.CrisisDetector;
 import it.cybion.socialeyeser.trends.model.Tweet;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.text.SimpleDateFormat;
+import java.util.Properties;
+
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.PropertyNamingStrategy;
+
 import twitter4j.FilterQuery;
 import twitter4j.StallWarning;
 import twitter4j.Status;
@@ -18,14 +28,6 @@ import twitter4j.TwitterStreamFactory;
 import twitter4j.conf.Configuration;
 import twitter4j.conf.ConfigurationBuilder;
 import twitter4j.json.DataObjectFactory;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintStream;
-import java.text.SimpleDateFormat;
-import java.util.Properties;
 
 /**
  * @author serxhiodaja (at) gmail (dot) com
@@ -116,7 +118,7 @@ public class TrendsMiner {
     
     private void initDetector() {
     
-        detector = new CrisisDetector();
+        detector = new CrisisDetector(0.8, 0.3);
     }
     
     public void fetchItems() {

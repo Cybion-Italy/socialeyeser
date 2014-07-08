@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 public class AlertHandler extends Observable {
     
-    private static double ALERT_HANDLER_THRESHOLD = 0.3;
+    private static double alertHandlerThreshold = 0.3;
     
     private static final Logger LOGGER = LoggerFactory.getLogger(AlertHandler.class);
     
@@ -20,7 +20,7 @@ public class AlertHandler extends Observable {
     
     public AlertHandler(double alertLevelRatioOnAverage) {
     
-        this.ALERT_HANDLER_THRESHOLD = alertLevelRatioOnAverage;
+        this.alertHandlerThreshold = alertLevelRatioOnAverage;
         lastAlert = Alert.NULL;
         
     }
@@ -34,7 +34,7 @@ public class AlertHandler extends Observable {
             averageAlertLevel = alertLevelSum / alertsCount;
             
             boolean validAlert = Math.abs((alert.getAlertLevel() - averageAlertLevel)
-                    / averageAlertLevel) > ALERT_HANDLER_THRESHOLD;
+                    / averageAlertLevel) > alertHandlerThreshold;
             
             if (validAlert) {
                 printAlert(alert);

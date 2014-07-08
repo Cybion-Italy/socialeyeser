@@ -33,8 +33,8 @@ import com.google.common.collect.Maps;
 
 public class CrisisDetector extends Observable {
     
-    private static final double ALERT_LEVEL_THRESHOLD = 0.3D;
-    private static final double ALERT_RATIO_THRESHOLD = 0.3D;
+    private double alertLevelThreshold = 0.80D;
+    private double alertRatioThreshold = 0.3D;
     
     private static final Logger LOGGER = LoggerFactory.getLogger(CrisisDetector.class);
     
@@ -49,9 +49,12 @@ public class CrisisDetector extends Observable {
     
     private AlertHandler alertHandler;
     
-    public CrisisDetector() {
+    public CrisisDetector(double alertLevelThreshold, double alertRatioThreshold) {
     
-        alertHandler = new AlertHandler(ALERT_RATIO_THRESHOLD);
+        this.alertLevelThreshold = alertLevelThreshold;
+        this.alertRatioThreshold = alertRatioThreshold;
+        
+        alertHandler = new AlertHandler(alertRatioThreshold);
         featureObservers = new HashMap<Feature, AdWin>();
         
         featureObserverList = new Feature[] {
@@ -129,7 +132,7 @@ public class CrisisDetector extends Observable {
         final double activatedObserversRatio = ((double) activatedObservers.size())
                 / featureObservers.size();
         
-        if (activatedObserversRatio >= ALERT_LEVEL_THRESHOLD) {
+        if (activatedObserversRatio >= alertLevelThreshold) {
             
             Map<String, Double> alertFeatures = Maps.newHashMap();
             

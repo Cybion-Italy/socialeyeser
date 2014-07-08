@@ -33,6 +33,8 @@ import com.google.common.collect.Maps;
 
 public class CrisisDetector extends Observable {
     
+    private static final double ALERT_LEVEL_THRESHOLD = 0.3D;
+    
     private static final Logger LOGGER = LoggerFactory.getLogger(CrisisDetector.class);
     
     private static final long ONE_MINUTE_MILLIS = 60 * 1000L;
@@ -109,6 +111,8 @@ public class CrisisDetector extends Observable {
         
         Alert possibleAlert = generateAlertIfCrisis(activatedObservers, activatingValues);
         if (!possibleAlert.equals(Alert.NULL)) {
+            LOGGER.debug("Generated alert " + possibleAlert);
+            setChanged();
             notifyObservers(possibleAlert);
         }
         
@@ -124,7 +128,8 @@ public class CrisisDetector extends Observable {
     
         final double activatedObserversRatio = ((double) activatedObservers.size())
                 / featureObservers.size();
-        if (activatedObserversRatio >= 0.85D) {
+        
+        if (activatedObserversRatio >= ALERT_LEVEL_THRESHOLD) {
             
             Map<String, Double> alertFeatures = Maps.newHashMap();
             

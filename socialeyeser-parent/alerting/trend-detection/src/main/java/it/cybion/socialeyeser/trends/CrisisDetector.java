@@ -34,6 +34,7 @@ import com.google.common.collect.Maps;
 public class CrisisDetector extends Observable {
     
     private static final double ALERT_LEVEL_THRESHOLD = 0.3D;
+    private static final double ALERT_RATIO_THRESHOLD = 0.3D;
     
     private static final Logger LOGGER = LoggerFactory.getLogger(CrisisDetector.class);
     
@@ -50,7 +51,7 @@ public class CrisisDetector extends Observable {
     
     public CrisisDetector() {
     
-        alertHandler = new AlertHandler();
+        alertHandler = new AlertHandler(ALERT_RATIO_THRESHOLD);
         featureObservers = new HashMap<Feature, AdWin>();
         
         featureObserverList = new Feature[] {

@@ -34,7 +34,8 @@ public class ReactiveTrendsTestCase {
         final StringLengthOMeter stringLengthOMeter = new StringLengthOMeter(stringPublishSubject,
                 Schedulers.io());
 
-        stringLengthOMeter.measureEvery(1, TimeUnit.SECONDS);
+        final Observable<Integer> stringLengths = stringLengthOMeter.measureEvery(1,
+                TimeUnit.SECONDS);
 
         //build observables
         final Observable<Integer> currentSpeed = stringSpeedometer.measureEvery(1,
@@ -50,8 +51,9 @@ public class ReactiveTrendsTestCase {
         //subscribe the same logger
         final SystemOutSubscriber systemOutSubscriber = new SystemOutSubscriber();
 
-        final Subscription avgPrinter = averageSpeed.subscribe(systemOutSubscriber);
-        final Subscription peakPrinter = filterGtEq.subscribe(systemOutSubscriber);
+//        final Subscription avgPrinter = averageSpeed.subscribe(systemOutSubscriber);
+//        final Subscription peakPrinter = filterGtEq.subscribe(systemOutSubscriber);
+        final Subscription stringLengthPrinter = stringLengths.subscribe(systemOutSubscriber);
 
         //        final BurstingWriter writer = new BurstingWriter(stringPublishSubject);
         final InfiniteWriter writer = new InfiniteWriter(stringPublishSubject);
@@ -61,14 +63,15 @@ public class ReactiveTrendsTestCase {
         thread.start();
 
 //        final int oneHourMsecs = 1000 * 60 * 60;
-        final int oneHourMsecs = 1;
+        final int oneHourMsecs = 10;
         Thread.sleep(oneHourMsecs);
 
         writer.stop();
         thread.join();
 
-        peakPrinter.unsubscribe();
-        avgPrinter.unsubscribe();
+//        peakPrinter.unsubscribe();
+//        avgPrinter.unsubscribe();
+        stringLengthPrinter.unsubscribe();
 
     }
 
@@ -138,7 +141,7 @@ public class ReactiveTrendsTestCase {
         public void run() {
 
             while (running) {
-                stringPublishSubject.onNext("next");
+                stringPublishSubject.onNext("message");
                 try {
                     Thread.sleep(1);
                 } catch (InterruptedException e) {
@@ -170,6 +173,7 @@ public class ReactiveTrendsTestCase {
         @Override
         public void onNext(Integer o) {
             //log
+            LOGGER.info(o + "");
 
         }
     }

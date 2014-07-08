@@ -71,6 +71,12 @@
 					<path>/${project.build.finalName}</path>
 				</configuration>
 			</plugin>
+            <plugin>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
 		</plugins>
 
 		<resources>

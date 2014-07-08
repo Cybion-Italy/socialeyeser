@@ -33,19 +33,57 @@
 
         <!-- Plugin versions -->
 
-		<maven-compiler-plugin.version>2.5.1</maven-compiler-plugin.version>
-		<maven-resources-plugin.version>2.4</maven-resources-plugin.version>
-		<maven-surefire-plugin.version>2.17</maven-surefire-plugin.version>
-		<tomcat7-maven-plugin.version>2.2</tomcat7-maven-plugin.version>
-
-	</properties>
+        <exec-maven-plugin.version>1.3.1</exec-maven-plugin.version>
+        <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
+        <maven-deploy-plugin.version>2.8.1</maven-deploy-plugin.version>
+        <maven-resources-plugin.version>2.6</maven-resources-plugin.version>
+        <maven-surefire-plugin.version>2.17</maven-surefire-plugin.version>
+        <maven-svn-wagon.version>1.4</maven-svn-wagon.version>
+        <tomcat7-maven-plugin.version>2.2</tomcat7-maven-plugin.version>
+    </properties>
 
 	<modules>
 		<module>influence</module>
 		<module>alerting</module>
 	</modules>
 
-	<!-- libraries used -->
+    <repositories>
+        <repository>
+            <id>cybion-maven-repo-snapshots.googlecode.com</id>
+            <name>Cybion Commons SNAPSHOTS Artifacts repository</name>
+            <url>https://cybion-maven-repo.googlecode.com/svn/m2/snapshots</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>cybion-maven-repo-releases.googlecode.com</id>
+            <name>Cybion Commons RELEASES Artifacts repository</name>
+            <url>https://cybion-maven-repo.googlecode.com/svn/m2/releases</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <distributionManagement>
+        <repository>
+            <id>cybion-maven-repo.googlecode.com</id>
+            <url>svn:https://cybion-maven-repo.googlecode.com/svn/m2/releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>cybion-maven-repo.googlecode.com-snapshots</id>
+            <url>svn:https://cybion-maven-repo.googlecode.com/svn/m2/snapshots</url>
+            <uniqueVersion>false</uniqueVersion>
+        </snapshotRepository>
+    </distributionManagement>
+
 	<dependencyManagement>
 		<dependencies>
             <dependency>
@@ -231,6 +269,31 @@
 					<artifactId>tomcat7-maven-plugin</artifactId>
 					<version>${tomcat7-maven-plugin.version}</version>
 				</plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>${maven-deploy-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <phase>deploy</phase>
+                            <goals>
+                                <goal>deploy</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.google.code.maven-svn-wagon</groupId>
+                            <artifactId>maven-svn-wagon</artifactId>
+                            <version>${maven-svn-wagon.version}</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>exec-maven-plugin</artifactId>
+                    <version>${exec-maven-plugin.version}</version>
+                </plugin>
 			</plugins>
 		</pluginManagement>
 	</build>

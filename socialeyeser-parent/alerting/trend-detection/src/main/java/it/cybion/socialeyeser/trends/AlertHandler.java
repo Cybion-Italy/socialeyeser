@@ -1,30 +1,43 @@
 package it.cybion.socialeyeser.trends;
 
-import java.util.Map.Entry;
-import java.util.Observable;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Map.Entry;
+import java.util.Observable;
+
 public class AlertHandler extends Observable {
     
-    private static double alertHandlerThreshold = 0.3;
-    
     private static final Logger LOGGER = LoggerFactory.getLogger(AlertHandler.class);
-    
+
+    private final double alertHandlerThreshold;
+
     // TODO hangle overflow on doubles...reset sums
     private Alert lastAlert;
-    private double alertLevelSum = 0;
-    private double alertsCount = 0;
+    private double alertLevelSum;
+    private double alertsCount;
     private double averageAlertLevel;
-    
-    public AlertHandler(double alertLevelRatioOnAverage) {
-    
-        this.alertHandlerThreshold = alertLevelRatioOnAverage;
-        lastAlert = Alert.NULL;
-        
+
+    public AlertHandler() {
+        this(0.3D);
     }
-    
+
+    public AlertHandler(double alertHandlerThreshold) {
+
+        this(alertHandlerThreshold, 0, 0, 0);
+
+    }
+
+    public AlertHandler(double alertHandlerThreshold, double alertLevelSum,
+            double alertsCount, double averageAlertLevel) {
+
+        this.alertHandlerThreshold = alertHandlerThreshold;
+        this.lastAlert = Alert.NULL;
+        this.alertLevelSum = alertLevelSum;
+        this.alertsCount = alertsCount;
+        this.averageAlertLevel = averageAlertLevel;
+    }
+
     public void handle(Alert alert) {
     
         if (!alert.equals(Alert.NULL)) {
@@ -46,7 +59,8 @@ public class AlertHandler extends Observable {
             
         }
     }
-    
+
+    //can be static passing some more params in?
     private void printAlert(Alert alert) {
     
         LOGGER.debug("");

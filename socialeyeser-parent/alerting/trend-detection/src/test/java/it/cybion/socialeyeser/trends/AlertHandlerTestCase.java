@@ -32,7 +32,7 @@ public class AlertHandlerTestCase {
         final AlertHandler alertHandler = new AlertHandler();
         final Observer mockObserver = createStrictMock(Observer.class);
         reset(mockObserver);
-        setup(mockObserver);
+        setupUpdateIsCalledAtLeastOnce(mockObserver);
         replay(mockObserver);
 
         alertHandler.addObserver(mockObserver);
@@ -50,7 +50,7 @@ public class AlertHandlerTestCase {
         final AlertHandler alertHandler = new AlertHandler();
         final Observer mockObserver = createStrictMock(Observer.class);
         reset(mockObserver);
-        setupNo(mockObserver);
+        setupUpdateIsCalledThenFails(mockObserver);
         replay(mockObserver);
 
         alertHandler.addObserver(mockObserver);
@@ -62,13 +62,13 @@ public class AlertHandlerTestCase {
 
     }
 
-    private void setup(Observer mockObserver) {
+    private void setupUpdateIsCalledAtLeastOnce(Observer mockObserver) {
 
         mockObserver.update(anyObject(Observable.class), anyObject());
         expectLastCall().atLeastOnce();
     }
 
-    private void setupNo(Observer mockObserver) {
+    private void setupUpdateIsCalledThenFails(Observer mockObserver) {
 
         mockObserver.update(anyObject(Observable.class), anyObject());
         expectLastCall().andAnswer(new IAnswer<Object>() {

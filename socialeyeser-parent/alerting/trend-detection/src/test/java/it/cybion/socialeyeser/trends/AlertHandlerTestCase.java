@@ -48,6 +48,26 @@ public class AlertHandlerTestCase {
     }
     
     @Test(enabled = true)
+    public void given2ValidAlertShouldNotifyTheObserverOnce() throws Exception {
+    
+        final AlertHandler alertHandler = new AlertHandler(ALERT_RATIO_THRESHOLD, 1000, 200, 1, 0.2);
+        final Observer mockObserver = createStrictMock(Observer.class);
+        reset(mockObserver);
+        setupUpObserverIsNotifiedOnce(mockObserver);
+        replay(mockObserver);
+        
+        alertHandler.addObserver(mockObserver);
+        final Map<String, Double> alertFeatures = new HashMap<String, Double>();
+        alertFeatures.put("some key", 1.0D);
+        final Alert someAlert = new Alert(new DateTime(), 0.23, 10, alertFeatures);
+        
+        alertHandler.handle(someAlert);
+        alertHandler.handle(someAlert);
+        verify(mockObserver);
+        
+    }
+    
+    @Test(enabled = true)
     public void givenANotValidAlertShouldNotNotifyTheObserver() throws Exception {
     
         final AlertHandler alertHandler = new AlertHandler(ALERT_RATIO_THRESHOLD, 1, 200, 1000, 0.2);
@@ -75,6 +95,13 @@ public class AlertHandlerTestCase {
     
         mockObserver.update(anyObject(Observable.class), anyObject());
         expectLastCall().atLeastOnce();
+    }
+    
+    private void setupUpObserverIsNotifiedOnce(Observer mockObserver) {
+    
+        mockObserver.update(anyObject(Observable.class), anyObject());
+        expectLastCall().once();
+        
     }
     
     private void setupUpdateIsCalledThenFails(Observer mockObserver) {

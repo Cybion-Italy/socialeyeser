@@ -31,7 +31,7 @@ public class AlertHandlerTestCase {
     @Test(enabled = true)
     public void givenAValidAlertShouldNotifyTheObserver() throws Exception {
     
-        final AlertHandler alertHandler = new AlertHandler(ALERT_RATIO_THRESHOLD);
+        final AlertHandler alertHandler = new AlertHandler(ALERT_RATIO_THRESHOLD, 200, 1000, 0.2);
         final Observer mockObserver = createStrictMock(Observer.class);
         reset(mockObserver);
         setupUpdateIsCalledAtLeastOnce(mockObserver);
@@ -42,7 +42,6 @@ public class AlertHandlerTestCase {
         alertFeatures.put("some key", 1.0D);
         final Alert someAlert = new Alert(new DateTime(), 0.23, 10, alertFeatures);
         
-        warmUpHandler(alertHandler, 0.2);
         alertHandler.handle(someAlert);
         verify(mockObserver);
         
@@ -51,7 +50,7 @@ public class AlertHandlerTestCase {
     @Test(enabled = true)
     public void givenANotValidAlertShouldNotNotifyTheObserver() throws Exception {
     
-        final AlertHandler alertHandler = new AlertHandler(ALERT_RATIO_THRESHOLD);
+        final AlertHandler alertHandler = new AlertHandler(ALERT_RATIO_THRESHOLD, 200, 1000, 0.2);
         final Observer mockObserver = createStrictMock(Observer.class);
         reset(mockObserver);
         setupUpdateIsCalledThenFails(mockObserver);
@@ -62,7 +61,6 @@ public class AlertHandlerTestCase {
         alertFeatures.put("some key", 1.0D);
         final Alert someAlert = new Alert(new DateTime(), 0.21, 10, alertFeatures);
         
-        warmUpHandler(alertHandler, 0.2);
         alertHandler.handle(someAlert);
         try {
             verify(mockObserver);
@@ -94,12 +92,4 @@ public class AlertHandlerTestCase {
         
     }
     
-    // inits handler state in order to have a specific average on observer alert
-    // levels
-    private void warmUpHandler(AlertHandler handler, double desiredAverageAlertLevel) {
-    
-        for (int i = 0; i < 1000; i++) {
-            handler.handle(new Alert(null, desiredAverageAlertLevel, 1, null));
-        }
-    }
 }

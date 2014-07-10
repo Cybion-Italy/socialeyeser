@@ -54,7 +54,7 @@ public class CrisisDetectorTestCase {
     public void setUp() throws Exception {
     
         this.rand = new Random();
-        this.crisisDetector = new CrisisDetector(0.3, 0.3);
+        this.crisisDetector = new CrisisDetector(0.3, 0.3, 1);
         this.aMockObserver = createStrictMock(Observer.class);
         this.crisisDetector.add(aMockObserver);
         this.sampleTweet = buildSampleTweet();

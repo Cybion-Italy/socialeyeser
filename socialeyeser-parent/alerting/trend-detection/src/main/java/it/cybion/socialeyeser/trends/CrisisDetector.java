@@ -49,12 +49,13 @@ public class CrisisDetector extends Observable {
     
     private AlertHandler alertHandler;
     
-    public CrisisDetector(double alertLevelThreshold, double alertRatioThreshold) {
+    public CrisisDetector(double alertLevelThreshold, double alertRatioThreshold,
+            double minInterAlertTimeMillis) {
     
         this.alertLevelThreshold = alertLevelThreshold;
         this.alertRatioThreshold = alertRatioThreshold;
         
-        alertHandler = new AlertHandler(alertRatioThreshold);
+        alertHandler = new AlertHandler(alertRatioThreshold, minInterAlertTimeMillis);
         featureObservers = new HashMap<Feature, AdWin>();
         
         featureObserverList = new Feature[] {

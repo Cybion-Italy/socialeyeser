@@ -72,7 +72,8 @@ public class RealDatasetsCrisisDetector {
             expectLastCall().atLeastOnce();
             replay(this.mockObserver);
             
-            CrisisDetector detector = new CrisisDetector(alertThreshold, alertRatioThreshold);
+            CrisisDetector detector = new CrisisDetector(alertThreshold, alertRatioThreshold,
+                    60000L);
             detector.add(mockObserver);
             
             LOGGER.debug("*** BEGIN OF STREAM for " + crisisName + " ***");

@@ -75,7 +75,7 @@ public class OfflineTrendsMiner {
     
     private void initDetector() {
     
-        detector = new CrisisDetector(0.8, 0.3);
+        detector = new CrisisDetector(0.8, 0.3, 1000);
     }
     
     public void fetchItems() {

@@ -31,7 +31,7 @@ public class AlertHandlerTestCase {
     @Test(enabled = true)
     public void givenAValidAlertShouldNotifyTheObserver() throws Exception {
     
-        final AlertHandler alertHandler = new AlertHandler(ALERT_RATIO_THRESHOLD, 200, 1000, 0.2);
+        final AlertHandler alertHandler = new AlertHandler(ALERT_RATIO_THRESHOLD, 1, 200, 1000, 0.2);
         final Observer mockObserver = createStrictMock(Observer.class);
         reset(mockObserver);
         setupUpdateIsCalledAtLeastOnce(mockObserver);
@@ -50,7 +50,7 @@ public class AlertHandlerTestCase {
     @Test(enabled = true)
     public void givenANotValidAlertShouldNotNotifyTheObserver() throws Exception {
     
-        final AlertHandler alertHandler = new AlertHandler(ALERT_RATIO_THRESHOLD, 200, 1000, 0.2);
+        final AlertHandler alertHandler = new AlertHandler(ALERT_RATIO_THRESHOLD, 1, 200, 1000, 0.2);
         final Observer mockObserver = createStrictMock(Observer.class);
         reset(mockObserver);
         setupUpdateIsCalledThenFails(mockObserver);

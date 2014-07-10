@@ -36,7 +36,7 @@ public class RealDatasetsCrisisDetector {
         this.mockObserver = createStrictMock(Observer.class);
     }
     
-    @Test
+    @Test(enabled = false)
     public void shouldTestPossibleThresholds() throws FileNotFoundException {
     
         PrintStream ps = new PrintStream("explore.txt");

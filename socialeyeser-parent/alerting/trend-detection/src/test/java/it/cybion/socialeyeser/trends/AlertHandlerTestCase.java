@@ -1,85 +1,105 @@
 package it.cybion.socialeyeser.trends;
 
 import static org.easymock.EasyMock.anyObject;
+import static org.easymock.EasyMock.createStrictMock;
 import static org.easymock.EasyMock.expectLastCall;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.reset;
 import static org.easymock.EasyMock.verify;
 import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.fail;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
-import org.easymock.EasyMock;
 import org.easymock.IAnswer;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+/**
+ * @author Matteo Moci ( matteo (dot) moci (at) gmail (dot) com )
+ */
 public class AlertHandlerTestCase {
     
-    private static final double ALERT_RATIO_THRESHOLD = 0.1;
     private static final Logger LOGGER = LoggerFactory.getLogger(AlertHandlerTestCase.class);
-    AlertHandler handler;
-    Alert alert;
-    Observer observer;
+    private static final double ALERT_RATIO_THRESHOLD = 0.1;
     
-    @BeforeClass
-    public void setup() {
+    @Test(enabled = true)
+    public void givenAValidAlertShouldNotifyTheObserver() throws Exception {
     
-        observer = EasyMock.createStrictMock(Observer.class);
-        alert = new Alert(new DateTime(), 0.05, 0, new HashMap<String, Double>());
+        final AlertHandler alertHandler = new AlertHandler(ALERT_RATIO_THRESHOLD);
+        final Observer mockObserver = createStrictMock(Observer.class);
+        reset(mockObserver);
+        setupUpdateIsCalledAtLeastOnce(mockObserver);
+        replay(mockObserver);
+        
+        alertHandler.addObserver(mockObserver);
+        final Map<String, Double> alertFeatures = new HashMap<String, Double>();
+        alertFeatures.put("some key", 1.0D);
+        final Alert someAlert = new Alert(new DateTime(), 0.23, 10, alertFeatures);
+        
+        warmUpHandler(alertHandler, 0.2);
+        alertHandler.handle(someAlert);
+        verify(mockObserver);
+        
     }
     
-    @Test
-    public void shouldTestAlertHandler() throws Exception {
+    @Test(enabled = true)
+    public void givenANotValidAlertShouldNotNotifyTheObserver() throws Exception {
     
-        reset(observer);
-        observer.update(anyObject(Observable.class), anyObject(Alert.class));
-        expectLastCall().andAnswer(new IAnswer() {
+        final AlertHandler alertHandler = new AlertHandler(ALERT_RATIO_THRESHOLD);
+        final Observer mockObserver = createStrictMock(Observer.class);
+        reset(mockObserver);
+        setupUpdateIsCalledThenFails(mockObserver);
+        replay(mockObserver);
+        
+        alertHandler.addObserver(mockObserver);
+        final Map<String, Double> alertFeatures = new HashMap<String, Double>();
+        alertFeatures.put("some key", 1.0D);
+        final Alert someAlert = new Alert(new DateTime(), 0.21, 10, alertFeatures);
+        
+        warmUpHandler(alertHandler, 0.2);
+        alertHandler.handle(someAlert);
+        try {
+            verify(mockObserver);
+            assertTrue(false);
+        } catch (AssertionError e) {
+            assertTrue(true);
+        }
+        
+    }
+    
+    private void setupUpdateIsCalledAtLeastOnce(Observer mockObserver) {
+    
+        mockObserver.update(anyObject(Observable.class), anyObject());
+        expectLastCall().atLeastOnce();
+    }
+    
+    private void setupUpdateIsCalledThenFails(Observer mockObserver) {
+    
+        mockObserver.update(anyObject(Observable.class), anyObject());
+        expectLastCall().andAnswer(new IAnswer<Object>() {
             
-            public Object answer() {
+            @Override
+            public Object answer() throws Throwable {
             
-                assertTrue(false);
+                fail();
                 return null;
             }
-        }).anyTimes();
+        });
         
-        replay(observer);
-        handler = new AlertHandler(ALERT_RATIO_THRESHOLD);
-        handler.addObserver(observer);
-        alert.setAlertLevel(0.2);
-        handler.handle(alert);
-        alert.setAlertLevel(0.205);
-        handler.handle(alert);
-        verify(observer);
-        
-        reset(observer);
-        observer.update(anyObject(Observable.class), anyObject(Alert.class));
-        expectLastCall().once();
-        replay(observer);
-        handler = new AlertHandler(ALERT_RATIO_THRESHOLD);
-        handler.addObserver(observer);
-        alert.setAlertLevel(0.2);
-        handler.handle(alert);
-        alert.setAlertLevel(0.25);
-        handler.handle(alert);
-        verify(observer);
-        
-        reset(observer);
-        observer.update(anyObject(Observable.class), anyObject(Alert.class));
-        expectLastCall().once();
-        replay(observer);
-        handler = new AlertHandler(ALERT_RATIO_THRESHOLD);
-        handler.addObserver(observer);
-        alert.setAlertLevel(0.2);
-        handler.handle(alert);
-        alert.setAlertLevel(0.5);
-        handler.handle(alert);
-        verify(observer);
     }
     
+    // inits handler state in order to have a specific average on observer alert
+    // levels
+    private void warmUpHandler(AlertHandler handler, double desiredAverageAlertLevel) {
+    
+        for (int i = 0; i < 1000; i++) {
+            handler.handle(new Alert(null, desiredAverageAlertLevel, 1, null));
+        }
+    }
 }

@@ -15,11 +15,11 @@ public class Tweet {
     public String inReplyToScreenName;
     public Long inReplyToStatusId;
     public Long inReplyToUserId;
-    public Place place;
-    public boolean favorited;
-    public boolean retweet;
-    public boolean truncated;
-    public boolean possiblySensitive;
+    // public Place place;
+    // public boolean favorited;
+    // public boolean retweet;
+    // public boolean truncated;
+    // public boolean possiblySensitive;
     public long retweetCount;
     public long favoriteCount;
     public Tweet retweetedStatus;
@@ -27,8 +27,8 @@ public class Tweet {
     public String text;
     public User user;
     public String lang;
-    public Object scopes;
-    public long currentUserRetweetId;
+    // public Object scopes;
+    // public long currentUserRetweetId;
     
     public double sentiment;
     public double userInfluence;

@@ -1,4 +1,4 @@
-package it.cybion.socialeyeser.trends;
+package it.cybion.socialeyeser.trends.runners;
 
 import com.google.common.base.Charsets;
 import it.cybion.socialeyeser.trends.functions.Average;

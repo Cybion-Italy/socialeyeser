@@ -11,12 +11,13 @@ import java.io.PrintStream;
 import java.text.SimpleDateFormat;
 import java.util.Properties;
 
-import org.apache.log4j.Logger;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.PropertyNamingStrategy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import twitter4j.FilterQuery;
 import twitter4j.StallWarning;
@@ -38,7 +39,7 @@ import twitter4j.json.DataObjectFactory;
  */
 public class TrendsMiner {
     
-    private static final Logger LOGGER = Logger.getLogger(TrendsMiner.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TrendsMiner.class);
     
     private String applicationConsumerKey;
     private String applicationConsumerSecret;

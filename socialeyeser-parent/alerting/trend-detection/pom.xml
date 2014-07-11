@@ -39,6 +39,7 @@
             <artifactId>rxjava-math</artifactId>
             <version>${rxjava-core.version}</version>
         </dependency>
+        <!-- TODO logback provided -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
@@ -64,6 +65,7 @@
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
+            <scope>test</scope>
 		</dependency>
     </dependencies>
 

@@ -30,6 +30,9 @@ public class Tweet {
     public Object scopes;
     public long currentUserRetweetId;
     
+    public double sentiment;
+    public double userInfluence;
+    
     public Tweet() {
     
     }

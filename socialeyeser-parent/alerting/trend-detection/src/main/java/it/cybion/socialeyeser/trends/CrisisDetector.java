@@ -42,10 +42,15 @@ public class CrisisDetector extends Observable {
     private static final long ONE_HOUR_MILLIS = 60 * ONE_MINUTE_MILLIS;
     private static final long SIX_HOURS_MILLIS = 6 * ONE_HOUR_MILLIS;
     private static final long ONE_DAY_MILLIS = 24 * ONE_HOUR_MILLIS;
+    private static final long ONE_WEEK_MILLIS = 7 * ONE_DAY_MILLIS;
+    
+    private long[] windows = new long[] { ONE_HOUR_MILLIS, SIX_HOURS_MILLIS, ONE_DAY_MILLIS,
+            ONE_WEEK_MILLIS };
     
     private static final double ADWIN_DEFAULT_DELTA = 0.002;// default 0.002;
     private final Map<Feature, AdWin> featureObservers;
-    private final Feature[] featureObserverList;
+    private final List<Feature> featureObserverList;
+    private List<Double> lastObserverFeatures = Lists.newArrayList();
     
     private AlertHandler alertHandler;
     
@@ -58,42 +63,22 @@ public class CrisisDetector extends Observable {
         alertHandler = new AlertHandler(alertRatioThreshold, minInterAlertTimeMillis);
         featureObservers = new HashMap<Feature, AdWin>();
         
-        featureObserverList = new Feature[] {
+        featureObserverList = Lists.newArrayList();
+        featureObserverList.add(new TweetFeature(new FixedTimeWindow(ONE_MINUTE_MILLIS)));
+        featureObserverList.add(new IsARetweetFeature(new FixedTimeWindow(ONE_MINUTE_MILLIS)));
         
-        new TweetFeature(new FixedTimeWindow(ONE_MINUTE_MILLIS)),
-                new IsARetweetFeature(new FixedTimeWindow(ONE_MINUTE_MILLIS)),
-                
-                new FavoritesFeature(new FixedTimeWindow(ONE_HOUR_MILLIS)),
-                new FollowersFeature(new FixedTimeWindow(ONE_HOUR_MILLIS)),
-                new FollowingsFeature(new FixedTimeWindow(ONE_HOUR_MILLIS)),
-                new HashtagsWindowFeature(new FixedTimeWindow(ONE_HOUR_MILLIS)),
-                new LinksFeature(new FixedTimeWindow(ONE_HOUR_MILLIS)),
-                new MentionsFeature(new FixedTimeWindow(ONE_HOUR_MILLIS)),
-                new TweetFeature(new FixedTimeWindow(ONE_HOUR_MILLIS)),
-                new IsARetweetFeature(new FixedTimeWindow(ONE_HOUR_MILLIS)),
-                new RetweetsFeature(new FixedTimeWindow(ONE_HOUR_MILLIS)),
-                
-                new FavoritesFeature(new FixedTimeWindow(SIX_HOURS_MILLIS)),
-                new FollowersFeature(new FixedTimeWindow(SIX_HOURS_MILLIS)),
-                new FollowingsFeature(new FixedTimeWindow(SIX_HOURS_MILLIS)),
-                new HashtagsWindowFeature(new FixedTimeWindow(SIX_HOURS_MILLIS)),
-                new LinksFeature(new FixedTimeWindow(SIX_HOURS_MILLIS)),
-                new MentionsFeature(new FixedTimeWindow(SIX_HOURS_MILLIS)),
-                new TweetFeature(new FixedTimeWindow(SIX_HOURS_MILLIS)),
-                new IsARetweetFeature(new FixedTimeWindow(SIX_HOURS_MILLIS)),
-                new RetweetsFeature(new FixedTimeWindow(SIX_HOURS_MILLIS)),
-                
-                new FavoritesFeature(new FixedTimeWindow(ONE_DAY_MILLIS)),
-                new FollowersFeature(new FixedTimeWindow(ONE_DAY_MILLIS)),
-                new FollowingsFeature(new FixedTimeWindow(ONE_DAY_MILLIS)),
-                new HashtagsWindowFeature(new FixedTimeWindow(ONE_DAY_MILLIS)),
-                new LinksFeature(new FixedTimeWindow(ONE_DAY_MILLIS)),
-                new MentionsFeature(new FixedTimeWindow(ONE_DAY_MILLIS)),
-                new TweetFeature(new FixedTimeWindow(ONE_DAY_MILLIS)),
-                new IsARetweetFeature(new FixedTimeWindow(ONE_DAY_MILLIS)),
-                new RetweetsFeature(new FixedTimeWindow(ONE_DAY_MILLIS))
-        
-        };
+        for (long windowLength : windows) {
+            
+            featureObserverList.add(new FavoritesFeature(new FixedTimeWindow(windowLength)));
+            featureObserverList.add(new FollowersFeature(new FixedTimeWindow(windowLength)));
+            featureObserverList.add(new FollowingsFeature(new FixedTimeWindow(windowLength)));
+            featureObserverList.add(new HashtagsWindowFeature(new FixedTimeWindow(windowLength)));
+            featureObserverList.add(new LinksFeature(new FixedTimeWindow(windowLength)));
+            featureObserverList.add(new MentionsFeature(new FixedTimeWindow(windowLength)));
+            featureObserverList.add(new TweetFeature(new FixedTimeWindow(windowLength)));
+            featureObserverList.add(new IsARetweetFeature(new FixedTimeWindow(windowLength)));
+            featureObserverList.add(new RetweetsFeature(new FixedTimeWindow(windowLength)));
+        }
         
         for (Feature feat : featureObserverList) {
             featureObservers.put(feat, new AdWin(ADWIN_DEFAULT_DELTA));
@@ -106,10 +91,13 @@ public class CrisisDetector extends Observable {
         double observerValue = 0.0;
         List<Feature> activatedObservers = Lists.newArrayList();
         List<Double> activatingValues = Lists.newArrayList();
+        lastObserverFeatures.clear();
+        lastObserverFeatures.add((double) tweet.createdAt.getTime());
         
         for (Feature observer : featureObserverList) {
             
             observerValue = observer.extractFrom(tweet);
+            lastObserverFeatures.add(observerValue);
             
             if (featureObservers.get(observer).setInput(observerValue)) {
                 activatedObservers.add(observer);
@@ -147,5 +135,10 @@ public class CrisisDetector extends Observable {
         } else
             return Alert.NULL;
         
+    }
+    
+    public List<Double> getLastObserverFeatures() {
+    
+        return lastObserverFeatures;
     }
 }

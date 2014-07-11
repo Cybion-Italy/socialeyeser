@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.util.List;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
@@ -48,8 +49,6 @@ public class OfflineTrendsMiner {
             OfflineTrendsMiner miner = new OfflineTrendsMiner(replayer, "/Data/crisis_data/alerts/"
                     + crisisName + ".txt");
             
-            // OfflineTrendsMiner miner = new OfflineTrendsMiner(replayer);
-            
             miner.fetchItems();
         }
         
@@ -76,7 +75,7 @@ public class OfflineTrendsMiner {
     
     private void initDetector() {
     
-        detector = new CrisisDetector(0.8, 0.3, 1000);
+        detector = new CrisisDetector(0.5, 0.5, 3600000);
     }
     
     public void fetchItems() {
@@ -88,6 +87,13 @@ public class OfflineTrendsMiner {
                 
                 totalTweetCounter++;
                 detector.detect(tweet);
+                List<Double> feats = detector.getLastObserverFeatures();
+                
+                if (totalTweetCounter % 1000 == 0) {
+                    for (double feat : feats)
+                        stats.print(feat + " ");
+                    stats.print("\n");
+                }
                 
             } catch (Exception e) {
                 

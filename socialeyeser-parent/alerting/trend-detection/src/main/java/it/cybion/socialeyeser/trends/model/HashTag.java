@@ -23,4 +23,14 @@ public class HashTag {
 
         return text;
     }
+
+    public void setIndices(int[] indices) {
+
+        this.indices = indices;
+    }
+
+    public void setText(String text) {
+
+        this.text = text;
+    }
 }

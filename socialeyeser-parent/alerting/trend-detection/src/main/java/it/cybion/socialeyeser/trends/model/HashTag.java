@@ -13,5 +13,14 @@ public class HashTag {
     public HashTag() {
     
     }
-    
+
+    public int[] getIndices() {
+
+        return indices;
+    }
+
+    public String getText() {
+
+        return text;
+    }
 }

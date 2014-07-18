@@ -36,4 +36,164 @@ public class Tweet {
     public Tweet() {
     
     }
+
+    public Long getId() {
+
+        return id;
+    }
+
+    public void setId(Long id) {
+
+        this.id = id;
+    }
+
+    public Date getCreatedAt() {
+
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+
+        this.createdAt = createdAt;
+    }
+
+    public Coordinates getCoordinates() {
+
+        return coordinates;
+    }
+
+    public void setCoordinates(Coordinates coordinates) {
+
+        this.coordinates = coordinates;
+    }
+
+    public Entities getEntities() {
+
+        return entities;
+    }
+
+    public void setEntities(Entities entities) {
+
+        this.entities = entities;
+    }
+
+    public String getInReplyToScreenName() {
+
+        return inReplyToScreenName;
+    }
+
+    public void setInReplyToScreenName(String inReplyToScreenName) {
+
+        this.inReplyToScreenName = inReplyToScreenName;
+    }
+
+    public Long getInReplyToStatusId() {
+
+        return inReplyToStatusId;
+    }
+
+    public void setInReplyToStatusId(Long inReplyToStatusId) {
+
+        this.inReplyToStatusId = inReplyToStatusId;
+    }
+
+    public Long getInReplyToUserId() {
+
+        return inReplyToUserId;
+    }
+
+    public void setInReplyToUserId(Long inReplyToUserId) {
+
+        this.inReplyToUserId = inReplyToUserId;
+    }
+
+    public long getRetweetCount() {
+
+        return retweetCount;
+    }
+
+    public void setRetweetCount(long retweetCount) {
+
+        this.retweetCount = retweetCount;
+    }
+
+    public long getFavoriteCount() {
+
+        return favoriteCount;
+    }
+
+    public void setFavoriteCount(long favoriteCount) {
+
+        this.favoriteCount = favoriteCount;
+    }
+
+    public Tweet getRetweetedStatus() {
+
+        return retweetedStatus;
+    }
+
+    public void setRetweetedStatus(Tweet retweetedStatus) {
+
+        this.retweetedStatus = retweetedStatus;
+    }
+
+    public String getSource() {
+
+        return source;
+    }
+
+    public void setSource(String source) {
+
+        this.source = source;
+    }
+
+    public String getText() {
+
+        return text;
+    }
+
+    public void setText(String text) {
+
+        this.text = text;
+    }
+
+    public User getUser() {
+
+        return user;
+    }
+
+    public void setUser(User user) {
+
+        this.user = user;
+    }
+
+    public String getLang() {
+
+        return lang;
+    }
+
+    public void setLang(String lang) {
+
+        this.lang = lang;
+    }
+
+    public double getSentiment() {
+
+        return sentiment;
+    }
+
+    public void setSentiment(double sentiment) {
+
+        this.sentiment = sentiment;
+    }
+
+    public double getUserInfluence() {
+
+        return userInfluence;
+    }
+
+    public void setUserInfluence(double userInfluence) {
+
+        this.userInfluence = userInfluence;
+    }
 }

@@ -18,4 +18,84 @@ public class Attribute {
     public Attribute() {
     
     }
+
+    public String getStreetAddress() {
+
+        return streetAddress;
+    }
+
+    public void setStreetAddress(String streetAddress) {
+
+        this.streetAddress = streetAddress;
+    }
+
+    public String getLocality() {
+
+        return locality;
+    }
+
+    public void setLocality(String locality) {
+
+        this.locality = locality;
+    }
+
+    public String getRegion() {
+
+        return region;
+    }
+
+    public void setRegion(String region) {
+
+        this.region = region;
+    }
+
+    public String getIso3() {
+
+        return iso3;
+    }
+
+    public void setIso3(String iso3) {
+
+        this.iso3 = iso3;
+    }
+
+    public String getPostalCode() {
+
+        return postalCode;
+    }
+
+    public void setPostalCode(String postalCode) {
+
+        this.postalCode = postalCode;
+    }
+
+    public String getPhone() {
+
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+
+        this.phone = phone;
+    }
+
+    public String getTwitter() {
+
+        return twitter;
+    }
+
+    public void setTwitter(String twitter) {
+
+        this.twitter = twitter;
+    }
+
+    public String getUrl() {
+
+        return url;
+    }
+
+    public void setUrl(String url) {
+
+        this.url = url;
+    }
 }

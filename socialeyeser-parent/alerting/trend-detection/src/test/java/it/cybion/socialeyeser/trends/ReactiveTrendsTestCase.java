@@ -49,7 +49,7 @@ public class ReactiveTrendsTestCase {
         final Observable<Integer> filterGtEq = filterInteger.filterGtEq(5);
 
         //subscribe the same logger
-        final SystemOutSubscriber systemOutSubscriber = new SystemOutSubscriber();
+        final SystemOutSubscriber<Integer> systemOutSubscriber = new SystemOutSubscriber<Integer>();
 
 //        final Subscription avgPrinter = averageSpeed.subscribe(systemOutSubscriber);
 //        final Subscription peakPrinter = filterGtEq.subscribe(systemOutSubscriber);
@@ -159,7 +159,7 @@ public class ReactiveTrendsTestCase {
         }
     }
 
-    private static class SystemOutSubscriber extends Subscriber<Integer> {
+    private static class SystemOutSubscriber<T> extends Subscriber<T> {
 
         @Override
         public void onCompleted() {
@@ -171,9 +171,8 @@ public class ReactiveTrendsTestCase {
         }
 
         @Override
-        public void onNext(Integer o) {
-            //log
-            LOGGER.info(o + "");
+        public void onNext(T o) {
+            LOGGER.info(o.toString() + "");
 
         }
     }

@@ -15,7 +15,7 @@
 	<name>trend-detection</name>
 
 	<properties>
-		<rxjava-core.version>0.19.6</rxjava-core.version>
+		<rxjava-core.version>0.20.0-RC3</rxjava-core.version>
 		<twitter4j-stream.version>3.0.3</twitter4j-stream.version>
 	</properties>
 

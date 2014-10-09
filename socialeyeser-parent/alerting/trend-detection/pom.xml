@@ -15,7 +15,6 @@
 	<name>trend-detection</name>
 
 	<properties>
-		<rxjava-core.version>0.20.0-RC3</rxjava-core.version>
 		<twitter4j-stream.version>3.0.3</twitter4j-stream.version>
 	</properties>
 
@@ -27,16 +26,6 @@
 		<dependency>
 			<groupId>joda-time</groupId>
 			<artifactId>joda-time</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.netflix.rxjava</groupId>
-			<artifactId>rxjava-core</artifactId>
-			<version>${rxjava-core.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.netflix.rxjava</groupId>
-			<artifactId>rxjava-math</artifactId>
-			<version>${rxjava-core.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>ch.qos.logback</groupId>

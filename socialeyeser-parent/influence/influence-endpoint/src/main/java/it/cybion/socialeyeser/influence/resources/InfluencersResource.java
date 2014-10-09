@@ -27,6 +27,7 @@ public class InfluencersResource {
 
         LOGGER.info("Starting influence service");
         //TODO is this the reason for singleton scope?
+        //TODO inject as dependency
         randomGenerator = new Random(System.nanoTime());
     }
 

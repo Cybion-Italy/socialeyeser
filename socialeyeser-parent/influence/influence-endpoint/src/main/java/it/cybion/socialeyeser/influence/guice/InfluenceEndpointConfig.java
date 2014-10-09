@@ -16,8 +16,9 @@ public class InfluenceEndpointConfig extends GuiceServletContextListener {
     @Override
     public Injector getInjector() {
     
-        final Injector injector = Guice.createInjector(new PropertiesModule(
-                "/socialeyeser.properties"), new InfluenceResourcesModule());
+        final Injector injector = Guice.createInjector(
+                new PropertiesModule("/socialeyeser.properties"),
+                new InfluenceResourcesModule());
         
         return injector;
     }
